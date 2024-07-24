@@ -7,6 +7,7 @@ use App\Http\Controllers\VoterProfileController;
 use App\Http\Controllers\RevokePermissionFromRoleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoterController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,5 +43,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::delete('/roles/{role}/permissions/{permission}', RevokePermissionFromRoleController::class)->name('roles.permission.destroy');
 });
+
+Route::get('/initvoters', [VoterController::class, 'initVoters']);
 
 require __DIR__ . '/auth.php';

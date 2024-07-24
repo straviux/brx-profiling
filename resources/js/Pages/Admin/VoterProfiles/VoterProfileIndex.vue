@@ -40,7 +40,7 @@ console.log(currentVoterPosition);
 </script>
 
 <template>
-    <Head title="Roles" />
+    <Head title="Voter's Profile" />
 
     <AdminLayout>
         <template #header>Voter's Profile</template>

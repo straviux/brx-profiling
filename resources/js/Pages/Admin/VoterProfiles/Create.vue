@@ -13,6 +13,8 @@ const positions = [
     { id: 3, name: "Subleader" },
     { id: 4, name: "Member" },
 ];
+
+const barangays = ["AMAS", "PANGOBILIAN"];
 const form = useForm({
     name: "",
     firstname: "",
@@ -103,11 +105,11 @@ const form = useForm({
                         <div class="w-1/3">
                             <InputLabel for="barangay" value="Barangay" />
 
-                            <TextInput
-                                id="barangay"
-                                type="text"
-                                class="mt-1 block w-full"
+                            <VueMultiselect
                                 v-model="form.barangay"
+                                :options="barangays"
+                                :close-on-select="true"
+                                placeholder="Select barangay"
                             />
 
                             <InputError
@@ -248,4 +250,5 @@ const form = useForm({
         </div>
     </AdminLayout>
 </template>
+
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
