@@ -6,15 +6,17 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
+import { onMounted, ref, watch } from "vue";
+import { debounce } from "lodash";
+import { router } from "@inertiajs/vue3";
 
-const positions = [
-    { id: 1, name: "Coordinator" },
-    { id: 2, name: "Leader" },
-    { id: 3, name: "Subleader" },
-    { id: 4, name: "Member" },
-];
+const props = defineProps({
+    voters: Object,
+    barangays: Array,
+});
+const positions = ["Coordinator", "Leader", "Subleader", "Member"];
 
-const barangays = ["AMAS", "PANGOBILIAN"];
+const barangayOptions = ref([]);
 const form = useForm({
     name: "",
     firstname: "",
@@ -28,6 +30,28 @@ const form = useForm({
     gender: "",
     position: "",
     remarks: "",
+});
+
+const searchVoterQuery = ref();
+const searchVoter = (voter) => {
+    searchVoterQuery.value = voter;
+};
+watch(
+    searchVoterQuery,
+    debounce(
+        (q) =>
+            router.get(
+                "create",
+                { voter: q },
+                { preserveState: true, preserveScroll: true, replace: true }
+            ),
+        500
+    )
+);
+onMounted(() => {
+    // console.log(props.barangays);
+    barangayOptions.value = props.barangays.map((bgy) => bgy.barangay_name);
+    // console.log(barangayOptions.value);
 });
 </script>
 
@@ -52,7 +76,24 @@ const form = useForm({
                 class="mt-6 max-w-5xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6"
             >
                 <form @submit.prevent="form.post(route('votersprofile.store'))">
-                    <div class="flex justify-between gap-4">
+                    <div class="w-1/2">
+                        <InputLabel for="voters" value="Voter" />
+
+                        <VueMultiselect
+                            v-model="form.name"
+                            @search-change="searchVoter"
+                            :options="props.voters"
+                            :close-on-select="true"
+                            label="voter_name"
+                            placeholder="Search voter"
+                        />
+
+                        <InputError
+                            class="mt-2"
+                            :message="form.errors.barangay"
+                        />
+                    </div>
+                    <div class="mt-4 flex justify-between gap-4">
                         <div class="w-1/3">
                             <InputLabel for="lastname" value="Last Name" />
 
@@ -60,7 +101,7 @@ const form = useForm({
                                 autofocus
                                 id="lastname"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.lastname"
                             />
 
@@ -75,7 +116,7 @@ const form = useForm({
                             <TextInput
                                 id="firstname"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.firstname"
                             />
 
@@ -90,7 +131,7 @@ const form = useForm({
                             <TextInput
                                 id="middlename"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.middlename"
                             />
 
@@ -107,7 +148,7 @@ const form = useForm({
 
                             <VueMultiselect
                                 v-model="form.barangay"
-                                :options="barangays"
+                                :options="barangayOptions"
                                 :close-on-select="true"
                                 placeholder="Select barangay"
                             />
@@ -123,7 +164,7 @@ const form = useForm({
                             <TextInput
                                 id="purok"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.purok"
                             />
 
@@ -141,7 +182,7 @@ const form = useForm({
                             <TextInput
                                 id="contact_no"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.contact_no"
                             />
 
@@ -162,7 +203,7 @@ const form = useForm({
                             <TextInput
                                 id="precinct_no"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.precinct_no"
                             />
 
@@ -177,7 +218,7 @@ const form = useForm({
                             <TextInput
                                 id="birthdate"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.birthdate"
                             />
 
@@ -192,7 +233,7 @@ const form = useForm({
                             <TextInput
                                 id="gender"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mt-1 block w-full uppercase"
                                 v-model="form.gender"
                             />
 
@@ -206,19 +247,16 @@ const form = useForm({
                     <div class="mt-4 flex">
                         <div class="w-1/2">
                             <InputLabel for="position" value="Position" />
-                            <select
-                                name="position"
-                                id="position"
+                            <VueMultiselect
                                 v-model="form.position"
-                            >
-                                <option
-                                    :value="pos.name"
-                                    v-for="pos in positions"
-                                    :key="pos.id"
-                                >
-                                    {{ pos.name }}
-                                </option>
-                            </select>
+                                :options="positions"
+                                :close-on-select="true"
+                                placeholder="Select position"
+                            />
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.position"
+                            />
                         </div>
                     </div>
 
@@ -250,5 +288,14 @@ const form = useForm({
         </div>
     </AdminLayout>
 </template>
-
+<style>
+.multiselect__input {
+    min-height: 40px !important;
+    text-transform: uppercase;
+    border-radius: 8px !important;
+}
+.multiselect__input::placeholder {
+    text-transform: none;
+}
+</style>
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>

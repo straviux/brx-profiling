@@ -1,4 +1,5 @@
-[
+{
+    "voters":[
         {
             "pro_voter_id": 2373455,
             "brgy_no": "001",
@@ -1335,7 +1336,7 @@
             "precinct_no": "0026A",
             "municipality_no": "06",
             "voter_no": 134,
-            "voter_name": "PATIÃ‘O, AMY TOYUK",
+            "voter_name": "PATIÑO, AMY TOYUK",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -1885,7 +1886,7 @@
             "precinct_no": "0026A",
             "municipality_no": "06",
             "voter_no": 189,
-            "voter_name": "TUDAO, MARIAN BAÃ‘ES",
+            "voter_name": "TUDAO, MARIAN BAÑES",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -4205,7 +4206,7 @@
             "precinct_no": "0026C",
             "municipality_no": "06",
             "voter_no": 26,
-            "voter_name": "CARAIG, SATUNIÃ‘O VASQUEZ",
+            "voter_name": "CARAIG, SATUNIÑO VASQUEZ",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -6215,7 +6216,7 @@
             "precinct_no": "0027A",
             "municipality_no": "06",
             "voter_no": 150,
-            "voter_name": "PATIÃ‘O, ALIN TUYOK",
+            "voter_name": "PATIÑO, ALIN TUYOK",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -8915,7 +8916,7 @@
             "precinct_no": "0029A",
             "municipality_no": "06",
             "voter_no": 153,
-            "voter_name": "ROSADEÃ‘O, MARICHELLE LLAMAS",
+            "voter_name": "ROSADEÑO, MARICHELLE LLAMAS",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -8925,7 +8926,7 @@
             "precinct_no": "0029A",
             "municipality_no": "06",
             "voter_no": 154,
-            "voter_name": "ROSADEÃ‘O, RIZALDO RABALLE",
+            "voter_name": "ROSADEÑO, RIZALDO RABALLE",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -8935,7 +8936,7 @@
             "precinct_no": "0029A",
             "municipality_no": "06",
             "voter_no": 155,
-            "voter_name": "ROSADEÃ‘O, VIVIAN LLAMAS",
+            "voter_name": "ROSADEÑO, VIVIAN LLAMAS",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -8945,7 +8946,7 @@
             "precinct_no": "0029A",
             "municipality_no": "06",
             "voter_no": 156,
-            "voter_name": "RUBIO, ALEX CARIÃ‘O",
+            "voter_name": "RUBIO, ALEX CARIÑO",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -8975,7 +8976,7 @@
             "precinct_no": "0029A",
             "municipality_no": "06",
             "voter_no": 159,
-            "voter_name": "RUBIO, CHITO CARIÃ‘O",
+            "voter_name": "RUBIO, CHITO CARIÑO",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -8985,7 +8986,7 @@
             "precinct_no": "0029A",
             "municipality_no": "06",
             "voter_no": 160,
-            "voter_name": "RUBIO, CLETO CAREÃ‘O",
+            "voter_name": "RUBIO, CLETO CAREÑO",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -9215,7 +9216,7 @@
             "precinct_no": "0029A",
             "municipality_no": "06",
             "voter_no": 183,
-            "voter_name": "VILLEGAS, ALBERT BAÃ‘ADERA",
+            "voter_name": "VILLEGAS, ALBERT BAÑADERA",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -9315,7 +9316,7 @@
             "precinct_no": "0030A",
             "municipality_no": "06",
             "voter_no": 8,
-            "voter_name": "ACOSTA JR., LEONCIO ARIÃ‘EGO",
+            "voter_name": "ACOSTA JR., LEONCIO ARIÑEGO",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -10715,7 +10716,7 @@
             "precinct_no": "0030A",
             "municipality_no": "06",
             "voter_no": 148,
-            "voter_name": "PATIÃ‘O, ALI TOYUK",
+            "voter_name": "PATIÑO, ALI TOYUK",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -10725,7 +10726,7 @@
             "precinct_no": "0030A",
             "municipality_no": "06",
             "voter_no": 149,
-            "voter_name": "PATIÃ‘O, LEO MANAGO",
+            "voter_name": "PATIÑO, LEO MANAGO",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -12665,7 +12666,7 @@
             "precinct_no": "0030B",
             "municipality_no": "06",
             "voter_no": 149,
-            "voter_name": "PATIÃ‘O, MABINI MAÃ‘AGO",
+            "voter_name": "PATIÑO, MABINI MAÑAGO",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -14205,7 +14206,7 @@
             "precinct_no": "0030C",
             "municipality_no": "06",
             "voter_no": 104,
-            "voter_name": "PATIÃ‘O, ANA TUYOK",
+            "voter_name": "PATIÑO, ANA TUYOK",
             "barangay_name": "AMAS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -17485,7 +17486,7 @@
             "precinct_no": "0032A",
             "municipality_no": "06",
             "voter_no": 113,
-            "voter_name": "MACAYAYONG, ALFIE CRIS CARDEÃ‘O",
+            "voter_name": "MACAYAYONG, ALFIE CRIS CARDEÑO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -17495,7 +17496,7 @@
             "precinct_no": "0032A",
             "municipality_no": "06",
             "voter_no": 114,
-            "voter_name": "MACAYAYONG, FE CARDEÃ‘O",
+            "voter_name": "MACAYAYONG, FE CARDEÑO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -18345,7 +18346,7 @@
             "precinct_no": "0032A",
             "municipality_no": "06",
             "voter_no": 199,
-            "voter_name": "VILLEGAS, MERITO BAÃ‘ADERA",
+            "voter_name": "VILLEGAS, MERITO BAÑADERA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -22365,7 +22366,7 @@
             "precinct_no": "0032D",
             "municipality_no": "06",
             "voter_no": 6,
-            "voter_name": "ALMOSA, ROE THRISTAN NIÃ‘O UNTAL",
+            "voter_name": "ALMOSA, ROE THRISTAN NIÑO UNTAL",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -22375,7 +22376,7 @@
             "precinct_no": "0032D",
             "municipality_no": "06",
             "voter_no": 7,
-            "voter_name": "ALOM, SONNY BOY SEÃ‘A",
+            "voter_name": "ALOM, SONNY BOY SEÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -22435,7 +22436,7 @@
             "precinct_no": "0032D",
             "municipality_no": "06",
             "voter_no": 13,
-            "voter_name": "BOROT, JENNY ANN AVANCEÃ‘A",
+            "voter_name": "BOROT, JENNY ANN AVANCEÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -22565,7 +22566,7 @@
             "precinct_no": "0032D",
             "municipality_no": "06",
             "voter_no": 26,
-            "voter_name": "DAUBAN, ROWEÃ‘O ANNAN",
+            "voter_name": "DAUBAN, ROWEÑO ANNAN",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -22675,7 +22676,7 @@
             "precinct_no": "0032D",
             "municipality_no": "06",
             "voter_no": 37,
-            "voter_name": "IBAÃ‘EZ, RODEL BONGON",
+            "voter_name": "IBAÑEZ, RODEL BONGON",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -22815,7 +22816,7 @@
             "precinct_no": "0032D",
             "municipality_no": "06",
             "voter_no": 51,
-            "voter_name": "MACAYAYONG, ANGELO CARDEÃ‘O",
+            "voter_name": "MACAYAYONG, ANGELO CARDEÑO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -24415,7 +24416,7 @@
             "precinct_no": "0033A",
             "municipality_no": "06",
             "voter_no": 117,
-            "voter_name": "MACAYAYONG, MARSHAWN DAVID CARDEÃ‘O",
+            "voter_name": "MACAYAYONG, MARSHAWN DAVID CARDEÑO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -25405,7 +25406,7 @@
             "precinct_no": "0033B",
             "municipality_no": "06",
             "voter_no": 54,
-            "voter_name": "OSEÃ‘A, ERLITA ANDING",
+            "voter_name": "OSEÑA, ERLITA ANDING",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -25415,7 +25416,7 @@
             "precinct_no": "0033B",
             "municipality_no": "06",
             "voter_no": 55,
-            "voter_name": "OSEÃ‘A, JESSABEL ANDING",
+            "voter_name": "OSEÑA, JESSABEL ANDING",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -26265,7 +26266,7 @@
             "precinct_no": "0034A",
             "municipality_no": "06",
             "voter_no": 50,
-            "voter_name": "BASAÃ‘EZ, JENELYN BADAC",
+            "voter_name": "BASAÑEZ, JENELYN BADAC",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -26745,7 +26746,7 @@
             "precinct_no": "0034A",
             "municipality_no": "06",
             "voter_no": 98,
-            "voter_name": "IBAÃ‘EZ, PETER AMBONG",
+            "voter_name": "IBAÑEZ, PETER AMBONG",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -26865,7 +26866,7 @@
             "precinct_no": "0034A",
             "municipality_no": "06",
             "voter_no": 110,
-            "voter_name": "MACAYAYONG, PEDRO JR. CARDIÃ‘O",
+            "voter_name": "MACAYAYONG, PEDRO JR. CARDIÑO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -27415,7 +27416,7 @@
             "precinct_no": "0034A",
             "municipality_no": "06",
             "voter_no": 165,
-            "voter_name": "SESPEÃ‘E, JERRY LAMPICAN",
+            "voter_name": "SESPEÑE, JERRY LAMPICAN",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -27425,7 +27426,7 @@
             "precinct_no": "0034A",
             "municipality_no": "06",
             "voter_no": 166,
-            "voter_name": "SESPEÃ‘E, NERLYN ASA",
+            "voter_name": "SESPEÑE, NERLYN ASA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -28075,7 +28076,7 @@
             "precinct_no": "0034B",
             "municipality_no": "06",
             "voter_no": 33,
-            "voter_name": "BASAÃ‘ES, BRYAN JAY BADAC",
+            "voter_name": "BASAÑES, BRYAN JAY BADAC",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -28085,7 +28086,7 @@
             "precinct_no": "0034B",
             "municipality_no": "06",
             "voter_no": 34,
-            "voter_name": "BASAÃ‘ES, RYAN BADAC",
+            "voter_name": "BASAÑES, RYAN BADAC",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -28975,7 +28976,7 @@
             "precinct_no": "0034B",
             "municipality_no": "06",
             "voter_no": 123,
-            "voter_name": "MIAN, RAIZA BASAÃ‘ES",
+            "voter_name": "MIAN, RAIZA BASAÑES",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -29185,7 +29186,7 @@
             "precinct_no": "0034B",
             "municipality_no": "06",
             "voter_no": 144,
-            "voter_name": "SESPEÃ‘E, JUBERT LAMPECAN",
+            "voter_name": "SESPEÑE, JUBERT LAMPECAN",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -29665,7 +29666,7 @@
             "precinct_no": "0035A",
             "municipality_no": "06",
             "voter_no": 27,
-            "voter_name": "BASAÃ‘ES, EDGAR MILLION",
+            "voter_name": "BASAÑES, EDGAR MILLION",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -29675,7 +29676,7 @@
             "precinct_no": "0035A",
             "municipality_no": "06",
             "voter_no": 28,
-            "voter_name": "BASAÃ‘ES, ROSELYN MILLION",
+            "voter_name": "BASAÑES, ROSELYN MILLION",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -30345,7 +30346,7 @@
             "precinct_no": "0035A",
             "municipality_no": "06",
             "voter_no": 95,
-            "voter_name": "IBAÃ‘EZ, JOHN PHILIP AMBONG",
+            "voter_name": "IBAÑEZ, JOHN PHILIP AMBONG",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -33985,7 +33986,7 @@
             "precinct_no": "0036A",
             "municipality_no": "06",
             "voter_no": 50,
-            "voter_name": "BASAÃ‘IS, NATY MILLION",
+            "voter_name": "BASAÑIS, NATY MILLION",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -35105,7 +35106,7 @@
             "precinct_no": "0036A",
             "municipality_no": "06",
             "voter_no": 162,
-            "voter_name": "PARIÃ‘AS, RICHELLE BANDORIAO",
+            "voter_name": "PARIÑAS, RICHELLE BANDORIAO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -35775,7 +35776,7 @@
             "precinct_no": "0036B",
             "municipality_no": "06",
             "voter_no": 33,
-            "voter_name": "BOROT, ANITA AVANCEÃ‘A",
+            "voter_name": "BOROT, ANITA AVANCEÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -35795,7 +35796,7 @@
             "precinct_no": "0036B",
             "municipality_no": "06",
             "voter_no": 35,
-            "voter_name": "BOROT, JASMINE ROSE AVANCEÃ‘A",
+            "voter_name": "BOROT, JASMINE ROSE AVANCEÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -35805,7 +35806,7 @@
             "precinct_no": "0036B",
             "municipality_no": "06",
             "voter_no": 36,
-            "voter_name": "BOROT, JEORELIO JR. AVANCEÃ‘A",
+            "voter_name": "BOROT, JEORELIO JR. AVANCEÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -35825,7 +35826,7 @@
             "precinct_no": "0036B",
             "municipality_no": "06",
             "voter_no": 38,
-            "voter_name": "BUSCANO, JUNE PIZAÃ‘A",
+            "voter_name": "BUSCANO, JUNE PIZAÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -35905,7 +35906,7 @@
             "precinct_no": "0036B",
             "municipality_no": "06",
             "voter_no": 46,
-            "voter_name": "CERVANCIA, MAILYN LORAÃ‘A",
+            "voter_name": "CERVANCIA, MAILYN LORAÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -38575,7 +38576,7 @@
             "precinct_no": "0037A",
             "municipality_no": "06",
             "voter_no": 16,
-            "voter_name": "BOROT, JENNIFER AVANCEÃ‘A",
+            "voter_name": "BOROT, JENNIFER AVANCEÑA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -40155,7 +40156,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 1,
-            "voter_name": "ABAÃ‘O, HERNAN VALENCIA",
+            "voter_name": "ABAÑO, HERNAN VALENCIA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -40165,7 +40166,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 2,
-            "voter_name": "ABAÃ‘O, SONIA SADANG",
+            "voter_name": "ABAÑO, SONIA SADANG",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -40215,7 +40216,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 7,
-            "voter_name": "AGUILAR, JANICE JOY IBAÃ‘EZ",
+            "voter_name": "AGUILAR, JANICE JOY IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -40225,7 +40226,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 8,
-            "voter_name": "AGUILAR, MICHAEL IBAÃ‘EZ",
+            "voter_name": "AGUILAR, MICHAEL IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -40235,7 +40236,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 9,
-            "voter_name": "AGUILAR, ZENAIDA IBAÃ‘EZ",
+            "voter_name": "AGUILAR, ZENAIDA IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -40655,7 +40656,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 51,
-            "voter_name": "BERAÃ‘A, BOBBY BARROGA",
+            "voter_name": "BERAÑA, BOBBY BARROGA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -40825,7 +40826,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 68,
-            "voter_name": "DAVATOS, ROWENA IBAÃ‘EZ",
+            "voter_name": "DAVATOS, ROWENA IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -41095,7 +41096,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 95,
-            "voter_name": "HASSAN, ALBAÃ‘IA SALIE",
+            "voter_name": "HASSAN, ALBAÑIA SALIE",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -41125,7 +41126,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 98,
-            "voter_name": "IBAÃ‘EZ, JESSIE BAGONA",
+            "voter_name": "IBAÑEZ, JESSIE BAGONA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -41135,7 +41136,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 99,
-            "voter_name": "IBAÃ‘EZ, JIMBO AMBONG",
+            "voter_name": "IBAÑEZ, JIMBO AMBONG",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -41145,7 +41146,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 100,
-            "voter_name": "IBAÃ‘EZ, MERCY ABOROT",
+            "voter_name": "IBAÑEZ, MERCY ABOROT",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -41155,7 +41156,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 101,
-            "voter_name": "IBAÃ‘EZ, PRECILLA ABADINES",
+            "voter_name": "IBAÑEZ, PRECILLA ABADINES",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -41165,7 +41166,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 102,
-            "voter_name": "IBAÃ‘EZ, ZOSIMA ABOROT",
+            "voter_name": "IBAÑEZ, ZOSIMA ABOROT",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -41175,7 +41176,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 103,
-            "voter_name": "IBAÃ‘EZ JR., ALFREDO BAGONA",
+            "voter_name": "IBAÑEZ JR., ALFREDO BAGONA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -42005,7 +42006,7 @@
             "precinct_no": "0038A",
             "municipality_no": "06",
             "voter_no": 186,
-            "voter_name": "TUY, FLORO AÃ‘IETE",
+            "voter_name": "TUY, FLORO AÑIETE",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -42145,7 +42146,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 3,
-            "voter_name": "AGUILAR, JOHN PHEL IBAÃ‘EZ",
+            "voter_name": "AGUILAR, JOHN PHEL IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -42395,7 +42396,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 28,
-            "voter_name": "CATEDRAL, MARY ANNE IBAÃ‘EZ",
+            "voter_name": "CATEDRAL, MARY ANNE IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -42565,7 +42566,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 45,
-            "voter_name": "IBAÃ‘EZ, JESTER ABOROT",
+            "voter_name": "IBAÑEZ, JESTER ABOROT",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -42575,7 +42576,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 46,
-            "voter_name": "IBAÃ‘EZ, MARY CRIS ABADINES",
+            "voter_name": "IBAÑEZ, MARY CRIS ABADINES",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -42585,7 +42586,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 47,
-            "voter_name": "IBAÃ‘EZ, PIOLITA AMBONG",
+            "voter_name": "IBAÑEZ, PIOLITA AMBONG",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -42775,7 +42776,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 66,
-            "voter_name": "LAS PIÃ‘AS, JAMRA JUMAANI",
+            "voter_name": "LAS PIÑAS, JAMRA JUMAANI",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -43525,7 +43526,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 141,
-            "voter_name": "SABUYA, ENRIQUE ORDOÃ‘O",
+            "voter_name": "SABUYA, ENRIQUE ORDOÑO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -43535,7 +43536,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 142,
-            "voter_name": "SABUYA, EXPECTACION CABUÃ‘AG",
+            "voter_name": "SABUYA, EXPECTACION CABUÑAG",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -43585,7 +43586,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 147,
-            "voter_name": "SABUYA, VIDAL ORDOÃ‘O",
+            "voter_name": "SABUYA, VIDAL ORDOÑO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -43705,7 +43706,7 @@
             "precinct_no": "0038B",
             "municipality_no": "06",
             "voter_no": 159,
-            "voter_name": "SAYON, MARY GRACE IBAÃ‘EZ",
+            "voter_name": "SAYON, MARY GRACE IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -44035,7 +44036,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 1,
-            "voter_name": "ABAÃ‘O, JOHNY SADANG",
+            "voter_name": "ABAÑO, JOHNY SADANG",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -44095,7 +44096,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 7,
-            "voter_name": "AGUILAR, MARK HUZEN IBAÃ‘EZ",
+            "voter_name": "AGUILAR, MARK HUZEN IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -44445,7 +44446,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 42,
-            "voter_name": "BERAÃ‘A, ELIZABETH CABASAL",
+            "voter_name": "BERAÑA, ELIZABETH CABASAL",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -44455,7 +44456,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 43,
-            "voter_name": "BERAÃ‘A, KIETH MICHELLE CABASAL",
+            "voter_name": "BERAÑA, KIETH MICHELLE CABASAL",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -44465,7 +44466,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 44,
-            "voter_name": "BERAÃ‘A, KRISTINE JOY CABASAL",
+            "voter_name": "BERAÑA, KRISTINE JOY CABASAL",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -44955,7 +44956,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 93,
-            "voter_name": "IBAÃ‘EZ, EDMONDO JR. ABOROT",
+            "voter_name": "IBAÑEZ, EDMONDO JR. ABOROT",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -44965,7 +44966,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 94,
-            "voter_name": "IBAÃ‘EZ, PERLA APLINO",
+            "voter_name": "IBAÑEZ, PERLA APLINO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -45145,7 +45146,7 @@
             "precinct_no": "0038C",
             "municipality_no": "06",
             "voter_no": 112,
-            "voter_name": "LAS PIÃ‘AS, EDSEL GASPE",
+            "voter_name": "LAS PIÑAS, EDSEL GASPE",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -46995,7 +46996,7 @@
             "precinct_no": "0038D",
             "municipality_no": "06",
             "voter_no": 102,
-            "voter_name": "MAHALAN, DINA PEÃ‘AFIEL",
+            "voter_name": "MAHALAN, DINA PEÑAFIEL",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -48245,7 +48246,7 @@
             "precinct_no": "0038E",
             "municipality_no": "06",
             "voter_no": 31,
-            "voter_name": "IBAÃ‘EZ, JEPER APLINO",
+            "voter_name": "IBAÑEZ, JEPER APLINO",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -48255,7 +48256,7 @@
             "precinct_no": "0038E",
             "municipality_no": "06",
             "voter_no": 32,
-            "voter_name": "IÃ‘IGO, SHELLA MAE TUBA",
+            "voter_name": "IÑIGO, SHELLA MAE TUBA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -49405,7 +49406,7 @@
             "precinct_no": "0039A",
             "municipality_no": "06",
             "voter_no": 80,
-            "voter_name": "IBAÃ‘EZ, MARY IRENE ABADINES",
+            "voter_name": "IBAÑEZ, MARY IRENE ABADINES",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -49505,7 +49506,7 @@
             "precinct_no": "0039A",
             "municipality_no": "06",
             "voter_no": 90,
-            "voter_name": "JARDIN, VICKY IBAÃ‘EZ",
+            "voter_name": "JARDIN, VICKY IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -50125,7 +50126,7 @@
             "precinct_no": "0039A",
             "municipality_no": "06",
             "voter_no": 152,
-            "voter_name": "PARANGUE, SHERYL CAÃ‘ARES",
+            "voter_name": "PARANGUE, SHERYL CAÑARES",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -50405,7 +50406,7 @@
             "precinct_no": "0039A",
             "municipality_no": "06",
             "voter_no": 180,
-            "voter_name": "TEJADA, MARY JEAN QUIÃ‘ANOLLA",
+            "voter_name": "TEJADA, MARY JEAN QUIÑANOLLA",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -51105,7 +51106,7 @@
             "precinct_no": "0039B",
             "municipality_no": "06",
             "voter_no": 53,
-            "voter_name": "IBAÃ‘EZ, ELVINA BUNGCOL",
+            "voter_name": "IBAÑEZ, ELVINA BUNGCOL",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -51115,7 +51116,7 @@
             "precinct_no": "0039B",
             "municipality_no": "06",
             "voter_no": 54,
-            "voter_name": "IBAÃ‘EZ, JESSA ABOROT",
+            "voter_name": "IBAÑEZ, JESSA ABOROT",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -52665,7 +52666,7 @@
             "precinct_no": "0040A",
             "municipality_no": "06",
             "voter_no": 56,
-            "voter_name": "JARDIN, EMMANUEL IBAÃ‘EZ",
+            "voter_name": "JARDIN, EMMANUEL IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -52675,7 +52676,7 @@
             "precinct_no": "0040A",
             "municipality_no": "06",
             "voter_no": 57,
-            "voter_name": "JARDIN, ROEL IBAÃ‘EZ",
+            "voter_name": "JARDIN, ROEL IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -52685,7 +52686,7 @@
             "precinct_no": "0040A",
             "municipality_no": "06",
             "voter_no": 58,
-            "voter_name": "JARDIN, SALVADOR IBAÃ‘EZ",
+            "voter_name": "JARDIN, SALVADOR IBAÑEZ",
             "barangay_name": "ARIBUNGOS",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -55275,7 +55276,7 @@
             "precinct_no": "0042A",
             "municipality_no": "06",
             "voter_no": 1,
-            "voter_name": "ABADINES, DAWN DELA PEÃ‘A",
+            "voter_name": "ABADINES, DAWN DELA PEÑA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -56595,7 +56596,7 @@
             "precinct_no": "0042A",
             "municipality_no": "06",
             "voter_no": 133,
-            "voter_name": "NONATO, RICARDO ARSIÃ‘O",
+            "voter_name": "NONATO, RICARDO ARSIÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -57085,7 +57086,7 @@
             "precinct_no": "0042A",
             "municipality_no": "06",
             "voter_no": 182,
-            "voter_name": "YGLORIA, ARIEL ESPAÃ‘OLA",
+            "voter_name": "YGLORIA, ARIEL ESPAÑOLA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -57705,7 +57706,7 @@
             "precinct_no": "0042B",
             "municipality_no": "06",
             "voter_no": 58,
-            "voter_name": "DELA PEÃ‘A, MAILYN PALINGCOD",
+            "voter_name": "DELA PEÑA, MAILYN PALINGCOD",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -58225,7 +58226,7 @@
             "precinct_no": "0042B",
             "municipality_no": "06",
             "voter_no": 110,
-            "voter_name": "NARCISO, GLORY BALEÃ‘A",
+            "voter_name": "NARCISO, GLORY BALEÑA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -58575,7 +58576,7 @@
             "precinct_no": "0042B",
             "municipality_no": "06",
             "voter_no": 145,
-            "voter_name": "TEVES, EL NIÃ‘O VARRON",
+            "voter_name": "TEVES, EL NIÑO VARRON",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -58585,7 +58586,7 @@
             "precinct_no": "0042B",
             "municipality_no": "06",
             "voter_no": 146,
-            "voter_name": "TOLEDO, GWYNETTE BAÃ‘EZ",
+            "voter_name": "TOLEDO, GWYNETTE BAÑEZ",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -59335,7 +59336,7 @@
             "precinct_no": "0043A",
             "municipality_no": "06",
             "voter_no": 66,
-            "voter_name": "CONTADO, NILO LOSAÃ‘ES",
+            "voter_name": "CONTADO, NILO LOSAÑES",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -59605,7 +59606,7 @@
             "precinct_no": "0043A",
             "municipality_no": "06",
             "voter_no": 93,
-            "voter_name": "ESCAÃ‘AN, ALMIDA RAZUL",
+            "voter_name": "ESCAÑAN, ALMIDA RAZUL",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -61195,7 +61196,7 @@
             "precinct_no": "0043B",
             "municipality_no": "06",
             "voter_no": 55,
-            "voter_name": "ESCAÃ‘AN, ADZLYN RAZUL",
+            "voter_name": "ESCAÑAN, ADZLYN RAZUL",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -61645,7 +61646,7 @@
             "precinct_no": "0043B",
             "municipality_no": "06",
             "voter_no": 100,
-            "voter_name": "NUÃ‘EZ, LEAH SACLET",
+            "voter_name": "NUÑEZ, LEAH SACLET",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -61655,7 +61656,7 @@
             "precinct_no": "0043B",
             "municipality_no": "06",
             "voter_no": 101,
-            "voter_name": "NUÃ‘EZ, RONNIE RUBANTE",
+            "voter_name": "NUÑEZ, RONNIE RUBANTE",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -62825,7 +62826,7 @@
             "precinct_no": "0043C",
             "municipality_no": "06",
             "voter_no": 24,
-            "voter_name": "BETAÃ‘O, JOHN BRYAN GABINETE",
+            "voter_name": "BETAÑO, JOHN BRYAN GABINETE",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -63185,7 +63186,7 @@
             "precinct_no": "0043C",
             "municipality_no": "06",
             "voter_no": 60,
-            "voter_name": "ESCAÃ‘AN, NORALYN RAZUL",
+            "voter_name": "ESCAÑAN, NORALYN RAZUL",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -63195,7 +63196,7 @@
             "precinct_no": "0043C",
             "municipality_no": "06",
             "voter_no": 61,
-            "voter_name": "ESCAÃ‘AN, ROMEO MOJELLO",
+            "voter_name": "ESCAÑAN, ROMEO MOJELLO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -63285,7 +63286,7 @@
             "precinct_no": "0043C",
             "municipality_no": "06",
             "voter_no": 70,
-            "voter_name": "FIDEL, RUSSEL PATIÃ‘O",
+            "voter_name": "FIDEL, RUSSEL PATIÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -63565,7 +63566,7 @@
             "precinct_no": "0043C",
             "municipality_no": "06",
             "voter_no": 98,
-            "voter_name": "NARCISO, NICK BALEÃ‘A",
+            "voter_name": "NARCISO, NICK BALEÑA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -64965,7 +64966,7 @@
             "precinct_no": "0044A",
             "municipality_no": "06",
             "voter_no": 99,
-            "voter_name": "DELA PEÃ‘A, JOSEPHINE GARCIA",
+            "voter_name": "DELA PEÑA, JOSEPHINE GARCIA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -64975,7 +64976,7 @@
             "precinct_no": "0044A",
             "municipality_no": "06",
             "voter_no": 100,
-            "voter_name": "DELA PEÃ‘A, SILVINO SR. RAMOS",
+            "voter_name": "DELA PEÑA, SILVINO SR. RAMOS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -64995,7 +64996,7 @@
             "precinct_no": "0044A",
             "municipality_no": "06",
             "voter_no": 102,
-            "voter_name": "DELA RIARTE, RAQUEL MUÃ‘EZ",
+            "voter_name": "DELA RIARTE, RAQUEL MUÑEZ",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -65635,7 +65636,7 @@
             "precinct_no": "0044A",
             "municipality_no": "06",
             "voter_no": 166,
-            "voter_name": "PASTOR, MALENDA BIÃ‘AS",
+            "voter_name": "PASTOR, MALENDA BIÑAS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -65845,7 +65846,7 @@
             "precinct_no": "0044A",
             "municipality_no": "06",
             "voter_no": 187,
-            "voter_name": "TANATE, JEANE ARCAÃ‘O",
+            "voter_name": "TANATE, JEANE ARCAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -66845,7 +66846,7 @@
             "precinct_no": "0044B",
             "municipality_no": "06",
             "voter_no": 89,
-            "voter_name": "MACMAC, LILY SESPEÃ‘E",
+            "voter_name": "MACMAC, LILY SESPEÑE",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -67145,7 +67146,7 @@
             "precinct_no": "0044B",
             "municipality_no": "06",
             "voter_no": 119,
-            "voter_name": "OIRA, RUTHIE JULLIENNE ARCAÃ‘O",
+            "voter_name": "OIRA, RUTHIE JULLIENNE ARCAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -67205,7 +67206,7 @@
             "precinct_no": "0044B",
             "municipality_no": "06",
             "voter_no": 125,
-            "voter_name": "ORFANEL, BENJAMIN GEÃ‘UZO",
+            "voter_name": "ORFANEL, BENJAMIN GEÑUZO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -68585,7 +68586,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 64,
-            "voter_name": "DELA PEÃ‘A, EMIL JOSHUA GARCIA",
+            "voter_name": "DELA PEÑA, EMIL JOSHUA GARCIA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -68595,7 +68596,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 65,
-            "voter_name": "DELA PEÃ‘A, JOE BENEDICK GARCIA",
+            "voter_name": "DELA PEÑA, JOE BENEDICK GARCIA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -68605,7 +68606,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 66,
-            "voter_name": "DELA PEÃ‘A, JOEY ALBERT GARCIA",
+            "voter_name": "DELA PEÑA, JOEY ALBERT GARCIA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -68615,7 +68616,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 67,
-            "voter_name": "DELA PEÃ‘A, SILVINO JR. GARCIA",
+            "voter_name": "DELA PEÑA, SILVINO JR. GARCIA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -68625,7 +68626,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 68,
-            "voter_name": "DELA RIARTE JR., ERASMO MUÃ‘EZ",
+            "voter_name": "DELA RIARTE JR., ERASMO MUÑEZ",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -68815,7 +68816,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 87,
-            "voter_name": "GARCIA, TOMAS PEÃ‘OSO",
+            "voter_name": "GARCIA, TOMAS PEÑOSO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -69325,7 +69326,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 138,
-            "voter_name": "OZEÃ‘A, ELVIRA TALAPTAP",
+            "voter_name": "OZEÑA, ELVIRA TALAPTAP",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -69335,7 +69336,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 139,
-            "voter_name": "OZEÃ‘A, MARK ANTHONY VACIRA",
+            "voter_name": "OZEÑA, MARK ANTHONY VACIRA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -69655,7 +69656,7 @@
             "precinct_no": "0044C",
             "municipality_no": "06",
             "voter_no": 171,
-            "voter_name": "SESPEÃ‘E, MORITO LAMPICAN",
+            "voter_name": "SESPEÑE, MORITO LAMPICAN",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -70125,7 +70126,7 @@
             "precinct_no": "0044D",
             "municipality_no": "06",
             "voter_no": 18,
-            "voter_name": "BAÃ‘EZ, RAYMART DEXTER HAPIN",
+            "voter_name": "BAÑEZ, RAYMART DEXTER HAPIN",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -71395,7 +71396,7 @@
             "precinct_no": "0045A",
             "municipality_no": "06",
             "voter_no": 82,
-            "voter_name": "DELA RIARTE, IRENE MUÃ‘EZ",
+            "voter_name": "DELA RIARTE, IRENE MUÑEZ",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -72345,7 +72346,7 @@
             "precinct_no": "0045A",
             "municipality_no": "06",
             "voter_no": 177,
-            "voter_name": "SESPEÃ‘E, ELMER _",
+            "voter_name": "SESPEÑE, ELMER _",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -72355,7 +72356,7 @@
             "precinct_no": "0045A",
             "municipality_no": "06",
             "voter_no": 178,
-            "voter_name": "SESPEÃ‘E, PLACIDA LAMPICAN",
+            "voter_name": "SESPEÑE, PLACIDA LAMPICAN",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -72685,7 +72686,7 @@
             "precinct_no": "0045B",
             "municipality_no": "06",
             "voter_no": 15,
-            "voter_name": "ARCAÃ‘O, JONATHAN RELON",
+            "voter_name": "ARCAÑO, JONATHAN RELON",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -72695,7 +72696,7 @@
             "precinct_no": "0045B",
             "municipality_no": "06",
             "voter_no": 16,
-            "voter_name": "ARCAÃ‘O, REMEDIOS GAPASIN",
+            "voter_name": "ARCAÑO, REMEDIOS GAPASIN",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -73305,7 +73306,7 @@
             "precinct_no": "0045B",
             "municipality_no": "06",
             "voter_no": 77,
-            "voter_name": "IBAÃ‘EZ, ROSALYN USOP",
+            "voter_name": "IBAÑEZ, ROSALYN USOP",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -75485,7 +75486,7 @@
             "precinct_no": "0046A",
             "municipality_no": "06",
             "voter_no": 9,
-            "voter_name": "ABADINES, JHON PETER DELA PEÃ‘A",
+            "voter_name": "ABADINES, JHON PETER DELA PEÑA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -75515,7 +75516,7 @@
             "precinct_no": "0046A",
             "municipality_no": "06",
             "voter_no": 12,
-            "voter_name": "ABADINES, JOYLYN DELA PEÃ‘A",
+            "voter_name": "ABADINES, JOYLYN DELA PEÑA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -76145,7 +76146,7 @@
             "precinct_no": "0046A",
             "municipality_no": "06",
             "voter_no": 75,
-            "voter_name": "ESCAÃ‘AN, CLARIZA GONDALA",
+            "voter_name": "ESCAÑAN, CLARIZA GONDALA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -76535,7 +76536,7 @@
             "precinct_no": "0046A",
             "municipality_no": "06",
             "voter_no": 114,
-            "voter_name": "MATENCIO, JOEMARK IBAÃ‘EZ",
+            "voter_name": "MATENCIO, JOEMARK IBAÑEZ",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -76725,7 +76726,7 @@
             "precinct_no": "0046A",
             "municipality_no": "06",
             "voter_no": 133,
-            "voter_name": "OZEÃ‘A, CORAZON BASARE",
+            "voter_name": "OZEÑA, CORAZON BASARE",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -77145,7 +77146,7 @@
             "precinct_no": "0046B",
             "municipality_no": "06",
             "voter_no": 6,
-            "voter_name": "ABADINES, MONICA DELA PEÃ‘A",
+            "voter_name": "ABADINES, MONICA DELA PEÑA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -77765,7 +77766,7 @@
             "precinct_no": "0046B",
             "municipality_no": "06",
             "voter_no": 68,
-            "voter_name": "MATENCIO, GEREMAY IBAÃ‘EZ",
+            "voter_name": "MATENCIO, GEREMAY IBAÑEZ",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -77775,7 +77776,7 @@
             "precinct_no": "0046B",
             "municipality_no": "06",
             "voter_no": 69,
-            "voter_name": "MATENCIO, JASPHER IBAÃ‘EZ",
+            "voter_name": "MATENCIO, JASPHER IBAÑEZ",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -77855,7 +77856,7 @@
             "precinct_no": "0046B",
             "municipality_no": "06",
             "voter_no": 77,
-            "voter_name": "OZEÃ‘A, RIC JAYSON VACERA",
+            "voter_name": "OZEÑA, RIC JAYSON VACERA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -78275,7 +78276,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 10,
-            "voter_name": "ANTOLINO, GEMAR NUÃ‘ALA",
+            "voter_name": "ANTOLINO, GEMAR NUÑALA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -78325,7 +78326,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 15,
-            "voter_name": "ANTOLINO, NOVELYN NUÃ‘ALA",
+            "voter_name": "ANTOLINO, NOVELYN NUÑALA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -79715,7 +79716,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 154,
-            "voter_name": "SATURNINO, ANGELO TAÃ‘O",
+            "voter_name": "SATURNINO, ANGELO TAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -79735,7 +79736,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 156,
-            "voter_name": "SATURNINO, NIKKI TAÃ‘O",
+            "voter_name": "SATURNINO, NIKKI TAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -79745,7 +79746,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 157,
-            "voter_name": "SATURNINO, SUSAN TAÃ‘O",
+            "voter_name": "SATURNINO, SUSAN TAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -79955,7 +79956,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 178,
-            "voter_name": "TAÃ‘O, FRED ROKERO",
+            "voter_name": "TAÑO, FRED ROKERO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -79965,7 +79966,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 179,
-            "voter_name": "TAÃ‘O, PETRA TOMAS",
+            "voter_name": "TAÑO, PETRA TOMAS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -79975,7 +79976,7 @@
             "precinct_no": "0047A",
             "municipality_no": "06",
             "voter_no": 180,
-            "voter_name": "TAÃ‘O, ROSITA JOMAS",
+            "voter_name": "TAÑO, ROSITA JOMAS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -80305,7 +80306,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 25,
-            "voter_name": "ANTOLINO, JENEMAY NUÃ‘ALA",
+            "voter_name": "ANTOLINO, JENEMAY NUÑALA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -80495,7 +80496,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 44,
-            "voter_name": "BASAÃ‘ES, MILISSA ASMA",
+            "voter_name": "BASAÑES, MILISSA ASMA",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -80535,7 +80536,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 48,
-            "voter_name": "CAJAYON, MARY ROSE ASCAÃ‘O",
+            "voter_name": "CAJAYON, MARY ROSE ASCAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -80655,7 +80656,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 60,
-            "voter_name": "DELA PEÃ‘A, AVEGAIL ECONG",
+            "voter_name": "DELA PEÑA, AVEGAIL ECONG",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -80935,7 +80936,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 88,
-            "voter_name": "IBAÃ‘EZ, HERALD CLEAR BACLAGON",
+            "voter_name": "IBAÑEZ, HERALD CLEAR BACLAGON",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81515,7 +81516,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 146,
-            "voter_name": "SATURNINO, JAMMID TAÃ‘O",
+            "voter_name": "SATURNINO, JAMMID TAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81525,7 +81526,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 147,
-            "voter_name": "SATURNINO, MARICON TAÃ‘O",
+            "voter_name": "SATURNINO, MARICON TAÑO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81675,7 +81676,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 162,
-            "voter_name": "TAÃ‘O, AMELYNE NARMIS",
+            "voter_name": "TAÑO, AMELYNE NARMIS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81685,7 +81686,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 163,
-            "voter_name": "TAÃ‘O, FREDDIE TOMAS",
+            "voter_name": "TAÑO, FREDDIE TOMAS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81695,7 +81696,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 164,
-            "voter_name": "TAÃ‘O, JESUS ROQUERO",
+            "voter_name": "TAÑO, JESUS ROQUERO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81705,7 +81706,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 165,
-            "voter_name": "TAÃ‘O, MARY NARMIS",
+            "voter_name": "TAÑO, MARY NARMIS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81715,7 +81716,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 166,
-            "voter_name": "TAÃ‘O, PERLITA TOMAS",
+            "voter_name": "TAÑO, PERLITA TOMAS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -81725,7 +81726,7 @@
             "precinct_no": "0047B",
             "municipality_no": "06",
             "voter_no": 167,
-            "voter_name": "TAÃ‘O, RUBY TOMAS",
+            "voter_name": "TAÑO, RUBY TOMAS",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -82205,7 +82206,7 @@
             "precinct_no": "0048A",
             "municipality_no": "06",
             "voter_no": 41,
-            "voter_name": "CARDAÃ‘O, GINA CAYAO",
+            "voter_name": "CARDAÑO, GINA CAYAO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -82425,7 +82426,7 @@
             "precinct_no": "0048A",
             "municipality_no": "06",
             "voter_no": 63,
-            "voter_name": "FABIAN, ARSEÃ‘IO JR. PABLO",
+            "voter_name": "FABIAN, ARSEÑIO JR. PABLO",
             "barangay_name": "BARONG-BARONG",
             "municipality_name": "BROOKE'S POINT"
         },
@@ -82931,3 +82932,5 @@
         }
     ]
 
+
+}

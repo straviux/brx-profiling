@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateVoterProfileRequest;
 use App\Http\Resources\VoterProfileResource;
 use App\Models\VoterProfile;
+use App\Models\Voter;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -53,9 +55,22 @@ class VoterProfileController extends Controller
         );
     }
 
-    public function create(): Response
+
+    public function create(Request $request): Response
     {
-        return Inertia::render('Admin/VoterProfiles/Create');
+        $bgy = Voter::distinct()->get('barangay_name')->toArray();
+        // dd($bgy);
+        return Inertia::render('Admin/VoterProfiles/Create', [
+            'barangays' => $bgy,
+            'voters' => Voter::query()
+                ->when(
+                    $request->voter,
+                    function (Builder $builder) use ($request) {
+                        // dd($request->voter);
+                        $builder->where('voter_name', 'like', "%{$request->voter}%");
+                    }
+                )->limit(10)->get()
+        ]);
     }
 
     /**

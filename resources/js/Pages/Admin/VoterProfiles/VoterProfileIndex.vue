@@ -36,7 +36,7 @@ const deleteRole = (voterProfileID) => {
         onSuccess: () => closeModal(),
     });
 };
-console.log(currentVoterPosition);
+// console.log(currentVoterPosition);
 </script>
 
 <template>

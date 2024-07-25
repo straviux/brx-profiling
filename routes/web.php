@@ -39,11 +39,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/roles', RoleController::class);
     Route::resource('/permissions', PermissionController::class);
     Route::get('/votersprofile/position/{position}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
+
     Route::resource('/votersprofile', VoterProfileController::class);
 
     Route::delete('/roles/{role}/permissions/{permission}', RevokePermissionFromRoleController::class)->name('roles.permission.destroy');
 });
 
-Route::get('/initvoters', [VoterController::class, 'initVoters']);
+Route::get('/initvoters/{file}', [VoterController::class, 'initVoters']);
 
 require __DIR__ . '/auth.php';

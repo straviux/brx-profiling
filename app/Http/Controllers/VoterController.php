@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Voter;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Response as InertiaResponse;
 
 class VoterController extends Controller
 {
 
-    public function initVoters()
+    public function initVoters($file)
     {
-        $records = File::json(base_path('storage/app/voters_6.json'));
+        $records = File::json(base_path('storage/app/' . $file));
         // dd($records);
         foreach ($records['voters'] as $record) {
             $voter = new Voter;
@@ -24,6 +26,6 @@ class VoterController extends Controller
             $voter->save();
         }
 
-        return 'voters initiated successfully';
+        return $file . ' initiated successfully';
     }
 }
