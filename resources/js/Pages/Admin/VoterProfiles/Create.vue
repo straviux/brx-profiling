@@ -1,23 +1,33 @@
 <script setup>
+import { onMounted, ref, watch } from "vue";
+import { debounce } from "lodash";
+import { router } from "@inertiajs/vue3";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
-import { onMounted, ref, watch } from "vue";
-import { debounce } from "lodash";
-import { router } from "@inertiajs/vue3";
+import Coordinator from "./Coordinator.vue";
+import { first } from "lodash";
 
 const props = defineProps({
     voters: Object,
+    coordinators: Object,
+    leaders: Object,
+    subleaders: Object,
     barangays: Array,
 });
-const positions = ["Coordinator", "Leader", "Subleader", "Member"];
+const positions = ["COORDINATOR", "LEADER", "SUBLEADER", "MEMBER"];
 
 const barangayOptions = ref([]);
+const coordinator = ref([]);
+const leader = ref([]);
+const subleader = ref([]);
+const voter_name = ref([]);
 const form = useForm({
+    parent_id: "",
     name: "",
     firstname: "",
     lastname: "",
@@ -33,9 +43,46 @@ const form = useForm({
 });
 
 const searchVoterQuery = ref();
+// const searchCoordinatorQuery = ref();
+// const searchLeaderQuery = ref();
+// const searchSubleaderQuery = ref();
+
 const searchVoter = (voter) => {
     searchVoterQuery.value = voter;
 };
+
+// const searchCoordinator = (voter) => {
+//     searchCoordinatorQuery.value = voter;
+// };
+
+// const searchLeader = (voter) => {
+//     searchLeaderQuery.value = voter;
+// };
+
+// const searchSubleader = (voter) => {
+//     searchSubleaderQuery.value = voter;
+// };
+
+const onSelectVoter = (voter) => {
+    // console.log(voter.voter_name.split(","));
+    const lastname = voter.voter_name.split(",")[0];
+    const name = voter.voter_name.split(" ").splice(1);
+    const middlename = name[name.length - 1];
+    const firstname = name.slice(0, -1);
+    form.name = voter.voter_name;
+    form.barangay = voter.barangay_name;
+    form.precinct_no = voter.precinct_no;
+    form.lastname = lastname;
+    form.firstname = firstname.join(" ");
+    form.middlename = middlename;
+    console.log(voter);
+    // console.log(name.length);
+};
+
+const onSelectParent = (c) => {
+    form.parent_id = c?.id;
+};
+
 watch(
     searchVoterQuery,
     debounce(
@@ -48,6 +95,7 @@ watch(
         500
     )
 );
+
 onMounted(() => {
     // console.log(props.barangays);
     barangayOptions.value = props.barangays.map((bgy) => bgy.barangay_name);
@@ -76,12 +124,74 @@ onMounted(() => {
                 class="mt-6 max-w-5xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6"
             >
                 <form @submit.prevent="form.post(route('votersprofile.store'))">
-                    <div class="w-1/2">
+                    <div class="mt-4 flex gap-2">
+                        <div class="w-1/2">
+                            <InputLabel for="position" value="Position" />
+                            <VueMultiselect
+                                v-model="form.position"
+                                :options="positions"
+                                :close-on-select="true"
+                                class="uppercase"
+                                placeholder="Select position"
+                            />
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.position"
+                            />
+                        </div>
+                        <div class="w-1/2" v-if="form.position == 'LEADER'">
+                            <InputLabel for="coordinator" value="Coordinator" />
+                            <VueMultiselect
+                                v-model="coordinator"
+                                @update:model-value="onSelectParent"
+                                :options="props.coordinators"
+                                :close-on-select="true"
+                                label="firstname"
+                                placeholder="Search coordinator"
+                            />
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.coordinator_id"
+                            />
+                        </div>
+                        <div class="w-1/2" v-if="form.position == 'SUBLEADER'">
+                            <InputLabel for="leader" value="Leader" />
+                            <VueMultiselect
+                                v-model="leader"
+                                @update:model-value="onSelectParent"
+                                :options="props.leaders"
+                                :close-on-select="true"
+                                label="firstname"
+                                placeholder="Search Leader"
+                            />
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.position"
+                            />
+                        </div>
+                        <div class="w-1/2" v-if="form.position == 'MEMBER'">
+                            <InputLabel for="subleader" value="Subleader" />
+                            <VueMultiselect
+                                v-model="subleader"
+                                @update:model-value="onSelectParent"
+                                :options="props.subleaders"
+                                :close-on-select="true"
+                                label="firstname"
+                                placeholder="Search subleader"
+                            />
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.position"
+                            />
+                        </div>
+                    </div>
+                    <div class="w-full mt-4">
                         <InputLabel for="voters" value="Voter" />
 
                         <VueMultiselect
-                            v-model="form.name"
+                            v-model="voter_name"
                             @search-change="searchVoter"
+                            @update:model-value="onSelectVoter"
                             :options="props.voters"
                             :close-on-select="true"
                             label="voter_name"
@@ -240,22 +350,6 @@ onMounted(() => {
                             <InputError
                                 class="mt-2"
                                 :message="form.errors.gender"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="mt-4 flex">
-                        <div class="w-1/2">
-                            <InputLabel for="position" value="Position" />
-                            <VueMultiselect
-                                v-model="form.position"
-                                :options="positions"
-                                :close-on-select="true"
-                                placeholder="Select position"
-                            />
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.position"
                             />
                         </div>
                     </div>

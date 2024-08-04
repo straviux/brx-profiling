@@ -69,7 +69,13 @@ class VoterProfileController extends Controller
                         // dd($request->voter);
                         $builder->where('voter_name', 'like', "%{$request->voter}%");
                     }
-                )->limit(10)->get()
+                )->limit(10)->get(),
+            'coordinators' => VoterProfile::query()
+                ->where('position', '=', 'Coordinator')->get(),
+            'leaders' => VoterProfile::query()
+                ->where('position', '=', 'Leader')->get(),
+            'subleaders' => VoterProfile::query()
+                ->where('position', '=', 'Subleader')->get(),
         ]);
     }
 

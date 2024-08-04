@@ -33,15 +33,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'role:admin'])->group(
+    function () {
+        Route::get('/votersprofile/position/{position}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
+
+        Route::resource('/votersprofile', VoterProfileController::class);
+    }
+);
+Route::middleware(['auth', 'role:admin'])->group(
+    function () {
+        Route::resource('/users', UserController::class);
+
+        Route::get('/votersprofile/position/{position}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
+        Route::get('/votersprofile/{id}/members', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showmembers
+        ');
+        Route::resource('/votersprofile', VoterProfileController::class);
+    }
+);
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::resource('/users', UserController::class);
     Route::resource('/roles', RoleController::class);
     Route::resource('/permissions', PermissionController::class);
-    Route::get('/votersprofile/position/{position}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
-
-    Route::resource('/votersprofile', VoterProfileController::class);
-
     Route::delete('/roles/{role}/permissions/{permission}', RevokePermissionFromRoleController::class)->name('roles.permission.destroy');
 });
 
