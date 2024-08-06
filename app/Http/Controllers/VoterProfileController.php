@@ -29,12 +29,16 @@ class VoterProfileController extends Controller
 
     public function showByPosition($position): Response
     {
+        $bgy = Voter::distinct()->get('barangay_name')->toArray();
         return Inertia::render(
             'Admin/VoterProfiles/VoterProfileIndex',
-            ['voterprofiles' => $position !== 'all' ?
-                VoterProfileResource::collection(
-                    VoterProfile::where('position', $position)->with('members')->with('leader')->get()
-                ) : VoterProfileResource::collection(VoterProfile::all())]
+            [
+                'barangays' => $bgy,
+                'voterprofiles' => $position !== 'all' ?
+                    VoterProfileResource::collection(
+                        VoterProfile::where('position', $position)->with('members')->with('leader')->get()
+                    ) : VoterProfileResource::collection(VoterProfile::all())
+            ]
         );
     }
 

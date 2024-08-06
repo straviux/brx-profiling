@@ -172,7 +172,7 @@ import {
                 </div>
             </div>
 
-            <div class="px-6 pt-6 2xl:container">
+            <div class="px-6 pt-6 2xl:container bg-slate-50">
                 <slot />
             </div>
         </div>
