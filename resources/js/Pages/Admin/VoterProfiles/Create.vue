@@ -327,7 +327,7 @@ onMounted(() => {
 
                             <TextInput
                                 id="birthdate"
-                                type="text"
+                                type="date"
                                 class="mt-1 block w-full uppercase"
                                 v-model="form.birthdate"
                             />
@@ -340,13 +340,45 @@ onMounted(() => {
                         <div class="w-1/3">
                             <InputLabel for="gender" value="Gender" />
 
-                            <TextInput
-                                id="gender"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.gender"
-                            />
+                            <div class="flex gap-4 mt-4 ml-4">
+                                <div
+                                    class="flex items-center mb-4 cursor-pointer"
+                                >
+                                    <input
+                                        v-model="form.gender"
+                                        type="radio"
+                                        name="gender"
+                                        value="M"
+                                        class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300 cursor-pointer"
+                                        aria-labelledby="country-option-1"
+                                        aria-describedby="country-option-1"
+                                    />
+                                    <label
+                                        for="country-option-1"
+                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer"
+                                    >
+                                        Male
+                                    </label>
+                                </div>
 
+                                <div class="flex items-center mb-4">
+                                    <input
+                                        v-model="form.gender"
+                                        type="radio"
+                                        name="gender"
+                                        value="F"
+                                        class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300 cursor-pointer"
+                                        aria-labelledby="country-option-2"
+                                        aria-describedby="country-option-2"
+                                    />
+                                    <label
+                                        for="country-option-2"
+                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer"
+                                    >
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
                             <InputError
                                 class="mt-2"
                                 :message="form.errors.gender"

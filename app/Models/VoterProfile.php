@@ -2,11 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use function PHPSTORM_META\map;
 
 class VoterProfile extends Model
 {
@@ -23,11 +20,16 @@ class VoterProfile extends Model
         'gender',
         'remarks',
         'position',
+        'parent_id',
         'barangay',
-        'purok',
-        'parent_id'
+        'purok'
     ];
 
+
+    public function members()
+    {
+        return $this->hasMany(VoterProfile::class, 'parent_id');
+    }
     public function leader()
     {
         return $this->belongsTo(VoterProfile::class, 'parent_id');

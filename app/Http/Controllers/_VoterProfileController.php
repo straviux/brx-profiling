@@ -4,18 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateVoterProfileRequest;
 use App\Http\Resources\VoterProfileResource;
-use App\Models\Voter;
 use App\Models\VoterProfile;
+use App\Models\Voter;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class VoterProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): RedirectResponse
     {
         // $voters = VoterProfile::all();
@@ -27,35 +25,51 @@ class VoterProfileController extends Controller
         return to_route('votersprofile.showposition', 'all');
     }
 
+
     public function showByPosition($position): Response
     {
+
+        // dd($position);
+        $props = [];
+        // if ($position === 'all') {
+        //     $props = ['voterprofiles' => Inertia::lazy(
+        //         fn () =>
+
+        //         VoterProfileResource::collection(VoterProfile::all())
+        //     )];
+        // } else if ($position === 'coordinator') {
+        //     $props = ['coordinator' => Inertia::lazy(
+        //         fn () =>
+
+        //         VoterProfileResource::collection(VoterProfile::all())
+        //     )];
+        // }
+
+
         return Inertia::render(
             'Admin/VoterProfiles/VoterProfileIndex',
             ['voterprofiles' => $position !== 'all' ?
                 VoterProfileResource::collection(
-                    VoterProfile::where('position', $position)->with('members')->with('leader')->get()
+                    VoterProfile::where('position', $position)->get()
                 ) : VoterProfileResource::collection(VoterProfile::all())]
         );
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request): Response
     {
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
-
-        $query = Voter::query();
-
-        if ($request->voter) {
-            $voter = $request->voter;
-            $query->where('voter_name', 'like', "%{$voter}%");
-        }
         // dd($bgy);
         return Inertia::render('Admin/VoterProfiles/Create', [
             'barangays' => $bgy,
-            'voters' => $query->whereNotIn('voter_name', VoterProfile::select('name'))->limit(10)->get(),
+            'voters' => Voter::query()
+                ->when(
+                    $request->voter,
+                    function (Builder $builder) use ($request) {
+                        // dd($request->voter);
+                        $builder->where('voter_name', 'like', "%{$request->voter}%");
+                    }
+                )->whereNotIn('voter_name', VoterProfile::select('name'))->limit(10)->get(),
             'coordinators' => VoterProfile::query()
                 ->where('position', '=', 'Coordinator')->get(),
             'leaders' => VoterProfile::query()
@@ -70,12 +84,15 @@ class VoterProfileController extends Controller
      */
     public function store(CreateVoterProfileRequest $request): RedirectResponse
     {
-
+        // dd($request->input('position.name'));
+        // $request->merge(['position' => $request->input('position.name')]);
+        // dd($request);
         VoterProfile::create($request->validated());
+        // if ($request->has('permissions')) {
+        //     $role->syncPermissions($request->input('permissions.*.name'));
+        // }
         return to_route('votersprofile.index');
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -84,7 +101,7 @@ class VoterProfileController extends Controller
     {
         // dd($id);
         $profile = VoterProfile::find($id);
-        // dd($profile);
+
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
         return Inertia::render('Admin/VoterProfiles/Edit', [
             'barangays' => $bgy,
@@ -92,24 +109,13 @@ class VoterProfileController extends Controller
         ]);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateVoterProfileRequest $request, $id): RedirectResponse
+    public function update(CreateVoterProfileRequest $request, VoterProfile $voterprofile): RedirectResponse
     {
-        // dd($request->validated());
-        $voterprofile = VoterProfile::findOrFail($id);
         $voterprofile->update($request->validated());
 
-        return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return to_route('permissions.index');
     }
 }

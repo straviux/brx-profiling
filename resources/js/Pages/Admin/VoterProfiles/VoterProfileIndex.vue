@@ -10,7 +10,11 @@ import Modal from "@/Components/Modal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TabLink from "@/Components/TabLink.vue";
-import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
+import {
+    MagnifyingGlassIcon,
+    PencilSquareIcon,
+    EyeIcon,
+} from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     voterprofiles: {
@@ -36,7 +40,7 @@ const deleteRole = (voterProfileID) => {
         onSuccess: () => closeModal(),
     });
 };
-// console.log(currentVoterPosition);
+console.log(props.voterprofiles);
 </script>
 
 <template>
@@ -151,7 +155,7 @@ const deleteRole = (voterProfileID) => {
                     >New Profile</Link
                 >
             </div>
-            <div class="mt-6">
+            <div class="mt-6" v-if="currentVoterPosition == 'all'">
                 <Table>
                     <template #header>
                         <TableRow class="border-b">
@@ -186,22 +190,6 @@ const deleteRole = (voterProfileID) => {
                                     >Edit</Link
                                 >
 
-                                <Link
-                                    v-if="currentVoterPosition == 'coordinator'"
-                                    :href="
-                                        route('votersprofile.edit', voter.id)
-                                    "
-                                    class="text-orange-500 hover:text-orange-600"
-                                    >Add Leader</Link
-                                >
-
-                                <!-- <Link
-                                    :href="route('roles.destroy', role.id)"
-                                    class="text-red-500 hover:text-red-600"
-                                    method="DELETE"
-                                    as="button"
-                                    >Delete</Link
-                                > -->
                                 <button
                                     class="text-red-500 hover:text-red-600"
                                     @click="
@@ -251,6 +239,99 @@ const deleteRole = (voterProfileID) => {
                         </TableRow>
                     </template>
                 </Table>
+            </div>
+
+            <div class="mt-6" v-else-if="currentVoterPosition == 'coordinator'">
+                <ul
+                    role="list"
+                    class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                >
+                    <li
+                        class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+                        v-for="(coordinator, index) in voterprofiles"
+                        :key="'coordinator_' + coordinator.id"
+                    >
+                        <div
+                            class="flex w-full items-center justify-between space-x-6 p-6"
+                        >
+                            <div class="flex-1 truncate">
+                                <div class="flex items-center space-x-3">
+                                    <p class="text-gray-700 text-sm">
+                                        {{ index + 1 }}.
+                                    </p>
+                                    <h3
+                                        class="truncate text-sm font-medium text-gray-900"
+                                    >
+                                        {{ coordinator.name }}
+                                    </h3>
+                                </div>
+                                <p
+                                    class="mt-1 ml-6 truncate text-sm text-gray-500"
+                                >
+                                    {{ coordinator.position }}
+                                </p>
+                            </div>
+                            <!-- <img
+                                class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
+                                src="https://qph.cf2.quoracdn.net/main-thumb-554097988-200-xietklpojlcioqxaqgcyykzfxblvoqrb.jpeg"
+                                alt=""
+                            /> -->
+                        </div>
+                        <div class="px-6 py-2">
+                            <h3 class="text-gray-600">Leaders</h3>
+                            <div class="mt-2">
+                                <div class="tree-view text-gray-500 text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li
+                                            class="py-1"
+                                            v-for="(
+                                                leader, i
+                                            ) in coordinator.members"
+                                            :key="'_leader_' + i"
+                                        >
+                                            <div class="flex items-center">
+                                                <span class="font-semibold">{{
+                                                    leader.name
+                                                }}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="-mt-px flex divide-x divide-gray-200">
+                                <div class="flex w-0 flex-1">
+                                    <a
+                                        :href="
+                                            route(
+                                                'votersprofile.edit',
+                                                coordinator.id
+                                            )
+                                        "
+                                        class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                    >
+                                        <PencilSquareIcon
+                                            class="h-5 w-5 text-gray-400"
+                                        />
+                                        Edit
+                                    </a>
+                                </div>
+                                <div class="-ml-px flex w-0 flex-1">
+                                    <a
+                                        href="tel:+1-202-555-0170"
+                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                    >
+                                        <EyeIcon
+                                            class="h-5 w-5 text-gray-400"
+                                        />
+                                        View
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </AdminLayout>
