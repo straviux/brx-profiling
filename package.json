@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@formkit/vue": "^1.6.5",
+        "@headlessui/vue": "^1.7.22",
         "@heroicons/vue": "^2.1.5",
         "@vueuse/core": "^10.11.0",
         "lodash": "^4.17.21",

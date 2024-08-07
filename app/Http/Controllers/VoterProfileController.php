@@ -27,20 +27,23 @@ class VoterProfileController extends Controller
         return to_route('votersprofile.showposition', 'all');
     }
 
-    public function showByPosition($position): Response
+    public function showByPosition($position, $id = null): Response
     {
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
+        $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         return Inertia::render(
             'Admin/VoterProfiles/VoterProfileIndex',
             [
+                'profile' => fn () => $profile,
                 'barangays' => $bgy,
                 'voterprofiles' => $position !== 'all' ?
-                    VoterProfileResource::collection(
+                    fn () => VoterProfileResource::collection(
                         VoterProfile::where('position', $position)->with('members')->with('leader')->get()
                     ) : VoterProfileResource::collection(VoterProfile::all())
             ]
         );
     }
+
 
 
     /**
@@ -106,6 +109,9 @@ class VoterProfileController extends Controller
         $voterprofile = VoterProfile::findOrFail($id);
         $voterprofile->update($request->validated());
 
+        if ($request->has('redirectUrl')) {
+            return redirect($request->redirectUrl);
+        }
         return back();
     }
 

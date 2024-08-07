@@ -16,10 +16,12 @@ import {
     MagnifyingGlassIcon,
     PencilSquareIcon,
     EyeIcon,
-    NumberedListIcon,
 } from "@heroicons/vue/20/solid";
 
+import EditModal from "@/Pages/Admin/VoterProfiles/Modal/EditModal.vue";
+
 const props = defineProps({
+    profile: Object,
     barangays: Array,
     voterprofiles: {
         type: Array,
@@ -48,6 +50,7 @@ const deleteRole = (voterProfileID) => {
 
 onMounted(() => {
     barangayOptions.value = props.barangays.map((bgy) => bgy.barangay_name);
+    console.log(props);
 });
 </script>
 
@@ -450,20 +453,26 @@ onMounted(() => {
                         <div>
                             <div class="-mt-px flex divide-x divide-gray-200">
                                 <div class="flex w-0 flex-1">
-                                    <a
+                                    <Link
                                         :href="
                                             route(
-                                                'votersprofile.edit',
-                                                profile.id
+                                                'votersprofile.showposition',
+                                                {
+                                                    position:
+                                                        currentVoterPosition,
+                                                    id: profile.id,
+                                                }
                                             )
                                         "
+                                        preserve-state
+                                        preserve-scroll
                                         class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                                     >
                                         <PencilSquareIcon
                                             class="h-5 w-5 text-gray-400"
                                         />
                                         Edit
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 <div class="-ml-px flex w-0 flex-1">
@@ -512,6 +521,7 @@ onMounted(() => {
                                     :href="
                                         route('votersprofile.edit', voter.id)
                                     "
+                                    :only="['profile']"
                                     class="text-green-500 hover:text-green-600"
                                     >Edit</Link
                                 >
@@ -565,6 +575,11 @@ onMounted(() => {
                         </TableRow>
                     </template>
                 </Table>
+                <EditModal
+                    :profile="props.profile"
+                    :barangays="barangayOptions"
+                    :position="currentVoterPosition"
+                />
             </div>
         </div>
     </AdminLayout>
@@ -573,12 +588,10 @@ onMounted(() => {
 .multiselect__input {
     min-height: 24px !important;
     font-size: 12px !important;
-    text-transform: capitalize !important;
     border-radius: 8px !important;
 }
 .multiselect__option {
     font-size: 14px !important;
-    text-transform: capitalize !important;
 }
 /* .multiselect__option--highlight {
     background: #0369a1 !important;

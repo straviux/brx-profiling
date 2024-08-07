@@ -43,7 +43,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::resource('/users', UserController::class);
 
-    Route::get('/votersprofile/position/{position}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
+    Route::get('/votersprofile/position/{position}/{id?}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
     // Route::get('/votersprofile/edit/{id}', [VoterProfileController::class, 'edit'])->name('votersprofile.edit');
     // Route::get('/votersprofile/{id}/members', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showmembers');
     Route::resource('/votersprofile', VoterProfileController::class);
