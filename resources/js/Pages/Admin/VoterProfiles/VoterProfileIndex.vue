@@ -1,8 +1,10 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import { debounce } from "lodash";
+import { router } from "@inertiajs/vue3";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { useStorage } from "@vueuse/core";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import Table from "@/Components/Table.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
@@ -33,6 +35,50 @@ const form = useForm({});
 const currentVoterPosition = route().params.position || null;
 const showConfirmDeleteVoterProfileModal = ref(false);
 const modalVoterProfileData = ref({ id: null, name: null });
+
+const filterBarangayQuery = ref();
+
+const searchNameQuery = ref();
+
+// const searchName = (voter) => {
+//     searchNameQuery.value = voter;
+// };
+
+watch(
+    searchNameQuery,
+    debounce(
+        () =>
+            router.get(
+                "",
+                {
+                    searchname: searchNameQuery.value,
+                    filterbarangay: filterBarangayQuery.value?.toLowerCase(),
+                },
+                { preserveState: true, preserveScroll: true, replace: true }
+            ),
+        500
+    )
+);
+
+watch(
+    filterBarangayQuery,
+    debounce(
+        () =>
+            router.get(
+                "",
+                {
+                    searchname: searchNameQuery.value,
+                    filterbarangay: filterBarangayQuery.value?.toLowerCase(),
+                },
+                { preserveState: true, preserveScroll: true, replace: true }
+            ),
+        500
+    )
+);
+
+// watch(props, () => {
+//     console.log(props);
+// });
 
 const confirmDeleteVoterProfile = (profileID, profileName) => {
     showConfirmDeleteVoterProfileModal.value = true;
@@ -159,6 +205,7 @@ onMounted(() => {
                             <input
                                 type="search"
                                 name="leadingIcon"
+                                v-model="searchNameQuery"
                                 id="leadingIcon"
                                 placeholder="Search name"
                                 class="w-full pl-14 pr-4 py-2.5 rounded-xl text-sm text-gray-600 outline-none border border-gray-300 focus:border-cyan-300 transition"
@@ -169,7 +216,7 @@ onMounted(() => {
                     <div class="w-1/2 flex items-center gap-2">
                         <p class="text-gray-600 text-sm">Filter</p>
                         <VueMultiselect
-                            v-model="form.barangay"
+                            v-model="filterBarangayQuery"
                             :options="barangayOptions"
                             :close-on-select="true"
                             placeholder="Select barangay"

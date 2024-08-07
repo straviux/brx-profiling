@@ -200,7 +200,7 @@ onMounted(() => {
 
                         <InputError
                             class="mt-2"
-                            :message="form.errors.barangay"
+                            :message="form.errors.voter_name"
                         />
                     </div>
                     <div class="mt-4 flex justify-between gap-4">
