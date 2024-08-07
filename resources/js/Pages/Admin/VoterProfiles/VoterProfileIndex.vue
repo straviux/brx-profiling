@@ -1,7 +1,8 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import { ref, onMounted } from "vue";
+import { useStorage } from "@vueuse/core";
+import { ref, onMounted, computed } from "vue";
 import Table from "@/Components/Table.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
@@ -25,7 +26,7 @@ const props = defineProps({
     },
 });
 const barangayOptions = ref([]);
-const gridview = ref(false);
+const gridview = useStorage("gridview", false);
 const form = useForm({});
 const currentVoterPosition = route().params.position || null;
 const showConfirmDeleteVoterProfileModal = ref(false);
@@ -48,7 +49,6 @@ const deleteRole = (voterProfileID) => {
 onMounted(() => {
     barangayOptions.value = props.barangays.map((bgy) => bgy.barangay_name);
 });
-console.log(props.voterprofiles);
 </script>
 
 <template>
@@ -174,7 +174,7 @@ console.log(props.voterprofiles);
                     </div>
                 </div>
                 <div
-                    class="flex items-center gap-2 ml-auto"
+                    class="flex items-center gap-2 ml-auto px-2 mr-2"
                     v-if="currentVoterPosition != 'all'"
                 >
                     <label
@@ -191,7 +191,8 @@ console.log(props.voterprofiles);
                             class="peer h-6 w-11 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-slate-800 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-green-300"
                         ></div>
                     </label>
-                    <p class="text-sm text-gray-600">Grid View</p>
+                    <p class="text-xs text-gray-600" v-if="gridview">Grid</p>
+                    <p class="text-xs text-gray-600" v-else>Table</p>
                 </div>
             </div>
             <div class="mt-6 bg-white" v-if="currentVoterPosition == 'all'">
@@ -282,8 +283,9 @@ console.log(props.voterprofiles);
 
             <div class="mt-6" v-else-if="currentVoterPosition != 'all'">
                 <ul
+                    v-if="gridview"
                     role="list"
-                    class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                    class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
                 >
                     <li
                         class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
@@ -479,6 +481,90 @@ console.log(props.voterprofiles);
                         </div>
                     </li>
                 </ul>
+
+                <Table v-else>
+                    <template #header>
+                        <TableRow class="border-b">
+                            <TableHeaderCell>#</TableHeaderCell>
+                            <TableHeaderCell>Name</TableHeaderCell>
+                            <TableHeaderCell>Position</TableHeaderCell>
+                            <TableHeaderCell>Barangay</TableHeaderCell>
+                            <TableHeaderCell>Action</TableHeaderCell>
+                        </TableRow>
+                    </template>
+                    <template #default>
+                        <TableRow
+                            v-for="(voter, index) in voterprofiles"
+                            :key="'voter_' + voter.id"
+                        >
+                            <TableDataCell>{{ index + 1 }}</TableDataCell>
+                            <TableDataCell>{{
+                                voter.lastname +
+                                ", " +
+                                voter.firstname +
+                                " " +
+                                (voter.middlename || "")
+                            }}</TableDataCell>
+                            <TableDataCell>{{ voter.position }}</TableDataCell>
+                            <TableDataCell>{{ voter.barangay }}</TableDataCell>
+                            <TableDataCell class="space-x-6">
+                                <Link
+                                    :href="
+                                        route('votersprofile.edit', voter.id)
+                                    "
+                                    class="text-green-500 hover:text-green-600"
+                                    >Edit</Link
+                                >
+
+                                <button
+                                    class="text-red-500 hover:text-red-600"
+                                    @click="
+                                        confirmDeleteVoterProfile(
+                                            voter.id,
+                                            voter.name
+                                        )
+                                    "
+                                >
+                                    Delete
+                                </button>
+                                <Modal
+                                    maxWidth="lg"
+                                    :show="showConfirmDeleteVoterProfileModal"
+                                    @close="closeModal"
+                                >
+                                    <div class="p-6">
+                                        <h2
+                                            class="text-lg font-semibold text-slate-800"
+                                        >
+                                            Are you sure you want to delete this
+                                            profile?
+                                        </h2>
+                                        <p
+                                            class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold"
+                                        >
+                                            "{{ modalVoterProfileData.name }}"
+                                        </p>
+
+                                        <div class="mt-6 flex space-x-4">
+                                            <DangerButton
+                                                @click="
+                                                    deleteRole(
+                                                        modalVoterProfileData.id
+                                                    )
+                                                "
+                                            >
+                                                Delete</DangerButton
+                                            >
+                                            <SecondaryButton @click="closeModal"
+                                                >Cancel</SecondaryButton
+                                            >
+                                        </div>
+                                    </div>
+                                </Modal>
+                            </TableDataCell>
+                        </TableRow>
+                    </template>
+                </Table>
             </div>
         </div>
     </AdminLayout>

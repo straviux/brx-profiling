@@ -115,11 +115,12 @@ onMounted(() => {
                 <h1 class="text-2xl font-semibold text-indigo-700">
                     Edit Voter Profile
                 </h1>
-                <Link
-                    :href="route('votersprofile.index')"
+                <button
+                    onclick="window.history.back()"
                     class="text-white font-semibold px-3 py-2 bg-indigo-500 hover:bg-indigo-700 rounded"
-                    >Back</Link
                 >
+                    Back
+                </button>
             </div>
             <div
                 class="mt-6 max-w-5xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6"
