@@ -27,25 +27,68 @@ class VoterProfileController extends Controller
         return to_route('votersprofile.showposition', 'all');
     }
 
-    public function showByPosition($position, $id = null): Response
+    public function showByPosition($position, $id = null, $downline = false): Response
     {
 
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         $name = app()->request['searchname'];
         $barangay = app()->request['filterbarangay'];
+        $precinct = app()->request['filterprecinct'];
+
         return Inertia::render(
             'Admin/VoterProfiles/VoterProfileIndex',
             [
-                'profile' => fn () => $profile,
+                'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct],
+                // 'editdownline' => app()->request['editdownline'],
+                'profile' => fn() => $profile,
+                'downline' => fn() => $downline,
                 'barangays' => $bgy,
-
+                'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
                 'voterprofiles' => $position !== 'all' ?
                     VoterProfileResource::collection(
-                        VoterProfile::where('position', $position)->where('name', 'LIKE', "%{$name}%")->where('barangay', 'LIKE', "%{$barangay}%")->with('members')->with('leader')->get()
-                    ) : VoterProfileResource::collection(VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")->where('name', 'LIKE', "%{$name}%")->get())
+                        VoterProfile::where('position', $position)->where('name', 'LIKE', "%{$name}%")->where('barangay', 'LIKE', "%{$barangay}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
+                            ->with('members')->with('leader')->get()
+                    ) : VoterProfileResource::collection(VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")->where('name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")->get()),
+                'urlPrev'    => function () {
+                    if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
+                        return url()->previous();
+                    } else {
+                        return 'empty'; // used in javascript to disable back button behavior
+                    }
+                },
             ]
         );
+    }
+
+    public function showDownline($id = null): Response
+    {
+
+        $bgy = Voter::distinct()->get('barangay_name')->toArray();
+        $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
+        $name = app()->request['searchname'];
+        $barangay = app()->request['filterbarangay'];
+        $precinct = app()->request['filterprecinct'];
+
+        return Inertia::render(
+            'Admin/VoterProfiles/VoterProfileIndex',
+            [
+                'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct],
+                // 'editdownline' => app()->request['editdownline'],
+                'profile' => fn() => $profile,
+                'barangays' => $bgy,
+                'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
+            ]
+        );
+    }
+
+    public function viewProfile($id = null): Response
+    {
+
+        $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
+        return Inertia::render('Admin/VoterProfiles/ViewProfile', [
+            'profile' => $profile
+        ]);
     }
 
 

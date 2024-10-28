@@ -1,16 +1,13 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { debounce } from "lodash";
-import { router } from "@inertiajs/vue3";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+
+import { Head, useForm } from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import VueMultiselect from "vue-multiselect";
-import Coordinator from "./Coordinator.vue";
-import { first } from "lodash";
 
 const props = defineProps({
     // voters: Object,

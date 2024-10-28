@@ -12,22 +12,19 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard');
+    });
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -43,7 +40,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::resource('/users', UserController::class);
 
-    Route::get('/votersprofile/position/{position}/{id?}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
+    Route::get('/votersprofile/position/{position}/{id?}/{downline?}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
+
+    Route::get('/votersprofile/view/{id}', [VoterProfileController::class, 'viewProfile'])->name('votersprofile.viewprofile');
     // Route::get('/votersprofile/edit/{id}', [VoterProfileController::class, 'edit'])->name('votersprofile.edit');
     // Route::get('/votersprofile/{id}/members', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showmembers');
     Route::resource('/votersprofile', VoterProfileController::class);

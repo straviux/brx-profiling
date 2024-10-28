@@ -32,6 +32,7 @@ const form = useForm({
     firstname: "",
     lastname: "",
     middlename: "",
+    extension: "",
     barangay: "",
     birthdate: "",
     purok: "",
@@ -204,7 +205,7 @@ onMounted(() => {
                         />
                     </div>
                     <div class="mt-4 flex justify-between gap-4">
-                        <div class="w-1/3">
+                        <div class="w-1/4">
                             <InputLabel for="lastname" value="Last Name" />
 
                             <TextInput
@@ -220,7 +221,7 @@ onMounted(() => {
                                 :message="form.errors.lastname"
                             />
                         </div>
-                        <div class="w-1/3">
+                        <div class="w-1/4">
                             <InputLabel for="firstname" value="First Name" />
 
                             <TextInput
@@ -235,7 +236,7 @@ onMounted(() => {
                                 :message="form.errors.firstname"
                             />
                         </div>
-                        <div class="w-1/3">
+                        <div class="w-1/4">
                             <InputLabel for="middlename" value="Middle Name" />
 
                             <TextInput
@@ -248,6 +249,21 @@ onMounted(() => {
                             <InputError
                                 class="mt-2"
                                 :message="form.errors.middlename"
+                            />
+                        </div>
+                        <div class="w-1/4">
+                            <InputLabel for="extension" value="Extension" />
+
+                            <TextInput
+                                id="extension"
+                                type="text"
+                                class="mt-1 block w-full uppercase"
+                                v-model="form.extension"
+                            />
+
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.extension"
                             />
                         </div>
                     </div>

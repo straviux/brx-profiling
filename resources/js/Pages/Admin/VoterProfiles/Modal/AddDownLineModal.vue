@@ -32,14 +32,18 @@
                                 class="text-xl font-medium leading-6 text-gray-900 flex justify-between"
                             >
                                 Edit Voter's Profile
-                                <button
+                                <Link
                                     class="-mr-4 -mt-4"
-                                    onclick="window.history.back()"
+                                    :href="
+                                        route('votersprofile.showposition', {
+                                            position: props?.position,
+                                        })
+                                    "
                                     preserve-state
                                     preserve-scroll
                                 >
                                     <XCircleIcon class="h-8 w-8 text-red-400" />
-                                </button>
+                                </Link>
                             </DialogTitle>
                             <form
                                 @submit.prevent="
@@ -252,37 +256,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <Draggable
-                                    class="mtl-tree"
-                                    v-model="treeData"
-                                    treeLine
-                                >
-                                    <template #default="{ node, stat }">
-                                        <OpenIcon
-                                            v-if="stat.children.length"
-                                            :open="stat.open"
-                                            class="mtl-mr -ml-4"
-                                            @click.native="
-                                                stat.open = !stat.open
-                                            "
-                                        />
-                                        <input
-                                            class="mtl-checkbox mtl-mr"
-                                            type="checkbox"
-                                            v-model="stat.checked"
-                                        />
-                                        <span class="mtl-ml">{{
-                                            node.name
-                                        }}</span>
-                                    </template>
-                                </Draggable>
-
-                                <button
-                                    class="py-2 px-4 bg-purple-700 text-white"
-                                    @click.prevent="updateHeirarchy"
-                                >
-                                    Update Heirarchy
-                                </button>
 
                                 <div class="flex items-center mt-4 justify-end">
                                     <PrimaryButton
@@ -307,9 +280,6 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { Head, Link, useForm, router } from "@inertiajs/vue3";
-import { BaseTree, Draggable, pro, OpenIcon } from "@he-tree/vue";
-import "@he-tree/vue/style/default.css";
-import "@he-tree/vue/style/material-design.css";
 import {
     TransitionRoot,
     TransitionChild,
@@ -329,25 +299,9 @@ const props = defineProps({
     profile: Object,
     position: String,
     barangays: Array,
-    urlPrev: String,
 });
-const currentVoterPosition = route().params.position || null;
+
 const isOpen = computed(() => !!props.profile);
-const treeData = ref([
-    {
-        id: props.profile?.id || "",
-        name: props.profile?.name || "",
-        children: props.profile?.members || "",
-    },
-]);
-
-const goBack = () => {
-    router.visit(urlPrev);
-};
-
-const updateHeirarchy = () => {
-    console.log(treeData);
-};
 
 const positions = ["COORDINATOR", "LEADER", "SUBLEADER", "MEMBER"];
 
@@ -372,13 +326,6 @@ watch(
     () => props.profile,
     (profile) => {
         if (profile) {
-            treeData.value = [
-                {
-                    id: props.profile?.id || "",
-                    name: props.profile?.name || "",
-                    children: props.profile?.members || "",
-                },
-            ];
             form.parent_id = profile.parent_id || "";
             form.name = profile.name || "";
             form.firstname = profile.firstname || "";

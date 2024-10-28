@@ -87,6 +87,19 @@
                                             class="mt-1 block w-full uppercase"
                                         />
                                     </div>
+                                    <div class="w-1/3">
+                                        <InputLabel
+                                            for="extension"
+                                            value="Extension"
+                                        />
+
+                                        <TextInput
+                                            id="extension"
+                                            v-model="form.extension"
+                                            type="text"
+                                            class="mt-1 block w-full uppercase"
+                                        />
+                                    </div>
                                 </div>
                                 <div class="mt-4 flex gap-2">
                                     <div class="w-1/3 pr-1">
@@ -383,6 +396,7 @@ const form = useForm({
     firstname: "",
     lastname: "",
     middlename: "",
+    extension: "",
     barangay: "",
     birthdate: "",
     purok: "",

@@ -18,27 +18,37 @@ import {
     MagnifyingGlassIcon,
     PencilSquareIcon,
     EyeIcon,
+    UserPlusIcon,
 } from "@heroicons/vue/20/solid";
 
 import EditModal from "@/Pages/Admin/VoterProfiles/Modal/EditModal.vue";
+import AddDownLineModal from "@/Pages/Admin/VoterProfiles/Modal/AddDownLineModal.vue";
 
 const props = defineProps({
+    editdownline: String,
+    q: Object,
     profile: Object,
+    showAddDownlineModal: Boolean,
     barangays: Array,
+    precincts: Array,
     voterprofiles: {
         type: Array,
     },
 });
 const barangayOptions = ref([]);
+const precinctOptions = computed(() =>
+    props.precincts?.map((p) => p.precinct_no)
+);
 const gridview = useStorage("gridview", false);
 const form = useForm({});
 const currentVoterPosition = route().params.position || null;
 const showConfirmDeleteVoterProfileModal = ref(false);
 const modalVoterProfileData = ref({ id: null, name: null });
 
-const filterBarangayQuery = ref();
+const filterBarangayQuery = ref(props.q?.filterbarangay?.toUpperCase());
 
-const searchNameQuery = ref();
+const searchNameQuery = ref(props.q?.searchname?.toUpperCase());
+const precinctNoQuery = ref(props.q?.filterprecinct?.toUpperCase());
 
 // const searchName = (voter) => {
 //     searchNameQuery.value = voter;
@@ -62,23 +72,39 @@ watch(
 
 watch(
     filterBarangayQuery,
-    debounce(
-        () =>
-            router.get(
-                "",
-                {
-                    searchname: searchNameQuery.value,
-                    filterbarangay: filterBarangayQuery.value?.toLowerCase(),
-                },
-                { preserveState: true, preserveScroll: true, replace: true }
-            ),
-        500
-    )
+    debounce(() => {
+        precinctNoQuery.value = null;
+        router.get(
+            "",
+            {
+                searchname: searchNameQuery.value,
+                filterbarangay: filterBarangayQuery.value?.toLowerCase(),
+                filterprecinct: null,
+            },
+            { preserveState: true, preserveScroll: true, replace: true }
+        );
+    }, 500)
+);
+
+watch(
+    precinctNoQuery,
+    debounce(() => {
+        router.get(
+            "",
+            {
+                searchname: searchNameQuery.value,
+                filterbarangay: filterBarangayQuery.value?.toLowerCase(),
+                filterprecinct: precinctNoQuery.value,
+            },
+            { preserveState: true, preserveScroll: true, replace: true }
+        );
+    }, 500)
 );
 
 // watch(props, () => {
-//     console.log(props);
+
 // });
+console.log(props);
 
 const confirmDeleteVoterProfile = (profileID, profileName) => {
     showConfirmDeleteVoterProfileModal.value = true;
@@ -88,7 +114,7 @@ const confirmDeleteVoterProfile = (profileID, profileName) => {
 const closeModal = () => {
     showConfirmDeleteVoterProfileModal.value = false;
 };
-const deleteRole = (voterProfileID) => {
+const deleteProfile = (voterProfileID) => {
     form.delete(route("votersprofile.destroy", voterProfileID), {
         onSuccess: () => closeModal(),
     });
@@ -96,7 +122,7 @@ const deleteRole = (voterProfileID) => {
 
 onMounted(() => {
     barangayOptions.value = props.barangays.map((bgy) => bgy.barangay_name);
-    console.log(props);
+    // console.log(props.precincts);
 });
 </script>
 
@@ -192,8 +218,8 @@ onMounted(() => {
 
             <div class="flex gap-4 mt-12 mb-4">
                 <!--search bar -->
-                <div class="flex gap-4 w-2/3">
-                    <div class="w-1/2">
+                <div class="flex gap-4 w-full">
+                    <div class="w-[400px]">
                         <div
                             class="relative flex items-center text-gray-400 focus-within:text-sky-500"
                         >
@@ -207,19 +233,27 @@ onMounted(() => {
                                 name="leadingIcon"
                                 v-model="searchNameQuery"
                                 id="leadingIcon"
-                                placeholder="Search name"
+                                placeholder="SEARCH NAME"
                                 class="w-full pl-14 pr-4 py-2.5 rounded-xl text-sm text-gray-600 outline-none border border-gray-300 focus:border-cyan-300 transition"
                             />
                         </div>
                     </div>
 
-                    <div class="w-1/2 flex items-center gap-2">
-                        <p class="text-gray-600 text-sm">Filter</p>
+                    <div class="w-[340px] flex items-center">
                         <VueMultiselect
                             v-model="filterBarangayQuery"
                             :options="barangayOptions"
                             :close-on-select="true"
-                            placeholder="Select barangay"
+                            placeholder="SELECT BARANGAY"
+                        />
+                    </div>
+                    <div class="w-[220px] flex items-center">
+                        <VueMultiselect
+                            :disabled="!filterBarangayQuery"
+                            v-model="precinctNoQuery"
+                            :options="precinctOptions"
+                            :close-on-select="true"
+                            placeholder="SELECT PRECINCT #"
                         />
                     </div>
                 </div>
@@ -253,6 +287,7 @@ onMounted(() => {
                             <TableHeaderCell>Name</TableHeaderCell>
                             <TableHeaderCell>Position</TableHeaderCell>
                             <TableHeaderCell>Barangay</TableHeaderCell>
+                            <TableHeaderCell>Precinct #</TableHeaderCell>
                             <TableHeaderCell>Action</TableHeaderCell>
                         </TableRow>
                     </template>
@@ -271,6 +306,9 @@ onMounted(() => {
                             }}</TableDataCell>
                             <TableDataCell>{{ voter.position }}</TableDataCell>
                             <TableDataCell>{{ voter.barangay }}</TableDataCell>
+                            <TableDataCell>{{
+                                voter.precinct_no
+                            }}</TableDataCell>
                             <TableDataCell class="space-x-6">
                                 <Link
                                     :href="
@@ -312,7 +350,7 @@ onMounted(() => {
                                         <div class="mt-6 flex space-x-4">
                                             <DangerButton
                                                 @click="
-                                                    deleteRole(
+                                                    deleteProfile(
                                                         modalVoterProfileData.id
                                                     )
                                                 "
@@ -513,7 +551,7 @@ onMounted(() => {
                                         "
                                         preserve-state
                                         preserve-scroll
-                                        class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                        class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-bl-lg border border-transparent py-4 text-xs font-semibold text-gray-900"
                                     >
                                         <PencilSquareIcon
                                             class="h-5 w-5 text-gray-400"
@@ -521,17 +559,43 @@ onMounted(() => {
                                         Edit
                                     </Link>
                                 </div>
+                                <div class="flex w-0 flex-1">
+                                    <Link
+                                        :href="
+                                            route(
+                                                'votersprofile.showposition',
+                                                {
+                                                    position:
+                                                        currentVoterPosition,
+                                                    id: profile.id,
+                                                }
+                                            )
+                                        "
+                                        preserve-state
+                                        preserve-scroll
+                                        class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-bl-lg border border-transparent py-4 text-xs font-semibold text-gray-900"
+                                    >
+                                        <UserPlusIcon
+                                            class="h-5 w-5 text-gray-400"
+                                        />
+                                        Downline
+                                    </Link>
+                                </div>
 
                                 <div class="-ml-px flex w-0 flex-1">
-                                    <a
-                                        href="tel:+1-202-555-0170"
-                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                    <Link
+                                        :href="
+                                            route('votersprofile.viewprofile', {
+                                                id: profile.id,
+                                            })
+                                        "
+                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-br-lg border border-transparent py-4 text-xs font-semibold text-gray-900"
                                     >
                                         <EyeIcon
                                             class="h-5 w-5 text-gray-400"
                                         />
                                         View
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -605,7 +669,7 @@ onMounted(() => {
                                         <div class="mt-6 flex space-x-4">
                                             <DangerButton
                                                 @click="
-                                                    deleteRole(
+                                                    deleteProfile(
                                                         modalVoterProfileData.id
                                                     )
                                                 "
