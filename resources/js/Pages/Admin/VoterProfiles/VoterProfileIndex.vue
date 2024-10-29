@@ -22,7 +22,7 @@ import {
 } from "@heroicons/vue/20/solid";
 
 import EditModal from "@/Pages/Admin/VoterProfiles/Modal/EditModal.vue";
-import AddDownLineModal from "@/Pages/Admin/VoterProfiles/Modal/AddDownLineModal.vue";
+import EditDownlineModal from "@/Pages/Admin/VoterProfiles/Modal/AddDownLineModal.vue";
 
 const props = defineProps({
     editdownline: String,
@@ -115,6 +115,7 @@ const closeModal = () => {
     showConfirmDeleteVoterProfileModal.value = false;
 };
 const deleteProfile = (voterProfileID) => {
+    // console.log(voterProfileID);
     form.delete(route("votersprofile.destroy", voterProfileID), {
         onSuccess: () => closeModal(),
     });
@@ -687,6 +688,13 @@ onMounted(() => {
                     </template>
                 </Table>
                 <EditModal
+                    v-if="props.profile"
+                    :profile="props.profile"
+                    :barangays="barangayOptions"
+                    :position="currentVoterPosition"
+                />
+                <EditDownlineModal
+                    v-if="props.profile"
                     :profile="props.profile"
                     :barangays="barangayOptions"
                     :position="currentVoterPosition"

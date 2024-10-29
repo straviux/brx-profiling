@@ -252,7 +252,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <Draggable
+                                <!-- <Draggable
                                     class="mtl-tree"
                                     v-model="treeData"
                                     treeLine
@@ -282,7 +282,7 @@
                                     @click.prevent="updateHeirarchy"
                                 >
                                     Update Heirarchy
-                                </button>
+                                </button> -->
 
                                 <div class="flex items-center mt-4 justify-end">
                                     <PrimaryButton
@@ -307,7 +307,7 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { Head, Link, useForm, router } from "@inertiajs/vue3";
-import { BaseTree, Draggable, pro, OpenIcon } from "@he-tree/vue";
+// import { BaseTree, Draggable, pro, OpenIcon } from "@he-tree/vue";
 import "@he-tree/vue/style/default.css";
 import "@he-tree/vue/style/material-design.css";
 import {
@@ -331,23 +331,18 @@ const props = defineProps({
     barangays: Array,
     urlPrev: String,
 });
-const currentVoterPosition = route().params.position || null;
 const isOpen = computed(() => !!props.profile);
-const treeData = ref([
-    {
-        id: props.profile?.id || "",
-        name: props.profile?.name || "",
-        children: props.profile?.members || "",
-    },
-]);
+// const treeData = ref([
+//     {
+//         id: props.profile?.id || "",
+//         name: props.profile?.name || "",
+//         children: props.profile?.members || "",
+//     },
+// ]);
 
-const goBack = () => {
-    router.visit(urlPrev);
-};
-
-const updateHeirarchy = () => {
-    console.log(treeData);
-};
+// const updateHeirarchy = () => {
+//     console.log(treeData);
+// };
 
 const positions = ["COORDINATOR", "LEADER", "SUBLEADER", "MEMBER"];
 

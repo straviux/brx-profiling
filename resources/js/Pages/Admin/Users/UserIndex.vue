@@ -71,13 +71,6 @@ const deleteUser = (userID) => {
                                     >Edit</Link
                                 >
 
-                                <!-- <Link
-                                    :href="route('users.destroy', user.id)"
-                                    class="text-red-500 hover:text-red-600"
-                                    method="DELETE"
-                                    as="button"
-                                    >Delete</Link
-                                > -->
                                 <button
                                     class="text-red-500 hover:text-red-600"
                                     @click="

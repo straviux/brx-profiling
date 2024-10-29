@@ -165,8 +165,10 @@ class VoterProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(VoterProfile $votersprofile)
     {
-        //
+        // dd($voterprofile);
+        $votersprofile->delete();
+        return back();
     }
 }

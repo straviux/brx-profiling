@@ -102,6 +102,14 @@ onMounted(() => {
     barangayOptions.value = props.barangays.map((bgy) => bgy.barangay_name);
     // console.log(barangayOptions.value);
 });
+
+const submit = () => {
+    form.name = `${form.lastname}, ${form.firstname} ${form.middlename}`;
+    form.lastname = form.lastname.toUpperCase();
+    form.firstname = form.firstname.toUpperCase();
+    form.middlename = form.middlename.toUpperCase();
+    form.post(route("votersprofile.store"));
+};
 </script>
 
 <template>
@@ -124,7 +132,8 @@ onMounted(() => {
             <div
                 class="mt-6 max-w-5xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6"
             >
-                <form @submit.prevent="form.post(route('votersprofile.store'))">
+                {{ form.errors }}
+                <form @submit.prevent="submit">
                     <div class="mt-4 flex gap-2">
                         <div class="w-1/2">
                             <InputLabel for="position" value="Position" />
