@@ -14,6 +14,7 @@ import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TabLink from "@/Components/TabLink.vue";
 import VueMultiselect from "vue-multiselect";
+import VueSelect from "vue3-select-component";
 import {
     MagnifyingGlassIcon,
     PencilSquareIcon,
@@ -23,6 +24,7 @@ import {
 
 import EditModal from "@/Pages/Admin/VoterProfiles/Modal/EditModal.vue";
 import EditDownlineModal from "@/Pages/Admin/VoterProfiles/Modal/AddDownLineModal.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     editdownline: String,
@@ -31,13 +33,14 @@ const props = defineProps({
     showAddDownlineModal: Boolean,
     barangays: Array,
     precincts: Array,
-    voterprofiles: {
-        type: Array,
-    },
+    voterprofiles: [Object, Array],
 });
 const barangayOptions = ref([]);
 const precinctOptions = computed(() =>
-    props.precincts?.map((p) => p.precinct_no)
+    props.precincts?.map((p) => ({
+        label: p.precinct_no,
+        value: p.precinct_no,
+    }))
 );
 const gridview = useStorage("gridview", false);
 const form = useForm({});
@@ -104,7 +107,7 @@ watch(
 // watch(props, () => {
 
 // });
-console.log(props);
+// console.log(props);
 
 const confirmDeleteVoterProfile = (profileID, profileName) => {
     showConfirmDeleteVoterProfileModal.value = true;
@@ -122,7 +125,11 @@ const deleteProfile = (voterProfileID) => {
 };
 
 onMounted(() => {
-    barangayOptions.value = props.barangays.map((bgy) => bgy.barangay_name);
+    // console.log(props.voterprofiles);
+    barangayOptions.value = props.barangays.map((bgy) => ({
+        label: bgy.barangay_name,
+        value: bgy.barangay_name,
+    }));
     // console.log(props.precincts);
 });
 </script>
@@ -235,26 +242,31 @@ onMounted(() => {
                                 v-model="searchNameQuery"
                                 id="leadingIcon"
                                 placeholder="SEARCH NAME"
-                                class="w-full pl-14 pr-4 py-2.5 rounded-xl text-sm text-gray-600 outline-none border border-gray-300 focus:border-cyan-300 transition"
+                                class="w-full pl-14 pr-4 rounded text-sm text-gray-600 outline-none border border-gray-300 focus:border-blue-300 transition"
                             />
                         </div>
                     </div>
 
-                    <div class="w-[340px] flex items-center">
-                        <VueMultiselect
+                    <div class="w-[340px] flex items-center rounded-lg">
+                        <!-- <VueMultiselect
                             v-model="filterBarangayQuery"
                             :options="barangayOptions"
                             :close-on-select="true"
                             placeholder="SELECT BARANGAY"
+                        /> -->
+                        <!-- {{ barangayOptions }} -->
+                        <VueSelect
+                            v-model="filterBarangayQuery"
+                            placeholder="Select Barangay"
+                            :options="barangayOptions"
                         />
                     </div>
                     <div class="w-[220px] flex items-center">
-                        <VueMultiselect
-                            :disabled="!filterBarangayQuery"
+                        <VueSelect
+                            :is-disabled="!filterBarangayQuery"
                             v-model="precinctNoQuery"
                             :options="precinctOptions"
-                            :close-on-select="true"
-                            placeholder="SELECT PRECINCT #"
+                            placeholder="Select Precinct#"
                         />
                     </div>
                 </div>
@@ -281,10 +293,23 @@ onMounted(() => {
                 </div>
             </div>
             <div class="mt-6 bg-white" v-if="currentVoterPosition == 'all'">
-                <Table>
+                <div class="flex flex-wrap items-baseline gap-2 w-[200px] mb-6">
+                    <label for="" class="text-sm">Show results</label>
+                    <select name="" id="" class="py-0 rounded-sm">
+                        <option value="all" selected>all</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <Table class="border-collapse border border-slate-400">
                     <template #header>
-                        <TableRow class="border-b">
-                            <TableHeaderCell>#</TableHeaderCell>
+                        <TableRow>
+                            <TableHeaderCell class="w-[10px]"
+                                >#</TableHeaderCell
+                            >
                             <TableHeaderCell>Name</TableHeaderCell>
                             <TableHeaderCell>Position</TableHeaderCell>
                             <TableHeaderCell>Barangay</TableHeaderCell>
@@ -294,23 +319,38 @@ onMounted(() => {
                     </template>
                     <template #default>
                         <TableRow
-                            v-for="(voter, index) in voterprofiles"
+                            v-for="(voter, index) in voterprofiles.data"
                             :key="'voter_' + voter.id"
                         >
-                            <TableDataCell>{{ index + 1 }}</TableDataCell>
-                            <TableDataCell>{{
-                                voter.lastname +
-                                ", " +
-                                voter.firstname +
-                                " " +
-                                (voter.middlename || "")
-                            }}</TableDataCell>
-                            <TableDataCell>{{ voter.position }}</TableDataCell>
-                            <TableDataCell>{{ voter.barangay }}</TableDataCell>
-                            <TableDataCell>{{
-                                voter.precinct_no
-                            }}</TableDataCell>
-                            <TableDataCell class="space-x-6">
+                            <TableDataCell
+                                class="px-6 w-[10px] border-collapse border-y border-slate-400"
+                                >{{ index + 1 }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{
+                                    voter.lastname +
+                                    ", " +
+                                    voter.firstname +
+                                    " " +
+                                    (voter.middlename || "")
+                                }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{ voter.position }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{ voter.barangay }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{ voter.precinct_no }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="space-x-6 border-collapse border border-slate-400 text-center"
+                            >
                                 <Link
                                     :href="
                                         route('votersprofile.edit', voter.id)
@@ -368,6 +408,8 @@ onMounted(() => {
                         </TableRow>
                     </template>
                 </Table>
+                <!-- {{ voterprofiles }} -->
+                <Pagination class="mt-4" :links="voterprofiles.meta.links" />
             </div>
 
             <div class="mt-6" v-else-if="currentVoterPosition != 'all'">
@@ -378,7 +420,7 @@ onMounted(() => {
                 >
                     <li
                         class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
-                        v-for="(profile, index) in voterprofiles"
+                        v-for="(profile, index) in voterprofiles.data"
                         :key="'profile_' + profile.id"
                     >
                         <div
@@ -603,37 +645,57 @@ onMounted(() => {
                     </li>
                 </ul>
 
-                <Table v-else>
+                <Table class="border-collapse border border-slate-400" v-else>
                     <template #header>
-                        <TableRow class="border-b">
-                            <TableHeaderCell>#</TableHeaderCell>
+                        <TableRow>
+                            <TableHeaderCell class="w-[10px]"
+                                >#</TableHeaderCell
+                            >
                             <TableHeaderCell>Name</TableHeaderCell>
                             <TableHeaderCell>Position</TableHeaderCell>
                             <TableHeaderCell>Barangay</TableHeaderCell>
+                            <TableHeaderCell>Precinct #</TableHeaderCell>
                             <TableHeaderCell>Action</TableHeaderCell>
                         </TableRow>
                     </template>
                     <template #default>
                         <TableRow
-                            v-for="(voter, index) in voterprofiles"
+                            v-for="(voter, index) in voterprofiles.data"
                             :key="'voter_' + voter.id"
                         >
-                            <TableDataCell>{{ index + 1 }}</TableDataCell>
-                            <TableDataCell>{{
-                                voter.lastname +
-                                ", " +
-                                voter.firstname +
-                                " " +
-                                (voter.middlename || "")
-                            }}</TableDataCell>
-                            <TableDataCell>{{ voter.position }}</TableDataCell>
-                            <TableDataCell>{{ voter.barangay }}</TableDataCell>
-                            <TableDataCell class="space-x-6">
+                            <TableDataCell
+                                class="px-6 w-[10px] border-collapse border-y border-slate-400"
+                                >{{ index + 1 }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{
+                                    voter.lastname +
+                                    ", " +
+                                    voter.firstname +
+                                    " " +
+                                    (voter.middlename || "")
+                                }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{ voter.position }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{ voter.barangay }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border border-slate-400 indent-1"
+                                >{{ voter.precinct_no }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="space-x-6 border-collapse border border-slate-400 text-center"
+                            >
                                 <Link
                                     :href="
                                         route('votersprofile.edit', voter.id)
                                     "
-                                    :only="['profile']"
                                     class="text-green-500 hover:text-green-600"
                                     >Edit</Link
                                 >
@@ -687,24 +749,25 @@ onMounted(() => {
                         </TableRow>
                     </template>
                 </Table>
+                <Pagination class="mt-4" :links="voterprofiles.meta.links" />
                 <EditModal
                     v-if="props.profile"
                     :profile="props.profile"
                     :barangays="barangayOptions"
                     :position="currentVoterPosition"
                 />
-                <EditDownlineModal
+                <!-- <EditDownlineModal
                     v-if="props.profile"
                     :profile="props.profile"
                     :barangays="barangayOptions"
                     :position="currentVoterPosition"
-                />
+                /> -->
             </div>
         </div>
     </AdminLayout>
 </template>
-<style>
-.multiselect__input {
+<style scoped>
+/* .multiselect__input {
     min-height: 24px !important;
     font-size: 12px !important;
     border-radius: 8px !important;
@@ -712,11 +775,27 @@ onMounted(() => {
 .multiselect__option {
     font-size: 14px !important;
 }
-/* .multiselect__option--highlight {
-    background: #0369a1 !important;
-} */
+
 .multiselect__input::placeholder {
     text-transform: none;
+} */
+
+:deep(.vue-select input) {
+    padding: 7px 10px;
+}
+:deep(.vue-select input::placeholder) {
+    color: #888;
+}
+:deep(.vue-select .focused .menu-option .focused) {
+    background: #7dd3fc;
+}
+:deep(.vue-select .value-container),
+:deep(.vue-select .indicators-container) {
+    background-color: none;
+}
+:deep(.vue-select .menu-option:hover) {
+    background: #ddd;
 }
 </style>
+
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>

@@ -48,8 +48,12 @@ class VoterProfileController extends Controller
                 'voterprofiles' => $position !== 'all' ?
                     VoterProfileResource::collection(
                         VoterProfile::where('position', $position)->where('name', 'LIKE', "%{$name}%")->where('barangay', 'LIKE', "%{$barangay}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
-                            ->with('members')->with('leader')->get()
-                    ) : VoterProfileResource::collection(VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")->where('name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")->get()),
+                            ->with('members')->with('leader')->paginate(5)->through(function ($voter) {
+                                return $voter;
+                            })
+                    ) : VoterProfileResource::collection(VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")->where('name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")->paginate(5)->through(function ($voter) {
+                        return $voter;
+                    })),
                 'urlPrev'    => function () {
                     if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
                         return url()->previous();

@@ -132,7 +132,7 @@ const submit = () => {
             <div
                 class="mt-6 max-w-5xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6"
             >
-                {{ form.errors }}
+                <!-- {{ form.errors }} -->
                 <form @submit.prevent="submit">
                     <div class="mt-4 flex gap-2">
                         <div class="w-1/2">
