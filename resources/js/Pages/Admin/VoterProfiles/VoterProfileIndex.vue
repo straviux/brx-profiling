@@ -292,7 +292,8 @@ onMounted(() => {
                     <p class="text-xs text-gray-600" v-else>Table</p>
                 </div>
             </div>
-            <div class="mt-6 bg-white" v-if="currentVoterPosition == 'all'">
+
+            <div class="mt-6">
                 <div class="flex flex-wrap items-baseline gap-2 w-[200px] mb-6">
                     <label for="" class="text-sm">Show results</label>
                     <select name="" id="" class="py-0 rounded-sm">
@@ -304,117 +305,8 @@ onMounted(() => {
                         <option value="100">100</option>
                     </select>
                 </div>
-                <Table class="border-collapse border border-slate-400">
-                    <template #header>
-                        <TableRow>
-                            <TableHeaderCell class="w-[10px]"
-                                >#</TableHeaderCell
-                            >
-                            <TableHeaderCell>Name</TableHeaderCell>
-                            <TableHeaderCell>Position</TableHeaderCell>
-                            <TableHeaderCell>Barangay</TableHeaderCell>
-                            <TableHeaderCell>Precinct #</TableHeaderCell>
-                            <TableHeaderCell>Action</TableHeaderCell>
-                        </TableRow>
-                    </template>
-                    <template #default>
-                        <TableRow
-                            v-for="(voter, index) in voterprofiles.data"
-                            :key="'voter_' + voter.id"
-                        >
-                            <TableDataCell
-                                class="px-6 w-[10px] border-collapse border-y border-slate-400"
-                                >{{ index + 1 }}</TableDataCell
-                            >
-                            <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
-                                >{{
-                                    voter.lastname +
-                                    ", " +
-                                    voter.firstname +
-                                    " " +
-                                    (voter.middlename || "")
-                                }}</TableDataCell
-                            >
-                            <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
-                                >{{ voter.position }}</TableDataCell
-                            >
-                            <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
-                                >{{ voter.barangay }}</TableDataCell
-                            >
-                            <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
-                                >{{ voter.precinct_no }}</TableDataCell
-                            >
-                            <TableDataCell
-                                class="space-x-6 border-collapse border border-slate-400 text-center"
-                            >
-                                <Link
-                                    :href="
-                                        route('votersprofile.edit', voter.id)
-                                    "
-                                    class="text-green-500 hover:text-green-600"
-                                    >Edit</Link
-                                >
-
-                                <button
-                                    class="text-red-500 hover:text-red-600"
-                                    @click="
-                                        confirmDeleteVoterProfile(
-                                            voter.id,
-                                            voter.name
-                                        )
-                                    "
-                                >
-                                    Delete
-                                </button>
-                                <Modal
-                                    maxWidth="lg"
-                                    :show="showConfirmDeleteVoterProfileModal"
-                                    @close="closeModal"
-                                >
-                                    <div class="p-6">
-                                        <h2
-                                            class="text-lg font-semibold text-slate-800"
-                                        >
-                                            Are you sure you want to delete this
-                                            profile?
-                                        </h2>
-                                        <p
-                                            class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold"
-                                        >
-                                            "{{ modalVoterProfileData.name }}"
-                                        </p>
-
-                                        <div class="mt-6 flex space-x-4">
-                                            <DangerButton
-                                                @click="
-                                                    deleteProfile(
-                                                        modalVoterProfileData.id
-                                                    )
-                                                "
-                                            >
-                                                Delete</DangerButton
-                                            >
-                                            <SecondaryButton @click="closeModal"
-                                                >Cancel</SecondaryButton
-                                            >
-                                        </div>
-                                    </div>
-                                </Modal>
-                            </TableDataCell>
-                        </TableRow>
-                    </template>
-                </Table>
-                <!-- {{ voterprofiles }} -->
-                <Pagination class="mt-4" :links="voterprofiles.meta.links" />
-            </div>
-
-            <div class="mt-6" v-else-if="currentVoterPosition != 'all'">
                 <ul
-                    v-if="gridview"
+                    v-if="gridview && currentVoterPosition !== 'all'"
                     role="list"
                     class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
                 >
@@ -664,11 +556,11 @@ onMounted(() => {
                             :key="'voter_' + voter.id"
                         >
                             <TableDataCell
-                                class="px-6 w-[10px] border-collapse border-y border-slate-400"
+                                class="px-6 w-[10px] border-collapse border-t border-slate-400"
                                 >{{ index + 1 }}</TableDataCell
                             >
                             <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
+                                class="border-collapse border-t border-l border-slate-400 indent-1"
                                 >{{
                                     voter.lastname +
                                     ", " +
@@ -678,19 +570,19 @@ onMounted(() => {
                                 }}</TableDataCell
                             >
                             <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
+                                class="border-collapse border-t border-l border-slate-400 indent-1"
                                 >{{ voter.position }}</TableDataCell
                             >
                             <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
+                                class="border-collapse border-t border-l border-slate-400 indent-1"
                                 >{{ voter.barangay }}</TableDataCell
                             >
                             <TableDataCell
-                                class="border-collapse border border-slate-400 indent-1"
+                                class="border-collapse border-t border-l border-slate-400 indent-1"
                                 >{{ voter.precinct_no }}</TableDataCell
                             >
                             <TableDataCell
-                                class="space-x-6 border-collapse border border-slate-400 text-center"
+                                class="space-x-6 border-collapse border-t border-l border-slate-400 text-center"
                             >
                                 <Link
                                     :href="
