@@ -35,11 +35,12 @@ class VoterProfileController extends Controller
         $name = app()->request['searchname'];
         $barangay = app()->request['filterbarangay'];
         $precinct = app()->request['filterprecinct'];
+        $showresults = app()->request['results'] ?? 100;
 
         return Inertia::render(
             'Admin/VoterProfiles/VoterProfileIndex',
             [
-                'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct],
+                'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct, 'results' => $showresults],
                 // 'editdownline' => app()->request['editdownline'],
                 'profile' => fn() => $profile,
                 'downline' => fn() => $downline,
@@ -47,13 +48,24 @@ class VoterProfileController extends Controller
                 'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
                 'voterprofiles' => $position !== 'all' ?
                     VoterProfileResource::collection(
-                        VoterProfile::where('position', $position)->where('name', 'LIKE', "%{$name}%")->where('barangay', 'LIKE', "%{$barangay}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
-                            ->with('members')->with('leader')->paginate(5)->through(function ($voter) {
+                        VoterProfile::where('position', $position)->where('name', 'LIKE', "%{$name}%")
+                            ->where('barangay', 'LIKE', "%{$barangay}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
+                            ->with('members')->with('leader')
+                            ->paginate($showresults)
+                            ->through(function ($voter) {
                                 return $voter;
                             })
-                    ) : VoterProfileResource::collection(VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")->where('name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")->paginate(5)->through(function ($voter) {
-                        return $voter;
-                    })),
+                            ->withQueryString()
+                    ) :
+                    VoterProfileResource::collection(
+                        VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")
+                            ->where('name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
+                            ->paginate($showresults)
+                            ->through(function ($voter) {
+                                return $voter;
+                            })
+                            ->withQueryString()
+                    ),
                 'urlPrev'    => function () {
                     if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
                         return url()->previous();
@@ -73,13 +85,14 @@ class VoterProfileController extends Controller
         $name = app()->request['searchname'];
         $barangay = app()->request['filterbarangay'];
         $precinct = app()->request['filterprecinct'];
-
+        $downline = app()->request['showdownline'];
         return Inertia::render(
             'Admin/VoterProfiles/VoterProfileIndex',
             [
-                'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct],
+                'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct, 'showdownline' => $downline],
                 // 'editdownline' => app()->request['editdownline'],
-                'profile' => fn() => $profile,
+                // 'profile' => fn() => $profile,
+
                 'barangays' => $bgy,
                 'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
             ]
@@ -88,11 +101,25 @@ class VoterProfileController extends Controller
 
     public function viewProfile($id = null): Response
     {
+        $searchname = app()->request['searchname'];
+        $query = Voter::query();
+
+        $query->where('voter_name', 'like', "%{$searchname}%");
 
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         return Inertia::render('Admin/VoterProfiles/ViewProfile', [
-            'profile' => $profile
+            'profile' => $profile,
+            'voters' => $query->whereNotIn('voter_name', VoterProfile::select('name'))->where('precinct_no', $profile->precinct_no)->limit(20)->get(),
+            'searchquery' => $searchname
         ]);
+    }
+
+
+    public function addDownline(CreateVoterProfileRequest $request): RedirectResponse
+    {
+        // dd($request->validated());
+        VoterProfile::create($request->validated());
+        return redirect()->back();
     }
 
 
@@ -173,6 +200,12 @@ class VoterProfileController extends Controller
     {
         // dd($voterprofile);
         $votersprofile->delete();
+        return back();
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        VoterProfile::whereIn('id', $request->ids)->delete();
         return back();
     }
 }

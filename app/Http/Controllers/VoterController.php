@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\VoterResource;
 use Illuminate\Http\Request;
 use App\Models\Voter;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Response as InertiaResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class VoterController extends Controller
 {
@@ -27,5 +28,32 @@ class VoterController extends Controller
         }
 
         return $file . ' initiated successfully';
+    }
+
+    public function findVoter(): Response
+    {
+        $bgy = Voter::distinct()->get('barangay_name')->toArray();
+        $name = app()->request['searchname'];
+        $barangay = app()->request['filterbarangay'];
+        $precinct = app()->request['filterprecinct'];
+        $showresults = app()->request['results'] ?? 100;
+        // if ($request->voter) {
+        //     $voter = $request->voter;
+        //     $query->where('voter_name', 'like', "%{$voter}%");
+        // }
+        // dd($bgy);
+        return Inertia::render('VotersList/VotersListIndex', [
+            'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct, 'results' => $showresults],
+            'barangays' => $bgy,
+            'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
+            'voters' => VoterResource::collection(Voter::where('barangay_name', 'LIKE', "%{$barangay}%")
+                ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
+                ->paginate($showresults)
+                ->through(function ($voter) {
+                    return $voter;
+                })
+                ->withQueryString())
+
+        ]);
     }
 }

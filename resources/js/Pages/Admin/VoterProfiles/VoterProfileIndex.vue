@@ -23,14 +23,15 @@ import {
 } from "@heroicons/vue/20/solid";
 
 import EditModal from "@/Pages/Admin/VoterProfiles/Modal/EditModal.vue";
-import EditDownlineModal from "@/Pages/Admin/VoterProfiles/Modal/AddDownLineModal.vue";
+// import EditDownlineModal from "@/Pages/Admin/VoterProfiles/Modal/EditDownLineModal.vue";
 import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
-    editdownline: String,
+    // editdownline: String,
+    // showdownline: Boolean,
     q: Object,
     profile: Object,
-    showAddDownlineModal: Boolean,
+    // showAddDownlineModal: Boolean,
     barangays: Array,
     precincts: Array,
     voterprofiles: [Object, Array],
@@ -49,13 +50,24 @@ const showConfirmDeleteVoterProfileModal = ref(false);
 const modalVoterProfileData = ref({ id: null, name: null });
 
 const filterBarangayQuery = ref(props.q?.filterbarangay?.toUpperCase());
-
 const searchNameQuery = ref(props.q?.searchname?.toUpperCase());
 const precinctNoQuery = ref(props.q?.filterprecinct?.toUpperCase());
+const showResultCount = ref(props.q?.results);
 
 // const searchName = (voter) => {
 //     searchNameQuery.value = voter;
 // };
+
+watch(
+    showResultCount,
+    debounce(() =>
+        router.get(
+            "",
+            { results: showResultCount.value },
+            { preserveState: true, preserveScroll: true, replace: true }
+        )
+    )
+);
 
 watch(
     searchNameQuery,
@@ -104,10 +116,9 @@ watch(
     }, 500)
 );
 
-// watch(props, () => {
-
-// });
-// console.log(props);
+watch(props, () => {
+    console.log(props);
+});
 
 const confirmDeleteVoterProfile = (profileID, profileName) => {
     showConfirmDeleteVoterProfileModal.value = true;
@@ -142,7 +153,7 @@ onMounted(() => {
 
         <div class="max-w-full mx-auto py-4">
             <div
-                class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 flex justify-center items-center"
+                class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 flex justify-center items-center"
             >
                 <ul class="flex flex-wrap -mb-px">
                     <li class="me-2">
@@ -217,10 +228,15 @@ onMounted(() => {
                         >
                     </li>
                 </ul>
-                <Link
+                <!-- <Link
                     :href="route('votersprofile.create')"
                     class="text-white font-semibold px-3 py-2 bg-sky-500 hover:bg-sky-600 rounded ml-auto shadow-lg"
                     >Add Profile</Link
+                > -->
+                <Link
+                    :href="route('votersprofile.create')"
+                    class="text-emerald-500 underline font-bold px-3 py-2 bg-none rounded ml-auto flex items-center justify-center gap-1 text-xl"
+                    ><UserPlusIcon class="h-6 w-6" />New Profile</Link
                 >
             </div>
 
@@ -240,8 +256,8 @@ onMounted(() => {
                                 type="search"
                                 name="leadingIcon"
                                 v-model="searchNameQuery"
-                                id="leadingIcon"
-                                placeholder="SEARCH NAME"
+                                id="searchName"
+                                placeholder="Search Name"
                                 class="w-full pl-14 pr-4 rounded text-sm text-gray-600 outline-none border border-gray-300 focus:border-blue-300 transition"
                             />
                         </div>
@@ -296,13 +312,18 @@ onMounted(() => {
             <div class="mt-6">
                 <div class="flex flex-wrap items-baseline gap-2 w-[200px] mb-6">
                     <label for="" class="text-sm">Show results</label>
-                    <select name="" id="" class="py-0 rounded-sm">
-                        <option value="all" selected>all</option>
+                    <select
+                        name=""
+                        id=""
+                        class="py-0 rounded-sm"
+                        v-model="showResultCount"
+                    >
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
-                        <option value="100">100</option>
+                        <option selected value="100">100</option>
+                        <option value="200">200</option>
                     </select>
                 </div>
                 <ul
@@ -318,7 +339,7 @@ onMounted(() => {
                         <div
                             class="flex w-full items-start justify-between space-x-6 px-2 py-2.5"
                         >
-                            <p class="text-gray-400 text-xs absolute ml-1 mt-1">
+                            <p class="text-gray-400 text-xs absolute mt-1">
                                 #{{ index + 1 }}
                             </p>
                             <div class="flex-1">
@@ -494,7 +515,7 @@ onMounted(() => {
                                         Edit
                                     </Link>
                                 </div>
-                                <div class="flex w-0 flex-1">
+                                <!-- <div class="flex w-0 flex-1">
                                     <Link
                                         :href="
                                             route(
@@ -503,6 +524,7 @@ onMounted(() => {
                                                     position:
                                                         currentVoterPosition,
                                                     id: profile.id,
+                                                    showdownline: true,
                                                 }
                                             )
                                         "
@@ -515,7 +537,7 @@ onMounted(() => {
                                         />
                                         Downline
                                     </Link>
-                                </div>
+                                </div> -->
 
                                 <div class="-ml-px flex w-0 flex-1">
                                     <Link
@@ -552,6 +574,7 @@ onMounted(() => {
                     </template>
                     <template #default>
                         <TableRow
+                            v-if="voterprofiles.data.length"
                             v-for="(voter, index) in voterprofiles.data"
                             :key="'voter_' + voter.id"
                         >
@@ -603,59 +626,54 @@ onMounted(() => {
                                 >
                                     Delete
                                 </button>
-                                <Modal
-                                    maxWidth="lg"
-                                    :show="showConfirmDeleteVoterProfileModal"
-                                    @close="closeModal"
-                                >
-                                    <div class="p-6">
-                                        <h2
-                                            class="text-lg font-semibold text-slate-800"
-                                        >
-                                            Are you sure you want to delete this
-                                            profile?
-                                        </h2>
-                                        <p
-                                            class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold"
-                                        >
-                                            "{{ modalVoterProfileData.name }}"
-                                        </p>
-
-                                        <div class="mt-6 flex space-x-4">
-                                            <DangerButton
-                                                @click="
-                                                    deleteProfile(
-                                                        modalVoterProfileData.id
-                                                    )
-                                                "
-                                            >
-                                                Delete</DangerButton
-                                            >
-                                            <SecondaryButton @click="closeModal"
-                                                >Cancel</SecondaryButton
-                                            >
-                                        </div>
-                                    </div>
-                                </Modal>
                             </TableDataCell>
                         </TableRow>
+                        <TableRow v-else
+                            ><TableDataCell
+                                class="px-6 py-8 w-[10px] border-collapse border-t border-slate-400 text-center"
+                                colspan="6"
+                                >No data to be displayed</TableDataCell
+                            ></TableRow
+                        >
                     </template>
                 </Table>
                 <Pagination class="mt-4" :links="voterprofiles.meta.links" />
                 <EditModal
-                    v-if="props.profile"
+                    v-if="props.profile && !props.q.showdownline"
                     :profile="props.profile"
                     :barangays="barangayOptions"
                     :position="currentVoterPosition"
                 />
-                <!-- <EditDownlineModal
-                    v-if="props.profile"
-                    :profile="props.profile"
-                    :barangays="barangayOptions"
-                    :position="currentVoterPosition"
-                /> -->
+                <!-- <EditDownlineModal v-if="props.q.showdownline" /> -->
             </div>
         </div>
+        <Modal
+            maxWidth="lg"
+            :show="showConfirmDeleteVoterProfileModal"
+            @close="closeModal"
+        >
+            <div class="p-6">
+                <h2 class="text-lg font-semibold text-slate-800">
+                    Are you sure you want to delete this profile?
+                </h2>
+                <p
+                    class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold"
+                >
+                    "{{ modalVoterProfileData.name }}"
+                </p>
+
+                <div class="mt-6 flex space-x-4">
+                    <DangerButton
+                        @click="deleteProfile(modalVoterProfileData.id)"
+                    >
+                        Delete</DangerButton
+                    >
+                    <SecondaryButton @click="closeModal"
+                        >Cancel</SecondaryButton
+                    >
+                </div>
+            </div>
+        </Modal>
     </AdminLayout>
 </template>
 <style scoped>
@@ -671,12 +689,19 @@ onMounted(() => {
 .multiselect__input::placeholder {
     text-transform: none;
 } */
+#searchName::placeholder {
+    color: #888;
+    font-weight: 400;
+    font-size: 1rem;
+}
 
 :deep(.vue-select input) {
     padding: 7px 10px;
 }
 :deep(.vue-select input::placeholder) {
     color: #888;
+    font-weight: 400;
+    font-size: 1rem;
 }
 :deep(.vue-select .focused .menu-option .focused) {
     background: #7dd3fc;

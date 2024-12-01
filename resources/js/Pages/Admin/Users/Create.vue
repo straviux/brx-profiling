@@ -6,7 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
-
+import { ArrowUturnLeftIcon } from "@heroicons/vue/20/solid";
 const props = defineProps({
     roles: Array,
 });
@@ -37,8 +37,9 @@ const submit = () => {
                 </h1>
                 <Link
                     :href="route('users.index')"
-                    class="text-white font-semibold px-3 py-2 bg-indigo-500 hover:bg-indigo-700 rounded"
-                    >Back</Link
+                    class="text-slate-500 underline font-bold px-3 py-2 bg-none rounded flex items-center justify-center gap-1"
+                    ><ArrowUturnLeftIcon class="h-4 w-4" />
+                    <span>Back</span></Link
                 >
             </div>
             <div

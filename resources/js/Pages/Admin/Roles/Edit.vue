@@ -11,7 +11,7 @@ import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
 import TableDataCell from "@/Components/TableDataCell.vue";
 import { onMounted, watch } from "vue";
-
+import { ArrowUturnLeftIcon } from "@heroicons/vue/20/solid";
 const props = defineProps({
     role: { type: Object, required: true },
     permissions: Array,
@@ -41,8 +41,9 @@ watch(
                 </h1>
                 <Link
                     :href="route('roles.index')"
-                    class="text-white font-semibold px-3 py-2 bg-indigo-500 hover:bg-indigo-700 rounded"
-                    >Back</Link
+                    class="text-slate-500 underline font-bold px-3 py-2 bg-none rounded flex items-center justify-center gap-1"
+                    ><ArrowUturnLeftIcon class="h-4 w-4" />
+                    <span>Back</span></Link
                 >
             </div>
             <div

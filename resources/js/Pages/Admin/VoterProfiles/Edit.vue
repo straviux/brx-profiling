@@ -8,7 +8,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import VueMultiselect from "vue-multiselect";
-
+import { ArrowUturnLeftIcon } from "@heroicons/vue/20/solid";
 const props = defineProps({
     // voters: Object,
     // coordinators: Object,
@@ -114,9 +114,9 @@ onMounted(() => {
                 </h1>
                 <button
                     onclick="window.history.back()"
-                    class="text-white font-semibold px-3 py-2 bg-indigo-500 hover:bg-indigo-700 rounded"
+                    class="text-slate-500 underline font-bold px-3 py-2 bg-none rounded flex items-center justify-center gap-1"
                 >
-                    Back
+                    <ArrowUturnLeftIcon class="h-5 w-5" /> Back
                 </button>
             </div>
             <div

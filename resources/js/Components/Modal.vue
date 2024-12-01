@@ -14,6 +14,10 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    marginTop: {
+        type: String,
+        default: "mt-2",
+    },
 });
 
 const emit = defineEmits(["close"]);
@@ -55,7 +59,17 @@ const maxWidthClass = computed(() => {
         lg: "sm:max-w-lg",
         xl: "sm:max-w-xl",
         "2xl": "sm:max-w-2xl",
+        "4xl": "sm:max-w-4xl",
     }[props.maxWidth];
+});
+
+const marginTopClass = computed(() => {
+    return {
+        sm: "mt-4",
+        md: "mt-16",
+        lg: "mt-24",
+        xl: "mt-40",
+    }[props.marginTop];
 });
 </script>
 
@@ -80,7 +94,9 @@ const maxWidthClass = computed(() => {
                         class="fixed inset-0 transform transition-all"
                         @click="close"
                     >
-                        <div class="absolute inset-0 bg-gray-500 opacity-25" />
+                        <div
+                            class="absolute inset-0 shadow-xl bg-gray-500 opacity-75"
+                        />
                     </div>
                 </Transition>
 
@@ -95,7 +111,7 @@ const maxWidthClass = computed(() => {
                     <div
                         v-show="show"
                         class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
-                        :class="maxWidthClass"
+                        :class="[maxWidthClass, marginTopClass]"
                     >
                         <slot v-if="show" />
                     </div>

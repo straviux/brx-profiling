@@ -18,6 +18,7 @@ import {
     UserGroupIcon,
     CogIcon,
     FingerPrintIcon,
+    ShieldExclamationIcon,
     ArrowRightStartOnRectangleIcon,
 } from "@heroicons/vue/20/solid";
 // import {  } from "@heroicons/vue/20/solid";
@@ -31,14 +32,14 @@ import {
     <div class="w-full h-full">
         <!-- component -->
         <aside
-            class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+            class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-[#2C3639] transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
         >
             <div>
                 <div class="-mx-6 px-6 py-4">
                     <a
                         href="#"
                         title="home"
-                        class="text-2xl font-bold font-mono text-gray-600"
+                        class="text-2xl font-bold font-mono text-white"
                     >
                         <!-- <img
                             src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg"
@@ -54,10 +55,21 @@ import {
                         <SidebarLink
                             :href="route('dashboard')"
                             :active="route().current('dashboard')"
+                            class="text-white"
                         >
                             <Squares2X2Icon class="h-5 w-5" />
 
                             <span class="-mr-1 font-medium">Dashboard</span>
+                        </SidebarLink>
+                    </li>
+                    <li>
+                        <SidebarLink
+                            :href="route('voterslist.index')"
+                            :active="route().current('voterslist.index')"
+                            class="text-white"
+                        >
+                            <FingerPrintIcon class="h-5 w-5" />
+                            <span class="-mr-1 font-medium">Voter's List</span>
                         </SidebarLink>
                     </li>
                     <li>
@@ -67,9 +79,10 @@ import {
                                 route().current('votersprofile.index') ||
                                 route().current('votersprofile.showposition')
                             "
+                            class="text-white"
                         >
                             <UserGroupIcon class="h-5 w-5" />
-                            <span class="-mr-1 font-medium">Voters</span>
+                            <span class="-mr-1 font-medium">Profiling</span>
                         </SidebarLink>
                     </li>
                     <li>
@@ -77,6 +90,7 @@ import {
                             v-if="hasRole('admin')"
                             :href="route('users.index')"
                             :active="route().current('users.index')"
+                            class="text-white"
                         >
                             <UsersIcon class="h-5 w-5" />
                             <span class="-mr-1 font-medium">Users</span>
@@ -90,6 +104,7 @@ import {
                                 route().current('roles.index') ||
                                 route().current('roles.create')
                             "
+                            class="text-white"
                         >
                             <CogIcon class="h-5 w-5" />
                             <span class="-mr-1 font-medium">Roles</span>
@@ -103,8 +118,9 @@ import {
                                 route().current('permissions.index') ||
                                 route().current('permissions.create')
                             "
+                            class="text-white"
                         >
-                            <FingerPrintIcon class="h-5 w-5" />
+                            <ShieldExclamationIcon class="h-5 w-5" />
                             <span class="-mr-1 font-medium">Permisions</span>
                         </SidebarLink>
                     </li>
@@ -115,25 +131,20 @@ import {
                 class="px-6 -mx-6 pt-4 flex justify-between items-center border-t"
             >
                 <Link
-                    class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group hover:text-red-400"
+                    class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-100 group hover:text-red-400"
                     :href="route('logout')"
                     method="post"
                     as="button"
                 >
                     <ArrowRightStartOnRectangleIcon class="h-5 w-5" />
-                    <span class="group-hover:text-red-400">Logout</span>
+                    <span>Logout</span>
                 </Link>
             </div>
         </aside>
         <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
-            <div class="sticky z-10 top-0 h-16 border-b bg-white lg:py-2.5">
-                <div
-                    class="px-6 flex items-center justify-between space-x-4 2xl:container"
-                >
-                    <h5
-                        hidden
-                        class="text-2xl text-gray-600 font-medium lg:block"
-                    >
+            <div class="sticky z-10 top-0 h-16 border-b bg-[#2C3639] lg:py-2.5">
+                <div class="px-6 flex items-center justify-between space-x-4">
+                    <h5 hidden class="text-2xl text-white font-medium lg:block">
                         <slot name="header" />
                     </h5>
                     <button class="w-12 h-16 -mr-2 border-r lg:hidden">
@@ -172,7 +183,7 @@ import {
                 </div>
             </div>
 
-            <div class="px-6 pt-6 2xl:container bg-slate-50">
+            <div class="px-6 pt-6 min-h-[calc(100vh-6rem)]">
                 <slot />
             </div>
         </div>

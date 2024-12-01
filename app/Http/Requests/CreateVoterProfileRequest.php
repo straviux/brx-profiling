@@ -69,7 +69,7 @@ class CreateVoterProfileRequest extends FormRequest
                 'max:255'
             ],
             "gender" => [
-                'required',
+                'nullable',
                 'string',
                 'max:255'
             ],

@@ -5,6 +5,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ArrowUturnLeftIcon } from "@heroicons/vue/20/solid";
 const form = useForm({ name: "" });
 </script>
 
@@ -21,8 +22,8 @@ const form = useForm({ name: "" });
                 </h1>
                 <Link
                     :href="route('permissions.index')"
-                    class="text-white font-semibold px-3 py-2 bg-indigo-500 hover:bg-indigo-700 rounded"
-                    >Back</Link
+                    class="text-slate-500 underline font-bold px-3 py-2 bg-none rounded flex items-center justify-center gap-1"
+                    ><ArrowUturnLeftIcon class="h-5 w-5" /> Back</Link
                 >
             </div>
             <div

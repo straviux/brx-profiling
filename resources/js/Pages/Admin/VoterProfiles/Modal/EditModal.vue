@@ -255,25 +255,35 @@
                                 <!-- <Draggable
                                     class="mtl-tree"
                                     v-model="treeData"
+                                    :indent="60"
                                     treeLine
+                                    :treeLineOffset="34"
+                                    :maxLevel="2"
                                 >
                                     <template #default="{ node, stat }">
-                                        <OpenIcon
-                                            v-if="stat.children.length"
-                                            :open="stat.open"
-                                            class="mtl-mr -ml-4"
-                                            @click.native="
-                                                stat.open = !stat.open
-                                            "
-                                        />
-                                        <input
-                                            class="mtl-checkbox mtl-mr"
-                                            type="checkbox"
-                                            v-model="stat.checked"
-                                        />
-                                        <span class="mtl-ml">{{
-                                            node.name
-                                        }}</span>
+                                        <div
+                                            class="py-3 flex justify-center items-center"
+                                        >
+                                            <OpenIcon
+                                                v-if="stat.children.length"
+                                                :open="stat.open"
+                                                class="mtl-mr -ml-4"
+                                                @click.native="
+                                                    stat.open = !stat.open
+                                                "
+                                            />
+                                            <input
+                                                class="mtl-checkbox mtl-mr"
+                                                type="checkbox"
+                                                v-model="stat.checked"
+                                            />
+                                            <p class="text-xs text-yellow-600">
+                                                [{{ node.position }}]
+                                            </p>
+                                            <p class="mtl-ml">
+                                                {{ node.name }}
+                                            </p>
+                                        </div>
                                     </template>
                                 </Draggable>
 
@@ -308,8 +318,8 @@
 import { ref, computed, watch } from "vue";
 import { Head, Link, useForm, router } from "@inertiajs/vue3";
 // import { BaseTree, Draggable, pro, OpenIcon } from "@he-tree/vue";
-import "@he-tree/vue/style/default.css";
-import "@he-tree/vue/style/material-design.css";
+// import "@he-tree/vue/style/default.css";
+// import "@he-tree/vue/style/material-design.css";
 import {
     TransitionRoot,
     TransitionChild,
@@ -336,13 +346,15 @@ const isOpen = computed(() => !!props.profile);
 //     {
 //         id: props.profile?.id || "",
 //         name: props.profile?.name || "",
+//         position: props.profile?.position || "",
+//         precinct_no: props.profile?.precinct_no || "",
 //         children: props.profile?.members || "",
 //     },
 // ]);
 
-// const updateHeirarchy = () => {
-//     console.log(treeData);
-// };
+const updateHeirarchy = () => {
+    console.log(treeData);
+};
 
 const positions = ["COORDINATOR", "LEADER", "SUBLEADER", "MEMBER"];
 
@@ -367,13 +379,15 @@ watch(
     () => props.profile,
     (profile) => {
         if (profile) {
-            treeData.value = [
-                {
-                    id: props.profile?.id || "",
-                    name: props.profile?.name || "",
-                    children: props.profile?.members || "",
-                },
-            ];
+            // treeData.value = [
+            //     {
+            //         id: props.profile?.id || "",
+            //         name: props.profile?.name || "",
+            //         position: props.profile?.position || "",
+            //         precinct_no: props.profile?.precinct_no || "",
+            //         children: props.profile?.members || "",
+            //     },
+            // ];
             form.parent_id = profile.parent_id || "";
             form.name = profile.name || "";
             form.firstname = profile.firstname || "";

@@ -9,7 +9,7 @@ import TableDataCell from "@/Components/TableDataCell.vue";
 import Modal from "@/Components/Modal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-
+import { SquaresPlusIcon } from "@heroicons/vue/20/solid";
 defineProps(["permissions"]);
 
 const form = useForm({});
@@ -38,46 +38,56 @@ const deletePermission = (permissionID) => {
     <AdminLayout>
         <template #header>Permissions</template>
 
-        <div class="max-w-7xl mx-auto py-4">
+        <div class="max-w-xl mx-auto py-4">
             <div class="flex justify-end">
                 <Link
                     :href="route('permissions.create')"
-                    class="text-white font-semibold px-3 py-2 bg-sky-600 hover:bg-sky-700 rounded"
-                    >New Permission</Link
+                    class="text-emerald-500 underline font-bold px-3 py-2 bg-none rounded flex items-center justify-center gap-1"
+                    ><SquaresPlusIcon class="h-5 w-5" />New Permission</Link
                 >
             </div>
             <div class="mt-6">
-                <Table>
+                <Table class="border-collapse border border-slate-400">
                     <template #header>
                         <TableRow class="border-b">
-                            <TableHeaderCell>#</TableHeaderCell>
-                            <TableHeaderCell>Name</TableHeaderCell>
-                            <TableHeaderCell>Action</TableHeaderCell>
+                            <TableHeaderCell class="-indent-1"
+                                >#</TableHeaderCell
+                            >
+                            <TableHeaderCell class="-indent-2 w-[70%]"
+                                >Role</TableHeaderCell
+                            >
+                            <TableHeaderCell class="-indent-2 w-[25%]"
+                                >Action</TableHeaderCell
+                            >
                         </TableRow>
                     </template>
                     <template #default>
                         <TableRow
                             v-for="(permission, index) in permissions"
-                            :key="'permissions_' + permission.id"
+                            :key="permission.id"
                         >
-                            <TableDataCell>{{ index + 1 }}</TableDataCell>
-                            <TableDataCell>{{ permission.name }}</TableDataCell>
-                            <TableDataCell class="space-x-6">
+                            <TableDataCell
+                                class="px-6 w-[10px] border-collapse border-t border-slate-400 -indent-1"
+                                >{{ index + 1 }}</TableDataCell
+                            >
+                            <TableDataCell
+                                class="border-collapse border-t border-l border-slate-400 indent-4"
+                                >{{ permission.name }}</TableDataCell
+                            >
+
+                            <TableDataCell
+                                class="space-x-6 border-collapse border-t border-l border-slate-400 indent-4"
+                            >
                                 <Link
                                     :href="
                                         route('permissions.edit', permission.id)
                                     "
-                                    class="text-green-500 hover:text-green-600"
+                                    class="text-purple-500 hover:text-purple-600"
                                     >Edit</Link
                                 >
 
                                 <!-- <Link
-                                    :href="
-                                        route(
-                                            'permissions.destroy',
-                                            permission.id
-                                        )
-                                    "
+                                    :href="route('roles.destroy', role.id)"
                                     class="text-red-500 hover:text-red-600"
                                     method="DELETE"
                                     as="button"
@@ -98,35 +108,34 @@ const deletePermission = (permissionID) => {
                         </TableRow>
                     </template>
                 </Table>
-                <Modal
-                    maxWidth="lg"
-                    :show="showConfirmDeletePermissionModal"
-                    @close="closeModal"
-                >
-                    <div class="p-6">
-                        <h2 class="text-lg font-semibold text-slate-800">
-                            Are you sure you want to delete this permission?
-                        </h2>
-                        <p
-                            class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold"
-                        >
-                            "{{ modalPermissionData.name }}"
-                        </p>
-                        <div class="mt-6 flex space-x-4">
-                            <DangerButton
-                                @click="
-                                    deletePermission(modalPermissionData.id)
-                                "
-                            >
-                                Delete</DangerButton
-                            >
-                            <SecondaryButton @click="closeModal"
-                                >Cancel</SecondaryButton
-                            >
-                        </div>
-                    </div>
-                </Modal>
             </div>
         </div>
+        <Modal
+            marginTop="md"
+            maxWidth="lg"
+            :show="showConfirmDeletePermissionModal"
+            @close="closeModal"
+        >
+            <div class="p-6">
+                <h2 class="text-lg font-semibold text-slate-800">
+                    Are you sure you want to delete this permission?
+                </h2>
+                <p
+                    class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold"
+                >
+                    "{{ modalPermissionData.name }}"
+                </p>
+                <div class="mt-6 flex space-x-4">
+                    <DangerButton
+                        @click="deletePermission(modalPermissionData.id)"
+                    >
+                        Delete</DangerButton
+                    >
+                    <SecondaryButton @click="closeModal"
+                        >Cancel</SecondaryButton
+                    >
+                </div>
+            </div>
+        </Modal>
     </AdminLayout>
 </template>
