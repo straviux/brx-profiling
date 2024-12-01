@@ -54,16 +54,36 @@
                             >
                                 <div class="mt-6">
                                     <div class="mt-4">
-                                        <div class="w-1/3 pr-1">
-                                            <InputLabel
-                                                for="position"
-                                                value="Position"
-                                            />
+                                        <div class="w-1/2 pr-1">
+                                            <div
+                                                class="flex gap-4 items-center"
+                                            >
+                                                <InputLabel
+                                                    for="position"
+                                                    value="Position"
+                                                />
+                                                <p
+                                                v-if="profile.members.length>0"
+                                                    class="flex items-center gap-1"
+                                                >
+                                                    <ExclamationCircleIcon
+                                                        class="h-4 w-4 text-gray-500"
+                                                    />
+                                                    <p class="text-gray-500 text-sm"
+                                                        >This profile has dowline. view <Link class="text-blue-500 underline" :href="
+                                            route('votersprofile.viewprofile', {
+                                                id: profile.id,
+                                            })
+                                        ">here</Link></p
+                                                    >
+                                                </p>
+                                            </div>
                                             <VueMultiselect
                                                 v-model="form.position"
                                                 :options="positions"
                                                 :close-on-select="true"
-                                                class="uppercase"
+                                                :disabled="profile.members.length>0"
+                                                class="uppercase mt-1"
                                                 placeholder="Select position"
                                             />
                                             <InputError
@@ -295,20 +315,20 @@
                                 </button> -->
 
                                 <div class="flex items-center mt-4 justify-end">
-                                    <PrimaryButton
+                                    <button
                                         :class="{
                                             'opacity-25': form.processing,
                                         }"
-                                        class="w-32 justify-center"
+                                        class="py-2 w-32 text-white justify-center rounded bg-[rgb(146,81,220)] hover:shadow-lg hover:bg-[rgb(128,71,194)]"
                                         :disabled="form.processing"
                                     >
                                         Update
-                                    </PrimaryButton>
+                                    </button>
                                 </div>
                             </form>
                         </DialogPanel>
                     </TransitionChild>
-                </div>
+   py-4      text-white         </div>
             </div>
         </Dialog>
     </TransitionRoot>
@@ -333,7 +353,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import VueMultiselect from "vue-multiselect";
 
-import { XCircleIcon } from "@heroicons/vue/20/solid";
+import { XCircleIcon, ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     profile: Object,

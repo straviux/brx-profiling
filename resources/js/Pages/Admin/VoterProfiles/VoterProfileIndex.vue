@@ -18,6 +18,7 @@ import VueSelect from "vue3-select-component";
 import {
     MagnifyingGlassIcon,
     PencilSquareIcon,
+    TrashIcon,
     EyeIcon,
     UserPlusIcon,
 } from "@heroicons/vue/20/solid";
@@ -35,6 +36,8 @@ const props = defineProps({
     barangays: Array,
     precincts: Array,
     voterprofiles: [Object, Array],
+    search_count: [String, Number],
+    total_count: [String, Number],
 });
 const barangayOptions = ref([]);
 const precinctOptions = computed(() =>
@@ -309,22 +312,44 @@ onMounted(() => {
                 </div>
             </div>
 
-            <div class="mt-6">
-                <div class="flex flex-wrap items-baseline gap-2 w-[200px] mb-6">
-                    <label for="" class="text-sm">Show results</label>
-                    <select
-                        name=""
-                        id=""
-                        class="py-0 rounded-sm"
-                        v-model="showResultCount"
-                    >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option selected value="100">100</option>
-                        <option value="200">200</option>
-                    </select>
+            <div class="mt-8">
+                <div class="flex justify-between items-baseline gap-2 mb-8">
+                    <div class="flex">
+                        <div class="w-[170px] space-x-2">
+                            <label class="text-sm text-gray-500"
+                                >Show results</label
+                            >
+                            <select
+                                class="py-0 rounded-sm text-gray-500 border-gray-400"
+                                v-model="showResultCount"
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option selected value="100">100</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                        <div class="text-gray-500 italic border-l-2 ml-2 pl-2">
+                            <span class="text-gray-600 font-semibold">
+                                {{ search_count }}
+                            </span>
+                            <span v-if="search_count > 1"> records</span>
+                            <span v-else>record</span> found
+                        </div>
+                        <div class="text-gray-500 italic">
+                            ( from
+                            <span class="text-gray-600 font-semibold">
+                                {{ total_count }}
+                            </span>
+                            total voters)
+                        </div>
+                    </div>
+                    <Pagination
+                        v-if="voterprofiles.data.length > 10"
+                        :links="voterprofiles.meta.links"
+                    />
                 </div>
                 <ul
                     v-if="gridview && currentVoterPosition !== 'all'"
@@ -332,7 +357,7 @@ onMounted(() => {
                     class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
                 >
                     <li
-                        class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+                        class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg"
                         v-for="(profile, index) in voterprofiles.data"
                         :key="'profile_' + profile.id"
                     >
@@ -493,7 +518,9 @@ onMounted(() => {
                         </div>
                         <div>
                             <div class="-mt-px flex divide-x divide-gray-200">
-                                <div class="flex w-0 flex-1">
+                                <div
+                                    class="flex w-0 flex-1 text-blue-400 hover:text-blue-600"
+                                >
                                     <Link
                                         :href="
                                             route(
@@ -507,11 +534,9 @@ onMounted(() => {
                                         "
                                         preserve-state
                                         preserve-scroll
-                                        class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-bl-lg border border-transparent py-4 text-xs font-semibold text-gray-900"
+                                        class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-bl-lg border border-transparent py-4 text-xs font-semibold"
                                     >
-                                        <PencilSquareIcon
-                                            class="h-5 w-5 text-gray-400"
-                                        />
+                                        <PencilSquareIcon class="h-5 w-5" />
                                         Edit
                                     </Link>
                                 </div>
@@ -539,18 +564,18 @@ onMounted(() => {
                                     </Link>
                                 </div> -->
 
-                                <div class="-ml-px flex w-0 flex-1">
+                                <div
+                                    class="-ml-px flex w-0 flex-1 text-purple-500 hover:text-purple-600"
+                                >
                                     <Link
                                         :href="
                                             route('votersprofile.viewprofile', {
                                                 id: profile.id,
                                             })
                                         "
-                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-br-lg border border-transparent py-4 text-xs font-semibold text-gray-900"
+                                        class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-br-lg border border-transparent py-4 text-xs font-semibold"
                                     >
-                                        <EyeIcon
-                                            class="h-5 w-5 text-gray-400"
-                                        />
+                                        <EyeIcon class="h-5 w-5" />
                                         View
                                     </Link>
                                 </div>
@@ -569,7 +594,9 @@ onMounted(() => {
                             <TableHeaderCell>Position</TableHeaderCell>
                             <TableHeaderCell>Barangay</TableHeaderCell>
                             <TableHeaderCell>Precinct #</TableHeaderCell>
-                            <TableHeaderCell>Action</TableHeaderCell>
+                            <TableHeaderCell class="w-[160px]"
+                                >Action</TableHeaderCell
+                            >
                         </TableRow>
                     </template>
                     <template #default>
@@ -577,6 +604,7 @@ onMounted(() => {
                             v-if="voterprofiles.data.length"
                             v-for="(voter, index) in voterprofiles.data"
                             :key="'voter_' + voter.id"
+                            class="hover:bg-gray-200"
                         >
                             <TableDataCell
                                 class="px-6 w-[10px] border-collapse border-t border-slate-400"
@@ -605,27 +633,45 @@ onMounted(() => {
                                 >{{ voter.precinct_no }}</TableDataCell
                             >
                             <TableDataCell
-                                class="space-x-6 border-collapse border-t border-l border-slate-400 text-center"
+                                class="border-collapse border-t border-l border-slate-400"
                             >
-                                <Link
-                                    :href="
-                                        route('votersprofile.edit', voter.id)
-                                    "
-                                    class="text-green-500 hover:text-green-600"
-                                    >Edit</Link
-                                >
+                                <div class="flex space-x-6 justify-center">
+                                    <Link
+                                        :href="
+                                            route(
+                                                'votersprofile.showposition',
+                                                {
+                                                    position:
+                                                        currentVoterPosition,
+                                                    id: voter.id,
+                                                }
+                                            )
+                                        "
+                                        preserve-state
+                                        preserve-scroll
+                                        class="text-blue-400 hover:text-blue-600 flex"
+                                    >
+                                        <PencilSquareIcon
+                                            class="h-5 w-5 text-blue-400"
+                                        />
+                                        Edit
+                                    </Link>
 
-                                <button
-                                    class="text-red-500 hover:text-red-600"
-                                    @click="
-                                        confirmDeleteVoterProfile(
-                                            voter.id,
-                                            voter.name
-                                        )
-                                    "
-                                >
-                                    Delete
-                                </button>
+                                    <button
+                                        class="text-red-500 hover:text-red-600 flex"
+                                        @click="
+                                            confirmDeleteVoterProfile(
+                                                voter.id,
+                                                voter.name
+                                            )
+                                        "
+                                    >
+                                        <TrashIcon
+                                            class="h-5 w-5 text-red-400"
+                                        />
+                                        Delete
+                                    </button>
+                                </div>
                             </TableDataCell>
                         </TableRow>
                         <TableRow v-else
@@ -637,7 +683,46 @@ onMounted(() => {
                         >
                     </template>
                 </Table>
-                <Pagination class="mt-4" :links="voterprofiles.meta.links" />
+                <div
+                    class="flex justify-between items-baseline gap-2 mb-6 mt-8"
+                >
+                    <div class="flex">
+                        <div class="w-[170px] space-x-2">
+                            <label class="text-sm text-gray-500"
+                                >Show results</label
+                            >
+                            <select
+                                class="py-0 rounded-sm text-gray-500 border-gray-400"
+                                v-model="showResultCount"
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option selected value="100">100</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                        <div class="text-gray-500 italic border-l-2 ml-2 pl-2">
+                            <span class="text-gray-600 font-semibold">
+                                {{ search_count }}
+                            </span>
+                            <span v-if="search_count > 1"> records</span>
+                            <span v-else>record</span> found
+                        </div>
+                        <div class="text-gray-500 italic">
+                            ( from
+                            <span class="text-gray-600 font-semibold">
+                                {{ total_count }}
+                            </span>
+                            total voters)
+                        </div>
+                    </div>
+                    <Pagination
+                        v-if="voterprofiles.data.length > 10"
+                        :links="voterprofiles.meta.links"
+                    />
+                </div>
                 <EditModal
                     v-if="props.profile && !props.q.showdownline"
                     :profile="props.profile"

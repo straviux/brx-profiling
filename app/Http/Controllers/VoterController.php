@@ -37,22 +37,22 @@ class VoterController extends Controller
         $barangay = app()->request['filterbarangay'];
         $precinct = app()->request['filterprecinct'];
         $showresults = app()->request['results'] ?? 100;
-        // if ($request->voter) {
-        //     $voter = $request->voter;
-        //     $query->where('voter_name', 'like', "%{$voter}%");
-        // }
-        // dd($bgy);
+        $query = Voter::where('barangay_name', 'LIKE', "%{$barangay}%")
+            ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%");
+
         return Inertia::render('VotersList/VotersListIndex', [
             'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct, 'results' => $showresults],
             'barangays' => $bgy,
             'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
-            'voters' => VoterResource::collection(Voter::where('barangay_name', 'LIKE', "%{$barangay}%")
-                ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
-                ->paginate($showresults)
-                ->through(function ($voter) {
-                    return $voter;
-                })
-                ->withQueryString())
+            'voters' => VoterResource::collection(
+                $query->paginate($showresults)
+                    ->through(function ($voter) {
+                        return $voter;
+                    })
+                    ->withQueryString()
+            ),
+            'search_count' => $query->count(),
+            'total_count' => Voter::count(),
 
         ]);
     }

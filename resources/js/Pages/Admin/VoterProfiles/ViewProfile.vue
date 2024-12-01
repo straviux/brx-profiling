@@ -169,17 +169,8 @@ const addDownline = () => {
             })
         }
     });
-    // console.log(newDownlineform);
 };
 
-onMounted(() => {
-    // console.log(props.profile);
-    // votersOptions.value = props.voters.map((voter) => ({
-    //     label: voter.voter_name,
-    //     value: voter.voter_name,
-    // }));
-    // console.log(props.precincts);
-});
 </script>
 
 <template>
@@ -241,9 +232,10 @@ onMounted(() => {
                     </div>
                 </div>
                 <div
-                    class="w-1/2 px-12 py-6 text-gray-900 border rounded mx-auto shadow mt-12 md:mt-0"
+                    class="w-1/2 pt-12"
                 >
-                    <form @submit.prevent="addDownline">
+                    <div class="px-12 py-8 text-gray-900 border rounded mx-auto shadow mt-16 md:mt-0">
+                        <form @submit.prevent="addDownline">
                         <div class="flex items-center rounded-lg py-2 gap-2">
                             <!-- <VueMultiselect
                             v-model="filterBarangayQuery"
@@ -271,7 +263,7 @@ onMounted(() => {
                                     !newDownline || newDownlineform.processing ||
                                     props.profile.members.length >= 7
                                 "
-                                class="py-4 px-6 bg-emerald-500 rounded-none text-lg text-white flex gap-2 items-center"
+                                class="py-2 px-8 bg-[#5dbea3] hover:bg-[#4bb798] hover:shadow rounded text text-white flex gap-2 items-center"
                             >
                                 ADD <UserPlusIcon class="h-8 w-8" />
                             </button>
@@ -279,6 +271,7 @@ onMounted(() => {
                     </form>
                     <div class="flex justify-between mt-6">
                         <div class="text-gray-400 text-xl">Downline</div>
+                        
                     </div>
                     <div>
                         <div
@@ -309,14 +302,14 @@ onMounted(() => {
 
                     <div class="flex gap-4 mt-12">
                         <button
-                            class="py-1 px-4 bg-purple-700 text-white"
+                            class="py-1 px-4 bg-[#80669d] hover:bg-[#7b5aa0] hover:shadow rounded text-white"
                             @click.prevent="updateHeirarchy"
                         >
                             Transfer Leadership
                         </button>
 
                         <button
-                            class="py-2 px-4 bg-red-500 text-white"
+                            class="py-2 px-4 bg-[#dd7973] hover:bg-[#d76d67] hover:shadow text-white rounded"
                             :class="{
                                     'opacity-25':!selectedMembers.length,
                                 }"
@@ -327,6 +320,7 @@ onMounted(() => {
                         >
                             Remove Selected
                         </button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -420,13 +414,13 @@ onMounted(() => {
 </template>
 <style scoped>
 :deep(.vue-select input) {
-    padding: 16px 12px;
+    padding: 7px 12px;
     font-size: 1.4rem;
 }
 :deep(.vue-select .single-value) {
     font-size: 1.4rem;
     font-weight: 500;
-    padding: 16px 12px;
+    padding: 7px 12px;
     color: #666666;
 }
 :deep(.vue-select input::placeholder) {

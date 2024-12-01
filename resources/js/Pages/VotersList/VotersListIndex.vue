@@ -34,6 +34,8 @@ const props = defineProps({
     barangays: Array,
     precincts: Array,
     voters: [Object, Array],
+    search_count: [String, Number],
+    total_count: [String, Number],
 });
 const barangayOptions = ref([]);
 const precinctOptions = computed(() =>
@@ -163,22 +165,47 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-wrap items-baseline gap-2 w-[200px] mb-6">
-                    <label for="" class="text-sm">Show results</label>
-                    <select
-                        name=""
-                        id=""
-                        class="py-0 rounded-sm"
-                        v-model="showResultCount"
-                    >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option selected value="100">100</option>
-                        <option value="200">200</option>
-                    </select>
+                <div
+                    class="flex justify-between items-baseline gap-2 mb-6 mt-8"
+                >
+                    <div class="flex">
+                        <div class="w-[170px] space-x-2">
+                            <label class="text-sm text-gray-500"
+                                >Show results</label
+                            >
+                            <select
+                                class="py-0 rounded-sm text-gray-500 border-gray-400"
+                                v-model="showResultCount"
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option selected value="100">100</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                        <div class="text-gray-500 italic border-l-2 ml-2 pl-2">
+                            <span class="text-gray-600 font-semibold">
+                                {{ search_count }}
+                            </span>
+                            <span v-if="search_count > 1"> records</span>
+                            <span v-else>record</span> found
+                        </div>
+                        <div class="text-gray-500 italic">
+                            &nbsp;( from
+                            <span class="text-gray-600 font-semibold">
+                                {{ total_count }}
+                            </span>
+                            total voters )
+                        </div>
+                    </div>
+                    <Pagination
+                        v-if="voters.data.length > 10"
+                        :links="voters.meta.links"
+                    />
                 </div>
+
                 <Table class="border-collapse border border-slate-400">
                     <template #header>
                         <TableRow>
@@ -227,7 +254,43 @@ onMounted(() => {
                         >
                     </template>
                 </Table>
-                <Pagination class="mt-4" :links="voters.meta.links" />
+                <div
+                    class="flex justify-between items-baseline gap-2 mb-6 mt-6"
+                >
+                    <div class="flex">
+                        <div class="w-[170px] space-x-2">
+                            <label class="text-sm text-gray-500"
+                                >Show results</label
+                            >
+                            <select
+                                class="py-0 rounded-sm text-gray-500 border-gray-400"
+                                v-model="showResultCount"
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option selected value="100">100</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                        <div class="text-gray-500 italic border-l-2 ml-2 pl-2">
+                            <span class="text-gray-600 font-semibold">
+                                {{ search_count }}
+                            </span>
+                            <span v-if="search_count > 1"> records</span>
+                            <span v-else>record</span> found
+                        </div>
+                        <div class="text-gray-500 italic">
+                            ( from
+                            <span class="text-gray-600 font-semibold">
+                                {{ total_count }}
+                            </span>
+                            total voters)
+                        </div>
+                    </div>
+                    <Pagination :links="voters.meta.links" />
+                </div>
                 <!-- {{ voters }} -->
             </div>
         </div>

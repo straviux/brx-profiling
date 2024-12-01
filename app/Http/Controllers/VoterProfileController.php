@@ -36,7 +36,26 @@ class VoterProfileController extends Controller
         $barangay = app()->request['filterbarangay'];
         $precinct = app()->request['filterprecinct'];
         $showresults = app()->request['results'] ?? 100;
-
+        $voterprofile = $position !== 'all' ?
+            VoterProfileResource::collection(
+                VoterProfile::where('position', $position)->where('name', 'LIKE', "%{$name}%")
+                    ->where('barangay', 'LIKE', "%{$barangay}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
+                    ->with('members')->with('leader')
+                    ->paginate($showresults)
+                    ->through(function ($voter) {
+                        return $voter;
+                    })
+                    ->withQueryString()
+            ) :
+            VoterProfileResource::collection(
+                VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")
+                    ->where('name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
+                    ->paginate($showresults)
+                    ->through(function ($voter) {
+                        return $voter;
+                    })
+                    ->withQueryString()
+            );
         return Inertia::render(
             'Admin/VoterProfiles/VoterProfileIndex',
             [
@@ -46,33 +65,10 @@ class VoterProfileController extends Controller
                 'downline' => fn() => $downline,
                 'barangays' => $bgy,
                 'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
-                'voterprofiles' => $position !== 'all' ?
-                    VoterProfileResource::collection(
-                        VoterProfile::where('position', $position)->where('name', 'LIKE', "%{$name}%")
-                            ->where('barangay', 'LIKE', "%{$barangay}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
-                            ->with('members')->with('leader')
-                            ->paginate($showresults)
-                            ->through(function ($voter) {
-                                return $voter;
-                            })
-                            ->withQueryString()
-                    ) :
-                    VoterProfileResource::collection(
-                        VoterProfile::where('barangay', 'LIKE', "%{$barangay}%")
-                            ->where('name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%")
-                            ->paginate($showresults)
-                            ->through(function ($voter) {
-                                return $voter;
-                            })
-                            ->withQueryString()
-                    ),
-                'urlPrev'    => function () {
-                    if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
-                        return url()->previous();
-                    } else {
-                        return 'empty'; // used in javascript to disable back button behavior
-                    }
-                },
+                'voterprofiles' => $voterprofile,
+                'search_count' => count($voterprofile),
+                'total_count' => VoterProfile::count()
+
             ]
         );
     }
