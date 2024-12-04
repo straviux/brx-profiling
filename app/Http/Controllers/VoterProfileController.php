@@ -125,6 +125,7 @@ class VoterProfileController extends Controller
      */
     public function create(Request $request): Response
     {
+        $this->authorize('create', VoterProfile::class);
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
 
         $query = Voter::query();
@@ -180,6 +181,7 @@ class VoterProfileController extends Controller
     public function update(CreateVoterProfileRequest $request, $id): RedirectResponse
     {
         // dd($request->validated());
+        $this->authorize('update', VoterProfile::class);
         $voterprofile = VoterProfile::findOrFail($id);
         $voterprofile->update($request->validated());
 

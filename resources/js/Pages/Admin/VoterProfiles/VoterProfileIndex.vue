@@ -5,6 +5,7 @@ import { router } from "@inertiajs/vue3";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { useStorage } from "@vueuse/core";
 import { ref, onMounted, computed, watch } from "vue";
+import { usePermission } from "@/composable/permissions";
 import Table from "@/Components/Table.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
@@ -24,9 +25,13 @@ import {
 } from "@heroicons/vue/20/solid";
 
 import EditModal from "@/Pages/Admin/VoterProfiles/Modal/EditModal.vue";
-// import EditDownlineModal from "@/Pages/Admin/VoterProfiles/Modal/EditDownLineModal.vue";
 import Pagination from "@/Components/Pagination.vue";
 
+const { hasPermission } = usePermission();
+const sortColumnBy = (columnName) => {
+    // console.log(sortColumsDirection.value.name);
+    console.log("test");
+};
 const props = defineProps({
     // editdownline: String,
     // showdownline: Boolean,
@@ -80,7 +85,6 @@ watch(
                 "",
                 {
                     searchname: searchNameQuery.value,
-                    filterbarangay: filterBarangayQuery.value?.toLowerCase(),
                 },
                 { preserveState: true, preserveScroll: true, replace: true }
             ),
@@ -95,9 +99,7 @@ watch(
         router.get(
             "",
             {
-                searchname: searchNameQuery.value,
                 filterbarangay: filterBarangayQuery.value?.toLowerCase(),
-                filterprecinct: null,
             },
             { preserveState: true, preserveScroll: true, replace: true }
         );
@@ -110,8 +112,6 @@ watch(
         router.get(
             "",
             {
-                searchname: searchNameQuery.value,
-                filterbarangay: filterBarangayQuery.value?.toLowerCase(),
                 filterprecinct: precinctNoQuery.value,
             },
             { preserveState: true, preserveScroll: true, replace: true }
@@ -237,6 +237,7 @@ onMounted(() => {
                     >Add Profile</Link
                 > -->
                 <Link
+                    v-if="hasPermission('create voterprofile')"
                     :href="route('votersprofile.create')"
                     class="text-emerald-500 underline font-bold px-3 py-2 bg-none rounded ml-auto flex items-center justify-center gap-1 text-xl"
                     ><UserPlusIcon class="h-6 w-6" />New Profile</Link
@@ -312,8 +313,11 @@ onMounted(() => {
                 </div>
             </div>
 
-            <div class="mt-8">
-                <div class="flex justify-between items-baseline gap-2 mb-8">
+            <div class="mt-10">
+                <div
+                    class="flex justify-between items-baseline gap-2 mb-8"
+                    v-if="voterprofiles.data.length > 10"
+                >
                     <div class="flex">
                         <div class="w-[170px] space-x-2">
                             <label class="text-sm text-gray-500"
@@ -336,7 +340,7 @@ onMounted(() => {
                                 {{ search_count }}
                             </span>
                             <span v-if="search_count > 1"> records</span>
-                            <span v-else>record</span> found
+                            <span v-else> record</span> found
                         </div>
                         <div class="text-gray-500 italic">
                             ( from
@@ -346,10 +350,7 @@ onMounted(() => {
                             total voters)
                         </div>
                     </div>
-                    <Pagination
-                        v-if="voterprofiles.data.length > 10"
-                        :links="voterprofiles.meta.links"
-                    />
+                    <Pagination :links="voterprofiles.meta.links" />
                 </div>
                 <ul
                     v-if="gridview && currentVoterPosition !== 'all'"
@@ -590,10 +591,19 @@ onMounted(() => {
                             <TableHeaderCell class="w-[10px]"
                                 >#</TableHeaderCell
                             >
-                            <TableHeaderCell>Name</TableHeaderCell>
-                            <TableHeaderCell>Position</TableHeaderCell>
-                            <TableHeaderCell>Barangay</TableHeaderCell>
-                            <TableHeaderCell>Precinct #</TableHeaderCell>
+                            <TableHeaderCell @click="sortColumnBy('name')"
+                                >Name</TableHeaderCell
+                            >
+                            <TableHeaderCell @click="sortColumnBy('position')"
+                                >Position</TableHeaderCell
+                            >
+                            <TableHeaderCell @click="sortColumnBy('barangay')"
+                                >Barangay</TableHeaderCell
+                            >
+                            <TableHeaderCell
+                                @click="sortColumnBy('precinct_no')"
+                                >Precinct #</TableHeaderCell
+                            >
                             <TableHeaderCell class="w-[160px]"
                                 >Action</TableHeaderCell
                             >
@@ -612,13 +622,15 @@ onMounted(() => {
                             >
                             <TableDataCell
                                 class="border-collapse border-t border-l border-slate-400 indent-1"
-                                >{{
-                                    voter.lastname +
-                                    ", " +
-                                    voter.firstname +
-                                    " " +
-                                    (voter.middlename || "")
-                                }}</TableDataCell
+                                ><div>
+                                    {{
+                                        voter.lastname +
+                                        ", " +
+                                        voter.firstname +
+                                        " " +
+                                        (voter.middlename || "")
+                                    }}
+                                </div></TableDataCell
                             >
                             <TableDataCell
                                 class="border-collapse border-t border-l border-slate-400 indent-1"
@@ -708,7 +720,7 @@ onMounted(() => {
                                 {{ search_count }}
                             </span>
                             <span v-if="search_count > 1"> records</span>
-                            <span v-else>record</span> found
+                            <span v-else> record</span> found
                         </div>
                         <div class="text-gray-500 italic">
                             ( from
@@ -718,10 +730,7 @@ onMounted(() => {
                             total voters)
                         </div>
                     </div>
-                    <Pagination
-                        v-if="voterprofiles.data.length > 10"
-                        :links="voterprofiles.meta.links"
-                    />
+                    <Pagination :links="voterprofiles.meta.links" />
                 </div>
                 <EditModal
                     v-if="props.profile && !props.q.showdownline"

@@ -157,7 +157,7 @@ watch(
             value: voter.voter_name,
             data: voter,
         }));
-    })
+    },500)
 );
 
 const addDownline = () => {

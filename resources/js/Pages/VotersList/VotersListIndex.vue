@@ -166,7 +166,8 @@ onMounted(() => {
                     </div>
                 </div>
                 <div
-                    class="flex justify-between items-baseline gap-2 mb-6 mt-8"
+                    class="flex justify-between items-baseline gap-2 mb-6 mt-10"
+                    v-if="voters.data.length > 10"
                 >
                     <div class="flex">
                         <div class="w-[170px] space-x-2">
@@ -190,7 +191,7 @@ onMounted(() => {
                                 {{ search_count }}
                             </span>
                             <span v-if="search_count > 1"> records</span>
-                            <span v-else>record</span> found
+                            <span v-else> record</span> found
                         </div>
                         <div class="text-gray-500 italic">
                             &nbsp;( from
@@ -200,10 +201,7 @@ onMounted(() => {
                             total voters )
                         </div>
                     </div>
-                    <Pagination
-                        v-if="voters.data.length > 10"
-                        :links="voters.meta.links"
-                    />
+                    <Pagination :links="voters.meta.links" />
                 </div>
 
                 <Table class="border-collapse border border-slate-400">
@@ -279,7 +277,7 @@ onMounted(() => {
                                 {{ search_count }}
                             </span>
                             <span v-if="search_count > 1"> records</span>
-                            <span v-else>record</span> found
+                            <span v-else> record</span> found
                         </div>
                         <div class="text-gray-500 italic">
                             ( from
