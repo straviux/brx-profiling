@@ -34,7 +34,7 @@ const votersOptions = ref([]);
 //         value: voter.voter_name,
 //     }))
 // );
-const prevUrl  = `/votersprofile/position/${props.profile.position.toLowerCase()}`;
+const prevUrl = `/votersprofile/position/${props.profile.position.toLowerCase()}`;
 const form = useForm({
     parent_id: props.profile?.parent_id || "",
     name: props.profile?.name || "",
@@ -66,7 +66,7 @@ const newDownlineform = useForm({
 });
 
 const deleteDownlineform = useForm({
-    ids:""
+    ids: ""
 })
 const onSelectedDownline = (opt) => {
     // console.log(opt.data);
@@ -86,8 +86,8 @@ const onSelectedDownline = (opt) => {
         props.profile.position == "COORDINATOR"
             ? "LEADER"
             : props.profile.position == "LEADER"
-            ? "SUBLEADER"
-            : "MEMBER";
+                ? "SUBLEADER"
+                : "MEMBER";
 };
 
 const selectedMembers = ref([]);
@@ -100,16 +100,16 @@ const prepareRemoveChildData = () => {
     showConfirmDeleteMemberModal.value = true;
 };
 const deleteChildData = () => {
-    const getCheckedData = selectedMembers.value.map((member)=>member.id);
+    const getCheckedData = selectedMembers.value.map((member) => member.id);
     deleteDownlineform.ids = getCheckedData;
     deleteDownlineform.delete(route('votersprofile.bulkdelete'), {
-            onSuccess: () =>{
-                closeModal(); 
-                router.visit('',{
-                    only: ['props']
-                });
-            }
+        onSuccess: () => {
+            closeModal();
+            router.visit('', {
+                only: ['props']
+            });
         }
+    }
     );
 };
 watch(
@@ -157,14 +157,14 @@ watch(
             value: voter.voter_name,
             data: voter,
         }));
-    },500)
+    }, 500)
 );
 
 const addDownline = () => {
     // console.log("test");
-    newDownlineform.post(route("votersprofile.adddownline"),{
-        onSuccess: ()=>{
-            router.visit('',{
+    newDownlineform.post(route("votersprofile.adddownline"), {
+        onSuccess: () => {
+            router.visit('', {
                 only: ['props']
             })
         }
@@ -174,183 +174,131 @@ const addDownline = () => {
 </script>
 
 <template>
+
     <Head title="Profile" />
 
     <AdminLayout>
         <template #header>Profile</template>
 
         <div class="max-w-full mx-auto py-4">
-            <Link
-                class="underline text-gray-600 text-2xl font-semibold float-right mr-12 flex gap-2 items-baseline"
-                :href="prevUrl"
-                preserve-state
-                preserve-scroll
-            >
-                <ArrowUturnLeftIcon class="h-5 w-5" /> Back
+            <Link class="underline text-gray-600 text-2xl font-semibold float-right mr-12 flex gap-2 items-baseline"
+                :href="prevUrl" preserve-state preserve-scroll>
+            <ArrowUturnLeftIcon class="h-5 w-5" /> Back
             </Link>
-            <div
-                class="bg-white overflow-hidden md:flex justify-evenly mt-12 md:gap-4"
-            >
+            <div class="bg-white overflow-hidden md:flex justify-evenly mt-12 md:gap-4">
                 <div class="md:w-1/3 ml-12">
                     <h3 class="text-2xl mb-12">Profile Details</h3>
                     <div>
                         <InputLabel for="name" value="Name" class="text-xl" />
-                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{ profile.name }}</div>
+                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{ profile.name
+                            }}</div>
 
                     </div>
                     <div class="mt-6">
-                        <InputLabel
-                            for="position"
-                            value="Position"
-                            class="text-xl"
-                        />
+                        <InputLabel for="position" value="Position" class="text-xl" />
 
-                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{ profile.position }}</div>
+                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{
+                            profile.position }}</div>
                     </div>
                     <div class="mt-6">
-                        <InputLabel
-                            for="barangay"
-                            value="Barangay"
-                            class="text-xl"
-                        />
+                        <InputLabel for="barangay" value="Barangay" class="text-xl" />
 
-                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{ profile.barangay }}</div>
+                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{
+                            profile.barangay }}</div>
                     </div>
                     <div class="mt-6">
                         <InputLabel for="purok" value="Purok" class="text-xl" />
 
-                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{ profile.purok }}</div>
+                        <div class="mt-1 px-2 py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{ profile.purok
+                            }}</div>
                     </div>
                     <div class="mt-6">
-                        <InputLabel
-                            for="precint"
-                            value="Precint No"
-                            class="text-xl"
-                        />
+                        <InputLabel for="precint" value="Precint No" class="text-xl" />
 
-                        <div class="mt-1 px-2  py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{ profile.precinct_no }}</div>
+                        <div class="mt-1 px-2  py-3 min-h-12 border border-gray-300 rounded-lg text-xl">{{
+                            profile.precinct_no }}</div>
                     </div>
                 </div>
-                <div
-                    class="w-1/2 pt-12"
-                >
-                    <div class="px-12 py-8 text-gray-900 border rounded mx-auto shadow mt-16 md:mt-0">
+                <div class="w-1/2 pt-12">
+                    <div v-if="props.profile.position.toLowerCase() !== 'member'"
+                        class="px-12 py-8 text-gray-900 border rounded mx-auto shadow mt-16 md:mt-0">
                         <form @submit.prevent="addDownline">
-                        <div class="flex items-center rounded-lg py-2 gap-2">
-                            <!-- <VueMultiselect
-                            v-model="filterBarangayQuery"
-                            :options="barangayOptions"
-                            :close-on-select="true"
-                            placeholder="SELECT BARANGAY"
-                        /> -->
-                            <!-- {{ barangayOptions }} -->
-                            <VueSelect
-                                v-model="newDownline"
-                                placeholder="Search name"
-                                :options="votersOptions"
-                                @option-selected="
-                                    (option) => onSelectedDownline(option)
-                                "
-                                @search="(search) => onSearchName(search)"
-                            />
-                            <button
-                                :class="{
-                                    'opacity-25':!newDownline||
+                            <div class="flex items-center rounded-lg py-2 gap-2">
+                                <!-- <VueMultiselect
+                                v-model="filterBarangayQuery"
+                                :options="barangayOptions"
+                                :close-on-select="true"
+                                placeholder="SELECT BARANGAY"
+                            /> -->
+                                <!-- {{ barangayOptions }} -->
+                                <VueSelect v-model="newDownline" placeholder="Search name" :options="votersOptions"
+                                    @option-selected="(option) => onSelectedDownline(option)
+                                        " @search="(search) => onSearchName(search)" />
+                                <button :class="{
+                                    'opacity-25': !newDownline ||
                                         newDownlineform.processing ||
                                         props.profile.members.length >= 7,
-                                }"
-                                :disabled="
-                                    !newDownline || newDownlineform.processing ||
+                                }" :disabled="!newDownline || newDownlineform.processing ||
                                     props.profile.members.length >= 7
-                                "
-                                class="py-2 px-8 bg-[#5dbea3] hover:bg-[#4bb798] hover:shadow rounded text text-white flex gap-2 items-center"
-                            >
-                                ADD <UserPlusIcon class="h-8 w-8" />
+                                    "
+                                    class="py-2 px-8 bg-[#5dbea3] hover:bg-[#4bb798] hover:shadow rounded text text-white flex gap-2 items-center">
+                                    ADD
+                                    <UserPlusIcon class="h-8 w-8" />
+                                </button>
+                            </div>
+                        </form>
+                        <div class="flex justify-between mt-6">
+                            <div class="text-gray-400 text-xl">Downline</div>
+
+                        </div>
+                        <div>
+                            <div class="py-5 flex justify-start gap-2 items-center text-xl text-gray-600 hover:bg-indigo-200 px-4"
+                                v-for="(member, i) in props.profile.members" :key="`_mem_` + i">
+                                <input :id="`member_checkbox_` + i" type="checkbox" v-model="selectedMembers"
+                                    :value="member"
+                                    class="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2 cursor-pointer" />
+                                <label :for="`member_checkbox_` + i" class="flex items-center gap-2 cursor-pointer">
+                                    <p class="text-xs text-yellow-600 ml-1 tracking-wider font-bold">
+                                        [{{ member.position }}]
+                                    </p>
+                                    <p>{{ member.name }}</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 mt-12">
+                            <button class="py-1 px-4 bg-[#80669d] hover:bg-[#7b5aa0] hover:shadow rounded text-white"
+                                @click.prevent="updateHeirarchy">
+                                Transfer Leadership
+                            </button>
+
+                            <button class="py-2 px-4 bg-[#dd7973] hover:bg-[#d76d67] hover:shadow text-white rounded"
+                                :class="{
+                                    'opacity-25': !selectedMembers.length,
+                                }" :disabled="!selectedMembers.length
+                                    " @click.prevent="prepareRemoveChildData">
+                                Remove Selected
                             </button>
                         </div>
-                    </form>
-                    <div class="flex justify-between mt-6">
-                        <div class="text-gray-400 text-xl">Downline</div>
-                        
-                    </div>
-                    <div>
-                        <div
-                            class="py-5 flex justify-start gap-2 items-center text-xl text-gray-600 hover:bg-indigo-200 px-4"
-                            v-for="(member, i) in props.profile.members"
-                            :key="`_mem_` + i"
-                        >
-                            <input
-                                :id="`member_checkbox_` + i"
-                                type="checkbox"
-                                v-model="selectedMembers"
-                                :value="member"
-                                class="w-4 h-4 text-blue-600 focus:ring-blue-500 focus:ring-2 cursor-pointer"
-                            />
-                            <label
-                                :for="`member_checkbox_` + i"
-                                class="flex items-center gap-2 cursor-pointer"
-                            >
-                                <p
-                                    class="text-xs text-yellow-600 ml-1 tracking-wider font-bold"
-                                >
-                                    [{{ member.position }}]
-                                </p>
-                                <p>{{ member.name }}</p>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-4 mt-12">
-                        <button
-                            class="py-1 px-4 bg-[#80669d] hover:bg-[#7b5aa0] hover:shadow rounded text-white"
-                            @click.prevent="updateHeirarchy"
-                        >
-                            Transfer Leadership
-                        </button>
-
-                        <button
-                            class="py-2 px-4 bg-[#dd7973] hover:bg-[#d76d67] hover:shadow text-white rounded"
-                            :class="{
-                                    'opacity-25':!selectedMembers.length,
-                                }"
-                                :disabled="
-                                    !selectedMembers.length
-                                "
-                            @click.prevent="prepareRemoveChildData"
-                        >
-                            Remove Selected
-                        </button>
-                    </div>
                     </div>
                 </div>
             </div>
         </div>
-        <Modal
-            maxWidth="2xl"
-            marginTop="md"
-            :show="showConfirmDeleteMemberModal"
-            @close="closeModal"
-        >
+        <Modal maxWidth="2xl" marginTop="md" :show="showConfirmDeleteMemberModal" @close="closeModal">
             <div class="p-6">
                 <h2 class="text-lg font-semibold text-slate-800">
                     Are you sure you want to remove this data from the list?
                 </h2>
 
-                <p
-                    class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold"
-                >
-                    <p v-for="(m, i) in selectedMembers" :key="'mem_' + i" class="py-2">
-                        {{ m.name }}</p
-                    >
-                    <!-- "{{ modalUserData.name }} / {{ modalUserData.username }}" -->
+                <p class="mt-4 bg-slate-100 p-2 text-center text-red-700 font-semibold">
+                <p v-for="(m, i) in selectedMembers" :key="'mem_' + i" class="py-2">
+                    {{ m.name }}</p>
+                <!-- "{{ modalUserData.name }} / {{ modalUserData.username }}" -->
                 </p>
                 <div class="mt-6 flex space-x-4">
                     <DangerButton @click="deleteChildData">
-                        Delete</DangerButton
-                    >
-                    <SecondaryButton @click="closeModal"
-                        >Cancel</SecondaryButton
-                    >
+                        Delete</DangerButton>
+                    <SecondaryButton @click="closeModal">Cancel</SecondaryButton>
                 </div>
             </div>
         </Modal>
@@ -417,24 +365,29 @@ const addDownline = () => {
     padding: 7px 12px;
     font-size: 1.4rem;
 }
+
 :deep(.vue-select .single-value) {
     font-size: 1.4rem;
     font-weight: 500;
     padding: 7px 12px;
     color: #666666;
 }
+
 :deep(.vue-select input::placeholder) {
     color: #888;
     font-weight: 500;
     font-size: 1.4rem;
 }
+
 :deep(.vue-select .focused .menu-option .focused) {
     background: #7dd3fc;
 }
+
 :deep(.vue-select .value-container),
 :deep(.vue-select .indicators-container) {
     background-color: none;
 }
+
 :deep(.vue-select .menu-option:hover) {
     background: #ddd;
 }

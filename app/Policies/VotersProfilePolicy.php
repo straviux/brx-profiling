@@ -37,7 +37,7 @@ class VotersProfilePolicy
      */
     public function update(User $user, VoterProfile $voterProfile): bool
     {
-        //
+        return $user->hasRole(['admin', 'moderator', 'encoder']) ? true : false;
     }
 
     /**
@@ -45,7 +45,7 @@ class VotersProfilePolicy
      */
     public function delete(User $user, VoterProfile $voterProfile): bool
     {
-        //
+        return $user->hasRole(['admin', 'moderator']) ? true : false;
     }
 
     /**

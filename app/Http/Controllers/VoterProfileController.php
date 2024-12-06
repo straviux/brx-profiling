@@ -8,6 +8,7 @@ use App\Models\Voter;
 use App\Models\VoterProfile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,6 +30,7 @@ class VoterProfileController extends Controller
 
     public function showByPosition($position, $id = null, $downline = false): Response
     {
+
 
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
@@ -105,7 +107,7 @@ class VoterProfileController extends Controller
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         return Inertia::render('Admin/VoterProfiles/ViewProfile', [
             'profile' => $profile,
-            'voters' => $query->whereNotIn('voter_name', VoterProfile::select('name'))->where('precinct_no', $profile->precinct_no)->limit(20)->get(),
+            'voters' => $query->whereIn('voter_name', VoterProfile::select('name')->whereNull('parent_id'))->where('precinct_no', $profile->precinct_no)->limit(20)->get(),
             'searchquery' => $searchname
         ]);
     }
@@ -125,7 +127,6 @@ class VoterProfileController extends Controller
      */
     public function create(Request $request): Response
     {
-        $this->authorize('create', VoterProfile::class);
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
 
         $query = Voter::query();
@@ -153,6 +154,7 @@ class VoterProfileController extends Controller
     public function store(CreateVoterProfileRequest $request): RedirectResponse
     {
 
+        // Gate::authorize('create', VoterProfile::class);
         VoterProfile::create($request->validated());
         return to_route('votersprofile.index');
     }
@@ -165,6 +167,7 @@ class VoterProfileController extends Controller
     public function edit(string $id): Response
     {
         // dd($id);
+        // Gate::authorize('update', VoterProfile::class);
         $profile = VoterProfile::find($id);
         // dd($profile);
         $bgy = Voter::distinct()->get('barangay_name')->toArray();
@@ -181,7 +184,7 @@ class VoterProfileController extends Controller
     public function update(CreateVoterProfileRequest $request, $id): RedirectResponse
     {
         // dd($request->validated());
-        $this->authorize('update', VoterProfile::class);
+        // Gate::authorize('update', VoterProfile::class);
         $voterprofile = VoterProfile::findOrFail($id);
         $voterprofile->update($request->validated());
 
@@ -197,12 +200,14 @@ class VoterProfileController extends Controller
     public function destroy(VoterProfile $votersprofile)
     {
         // dd($voterprofile);
+        // Gate::authorize('delete', $votersprofile);
         $votersprofile->delete();
         return back();
     }
 
     public function bulkDelete(Request $request)
     {
+        // Gate::authorize('delete', VoterProfile::class);
         VoterProfile::whereIn('id', $request->ids)->delete();
         return back();
     }

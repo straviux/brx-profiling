@@ -1,255 +1,135 @@
 <template>
     <TransitionRoot appear :show="isOpen" as="template">
         <Dialog as="div" class="relative z-10">
-            <TransitionChild
-                as="template"
-                enter="duration-300 ease-out"
-                enter-from="opacity-0"
-                enter-to="opacity-100"
-                leave="duration-200 ease-in"
-                leave-from="opacity-100"
-                leave-to="opacity-0"
-            >
+            <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
+                leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-black/25" />
             </TransitionChild>
 
             <div class="fixed inset-0 overflow-y-auto">
                 <div class="flex justify-center p-4 text-center">
-                    <TransitionChild
-                        as="template"
-                        enter="duration-300 ease-out"
-                        enter-from="opacity-0 scale-95"
-                        enter-to="opacity-100 scale-100"
-                        leave="duration-200 ease-in"
-                        leave-from="opacity-100 scale-100"
-                        leave-to="opacity-0 scale-95"
-                    >
+                    <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
+                        enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
+                        leave-to="opacity-0 scale-95">
                         <DialogPanel
-                            class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
-                        >
-                            <DialogTitle
-                                as="h3"
-                                class="text-xl font-medium leading-6 text-gray-900 flex justify-between"
-                            >
+                            class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                            <DialogTitle as="h3"
+                                class="text-xl font-medium leading-6 text-gray-900 flex justify-between">
                                 Edit Voter's Profile
-                                <button
-                                    class="-mr-4 -mt-4"
-                                    onclick="window.history.back()"
-                                    preserve-state
-                                    preserve-scroll
-                                >
+                                <button class="-mr-4 -mt-4" onclick="window.history.back()" preserve-state
+                                    preserve-scroll>
                                     <XCircleIcon class="h-8 w-8 text-red-400" />
                                 </button>
                             </DialogTitle>
-                            <form
-                                @submit.prevent="
-                                    form.put(
-                                        route(
-                                            'votersprofile.update',
-                                            profile.id
-                                        ),
-                                        { preserveScroll: true }
-                                    )
-                                "
-                            >
+                            <form @submit.prevent="
+                                form.put(
+                                    route(
+                                        'votersprofile.update',
+                                        profile.id
+                                    ),
+                                    { preserveScroll: true }
+                                )
+                                ">
                                 <div class="mt-6">
                                     <div class="mt-4">
                                         <div class="w-1/2 pr-1">
-                                            <div
-                                                class="flex gap-4 items-center"
-                                            >
-                                                <InputLabel
-                                                    for="position"
-                                                    value="Position"
-                                                />
-                                                <p
-                                                v-if="profile.members.length>0"
-                                                    class="flex items-center gap-1"
-                                                >
-                                                    <ExclamationCircleIcon
-                                                        class="h-4 w-4 text-gray-500"
-                                                    />
-                                                    <p class="text-gray-500 text-sm"
-                                                        >This profile has dowline. view <Link class="text-blue-500 underline" :href="
-                                            route('votersprofile.viewprofile', {
-                                                id: profile.id,
-                                            })
-                                        ">here</Link></p
-                                                    >
-                                                </p>
+                                            {{ typeof profile.parent_id }}
+                                            <div class="flex gap-4 items-center">
+                                                <InputLabel for="position" value="Position" />
+                                                <div v-if="profile.members.length > 0" class="flex items-center gap-1">
+                                                    <ExclamationCircleIcon class="h-4 w-4 text-gray-500" />
+                                                    <p class="text-gray-500 text-sm">This profile has dowline. view
+                                                        <Link class="text-blue-500 underline" :href="route('votersprofile.viewprofile', {
+                                                            id: profile.id,
+                                                        })
+                                                            ">here</Link>
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <VueMultiselect
-                                                v-model="form.position"
-                                                :options="positions"
+                                            <VueMultiselect v-model="form.position" :options="positions"
                                                 :close-on-select="true"
-                                                :disabled="profile.members.length>0"
-                                                class="uppercase mt-1"
-                                                placeholder="Select position"
-                                            />
-                                            <InputError
-                                                class="mt-2"
-                                                :message="form.errors.position"
-                                            />
+                                                :disabled="profile.members.length > 0 || typeof profile.parent_id == 'number'"
+                                                class="uppercase mt-1" placeholder="Select position" />
+                                            <InputError class="mt-2" :message="form.errors.position" />
                                         </div>
                                     </div>
                                     <div class="mt-4 flex gap-2">
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="lastname"
-                                                value="Last Name"
-                                            />
+                                            <InputLabel for="lastname" value="Last Name" />
 
-                                            <TextInput
-                                                id="lastname"
-                                                type="text"
-                                                v-model="form.lastname"
-                                                autofocus
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="lastname" type="text" v-model="form.lastname" autofocus
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="firstname"
-                                                value="First Name"
-                                            />
+                                            <InputLabel for="firstname" value="First Name" />
 
-                                            <TextInput
-                                                id="firstname"
-                                                v-model="form.firstname"
-                                                type="text"
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="firstname" v-model="form.firstname" type="text"
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="middlename"
-                                                value="Middle Name"
-                                            />
+                                            <InputLabel for="middlename" value="Middle Name" />
 
-                                            <TextInput
-                                                id="middlename"
-                                                v-model="form.middlename"
-                                                type="text"
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="middlename" v-model="form.middlename" type="text"
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                     </div>
                                     <div class="mt-4 flex gap-2">
                                         <div class="w-1/3 pr-1">
-                                            <InputLabel
-                                                for="barangay"
-                                                value="Barangay"
-                                            />
+                                            <InputLabel for="barangay" value="Barangay" />
 
-                                            <VueMultiselect
-                                                v-model="form.barangay"
-                                                :options="barangays"
-                                                :close-on-select="true"
-                                                placeholder="Select barangay"
-                                            />
+                                            <VueMultiselect v-model="form.barangay" :options="barangays"
+                                                :close-on-select="true" placeholder="Select barangay" />
 
-                                            <InputError
-                                                class="mt-2"
-                                                :message="form.errors.barangay"
-                                            />
+                                            <InputError class="mt-2" :message="form.errors.barangay" />
                                         </div>
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="purok"
-                                                value="Purok/Sitio"
-                                            />
+                                            <InputLabel for="purok" value="Purok/Sitio" />
 
-                                            <TextInput
-                                                id="purok"
-                                                v-model="form.purok"
-                                                type="text"
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="purok" v-model="form.purok" type="text"
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="contact_no"
-                                                value="Contact Number"
-                                            />
+                                            <InputLabel for="contact_no" value="Contact Number" />
 
-                                            <TextInput
-                                                id="contact_no"
-                                                v-model="form.contact_no"
-                                                type="text"
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="contact_no" v-model="form.contact_no" type="text"
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                     </div>
                                     <div class="mt-4 flex gap-2">
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="precint_no"
-                                                value="Precinct Number"
-                                            />
+                                            <InputLabel for="precint_no" value="Precinct Number" />
 
-                                            <TextInput
-                                                id="precint_no"
-                                                type="text"
-                                                v-model="form.precinct_no"
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="precint_no" type="text" v-model="form.precinct_no"
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="birthdate"
-                                                value="Birthdate"
-                                            />
+                                            <InputLabel for="birthdate" value="Birthdate" />
 
-                                            <TextInput
-                                                id="birthdate"
-                                                v-model="form.birthdate"
-                                                type="date"
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="birthdate" v-model="form.birthdate" type="date"
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                         <div class="w-1/3">
-                                            <InputLabel
-                                                for="gender"
-                                                value="Gender"
-                                            />
+                                            <InputLabel for="gender" value="Gender" />
 
                                             <div class="flex gap-4 mt-4 ml-4">
-                                                <div
-                                                    class="flex items-center mb-4 cursor-pointer"
-                                                >
-                                                    <input
-                                                        v-model="form.gender"
-                                                        type="radio"
-                                                        name="gender"
-                                                        value="M"
+                                                <div class="flex items-center mb-4 cursor-pointer">
+                                                    <input v-model="form.gender" type="radio" name="gender" value="M"
                                                         class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300 cursor-pointer"
                                                         aria-labelledby="country-option-1"
-                                                        aria-describedby="country-option-1"
-                                                    />
-                                                    <label
-                                                        for="country-option-1"
-                                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer"
-                                                    >
+                                                        aria-describedby="country-option-1" />
+                                                    <label for="country-option-1"
+                                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer">
                                                         Male
                                                     </label>
                                                 </div>
 
-                                                <div
-                                                    class="flex items-center mb-4"
-                                                >
-                                                    <input
-                                                        v-model="form.gender"
-                                                        type="radio"
-                                                        name="gender"
-                                                        value="F"
+                                                <div class="flex items-center mb-4">
+                                                    <input v-model="form.gender" type="radio" name="gender" value="F"
                                                         class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300 cursor-pointer"
                                                         aria-labelledby="country-option-2"
-                                                        aria-describedby="country-option-2"
-                                                    />
-                                                    <label
-                                                        for="country-option-2"
-                                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer"
-                                                    >
+                                                        aria-describedby="country-option-2" />
+                                                    <label for="country-option-2"
+                                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer">
                                                         Female
                                                     </label>
                                                 </div>
@@ -258,17 +138,10 @@
                                     </div>
                                     <div class="mt-4">
                                         <div class="w-1/2">
-                                            <InputLabel
-                                                for="remarks"
-                                                value="Remarks"
-                                            />
+                                            <InputLabel for="remarks" value="Remarks" />
 
-                                            <TextInput
-                                                id="remarks"
-                                                v-model="form.remarks"
-                                                type="text"
-                                                class="mt-1 block w-full uppercase"
-                                            />
+                                            <TextInput id="remarks" v-model="form.remarks" type="text"
+                                                class="mt-1 block w-full uppercase" />
                                         </div>
                                     </div>
                                 </div>
@@ -305,30 +178,25 @@
                                             </p>
                                         </div>
                                     </template>
-                                </Draggable>
+</Draggable>
 
-                                <button
-                                    class="py-2 px-4 bg-purple-700 text-white"
-                                    @click.prevent="updateHeirarchy"
-                                >
-                                    Update Heirarchy
-                                </button> -->
+<button class="py-2 px-4 bg-purple-700 text-white" @click.prevent="updateHeirarchy">
+    Update Heirarchy
+</button> -->
 
                                 <div class="flex items-center mt-4 justify-end">
-                                    <button
-                                        :class="{
-                                            'opacity-25': form.processing,
-                                        }"
-                                        class="py-2 w-32 text-white justify-center rounded bg-[rgb(146,81,220)] hover:shadow-lg hover:bg-[rgb(128,71,194)]"
-                                        :disabled="form.processing"
-                                    >
+                                    <button :class="{
+                                        'opacity-25': form.processing,
+                                    }" class="py-2 w-32 text-white justify-center rounded bg-[rgb(146,81,220)] hover:shadow-lg hover:bg-[rgb(128,71,194)]"
+                                        :disabled="form.processing">
                                         Update
                                     </button>
                                 </div>
                             </form>
                         </DialogPanel>
                     </TransitionChild>
-   py-4      text-white         </div>
+                    py-4 text-white
+                </div>
             </div>
         </Dialog>
     </TransitionRoot>
