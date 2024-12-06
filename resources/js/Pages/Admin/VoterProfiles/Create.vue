@@ -114,6 +114,7 @@ const submit = () => {
 </script>
 
 <template>
+
     <Head title="Create new role" />
 
     <AdminLayout>
@@ -124,157 +125,83 @@ const submit = () => {
                 <h1 class="text-2xl font-semibold text-indigo-700">
                     Create New Voter Profile
                 </h1>
-                <Link
-                    :href="route('votersprofile.index')"
-                    class="text-slate-500 underline font-bold px-3 py-2 bg-none rounded flex items-center justify-center gap-1"
-                    ><ArrowUturnLeftIcon class="h-5 w-5" /> Back</Link
-                >
+                <Link :href="route('votersprofile.index')"
+                    class="text-slate-500 underline font-bold px-3 py-2 bg-none rounded flex items-center justify-center gap-1">
+                <ArrowUturnLeftIcon class="h-5 w-5" /> Back</Link>
             </div>
-            <div
-                class="mt-6 max-w-5xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6"
-            >
+            <div class="mt-6 max-w-5xl mx-auto bg-gray-100 shadow-lg rounded-lg p-6">
                 <!-- {{ form.errors }} -->
                 <form @submit.prevent="submit">
                     <div class="mt-4 flex gap-2">
                         <div class="w-1/2">
                             <InputLabel for="position" value="Position" />
-                            <VueMultiselect
-                                v-model="form.position"
-                                :options="positions"
-                                :close-on-select="true"
-                                class="uppercase"
-                                placeholder="Select position"
-                            />
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.position"
-                            />
+                            <VueMultiselect v-model="form.position" :options="positions" :close-on-select="true"
+                                class="uppercase" placeholder="Select position" />
+                            <InputError class="mt-2" :message="form.errors.position" />
                         </div>
                         <div class="w-1/2" v-if="form.position == 'LEADER'">
                             <InputLabel for="coordinator" value="Coordinator" />
-                            <VueMultiselect
-                                v-model="coordinator"
-                                @update:model-value="onSelectParent"
-                                :options="props.coordinators"
-                                :close-on-select="true"
-                                label="firstname"
-                                placeholder="Search coordinator"
-                            />
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.coordinator_id"
-                            />
+                            <VueMultiselect v-model="coordinator" @update:model-value="onSelectParent"
+                                :options="props.coordinators" :close-on-select="true" label="firstname"
+                                placeholder="Search coordinator" />
+                            <InputError class="mt-2" :message="form.errors.coordinator_id" />
                         </div>
                         <div class="w-1/2" v-if="form.position == 'SUBLEADER'">
                             <InputLabel for="leader" value="Leader" />
-                            <VueMultiselect
-                                v-model="leader"
-                                @update:model-value="onSelectParent"
-                                :options="props.leaders"
-                                :close-on-select="true"
-                                label="firstname"
-                                placeholder="Search Leader"
-                            />
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.position"
-                            />
+                            <VueMultiselect v-model="leader" @update:model-value="onSelectParent"
+                                :options="props.leaders" :close-on-select="true" label="firstname"
+                                placeholder="Search Leader" />
+                            <InputError class="mt-2" :message="form.errors.position" />
                         </div>
                         <div class="w-1/2" v-if="form.position == 'MEMBER'">
                             <InputLabel for="subleader" value="Subleader" />
-                            <VueMultiselect
-                                v-model="subleader"
-                                @update:model-value="onSelectParent"
-                                :options="props.subleaders"
-                                :close-on-select="true"
-                                label="firstname"
-                                placeholder="Search subleader"
-                            />
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.position"
-                            />
+                            <VueMultiselect v-model="subleader" @update:model-value="onSelectParent"
+                                :options="props.subleaders" :close-on-select="true" label="firstname"
+                                placeholder="Search subleader" />
+                            <InputError class="mt-2" :message="form.errors.position" />
                         </div>
                     </div>
                     <div class="w-full mt-4">
                         <InputLabel for="voters" value="Voter" />
 
-                        <VueMultiselect
-                            v-model="voter_name"
-                            @search-change="searchVoter"
-                            @update:model-value="onSelectVoter"
-                            :options="props.voters"
-                            :close-on-select="true"
-                            label="voter_name"
-                            placeholder="Search voter"
-                        />
+                        <VueMultiselect v-model="voter_name" @search-change="searchVoter"
+                            @update:model-value="onSelectVoter" :options="props.voters" :close-on-select="true"
+                            label="voter_name" placeholder="Search voter" />
 
-                        <InputError
-                            class="mt-2"
-                            :message="form.errors.voter_name"
-                        />
+                        <InputError class="mt-2" :message="form.errors.voter_name" />
                     </div>
                     <div class="mt-4 flex justify-between gap-4">
                         <div class="w-1/4">
                             <InputLabel for="lastname" value="Last Name" />
 
-                            <TextInput
-                                autofocus
-                                id="lastname"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.lastname"
-                            />
+                            <TextInput autofocus id="lastname" type="text" class="mt-1 block w-full uppercase"
+                                v-model="form.lastname" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.lastname"
-                            />
+                            <InputError class="mt-2" :message="form.errors.lastname" />
                         </div>
                         <div class="w-1/4">
                             <InputLabel for="firstname" value="First Name" />
 
-                            <TextInput
-                                id="firstname"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.firstname"
-                            />
+                            <TextInput id="firstname" type="text" class="mt-1 block w-full uppercase"
+                                v-model="form.firstname" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.firstname"
-                            />
+                            <InputError class="mt-2" :message="form.errors.firstname" />
                         </div>
                         <div class="w-1/4">
                             <InputLabel for="middlename" value="Middle Name" />
 
-                            <TextInput
-                                id="middlename"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.middlename"
-                            />
+                            <TextInput id="middlename" type="text" class="mt-1 block w-full uppercase"
+                                v-model="form.middlename" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.middlename"
-                            />
+                            <InputError class="mt-2" :message="form.errors.middlename" />
                         </div>
                         <div class="w-1/4">
                             <InputLabel for="extension" value="Extension" />
 
-                            <TextInput
-                                id="extension"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.extension"
-                            />
+                            <TextInput id="extension" type="text" class="mt-1 block w-full uppercase"
+                                v-model="form.extension" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.extension"
-                            />
+                            <InputError class="mt-2" :message="form.errors.extension" />
                         </div>
                     </div>
 
@@ -282,156 +209,83 @@ const submit = () => {
                         <div class="w-1/3">
                             <InputLabel for="barangay" value="Barangay" />
 
-                            <VueMultiselect
-                                v-model="form.barangay"
-                                :options="barangayOptions"
-                                :close-on-select="true"
-                                placeholder="Select barangay"
-                            />
+                            <VueMultiselect v-model="form.barangay" :options="barangayOptions" :close-on-select="true"
+                                placeholder="Select barangay" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.barangay"
-                            />
+                            <InputError class="mt-2" :message="form.errors.barangay" />
                         </div>
                         <div class="w-1/3">
                             <InputLabel for="purok" value="Purok/Sitio" />
 
-                            <TextInput
-                                id="purok"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.purok"
-                            />
+                            <TextInput id="purok" type="text" class="mt-1 block w-full uppercase"
+                                v-model="form.purok" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.purok"
-                            />
+                            <InputError class="mt-2" :message="form.errors.purok" />
                         </div>
                         <div class="w-1/3">
-                            <InputLabel
-                                for="contact_no"
-                                value="Contact Number"
-                            />
+                            <InputLabel for="contact_no" value="Contact Number" />
 
-                            <TextInput
-                                id="contact_no"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.contact_no"
-                            />
+                            <TextInput id="contact_no" type="text" class="mt-1 block w-full uppercase"
+                                v-model="form.contact_no" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.contact_no"
-                            />
+                            <InputError class="mt-2" :message="form.errors.contact_no" />
                         </div>
                     </div>
 
                     <div class="mt-6 flex justify-between gap-4">
                         <div class="w-1/3">
-                            <InputLabel
-                                for="precinct_no"
-                                value="Precinct Number"
-                            />
+                            <InputLabel for="precinct_no" value="Precinct Number" />
 
-                            <TextInput
-                                id="precinct_no"
-                                type="text"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.precinct_no"
-                            />
+                            <TextInput id="precinct_no" type="text" class="mt-1 block w-full uppercase"
+                                v-model="form.precinct_no" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.precinct_no"
-                            />
+                            <InputError class="mt-2" :message="form.errors.precinct_no" />
                         </div>
                         <div class="w-1/3">
                             <InputLabel for="birthdate" value="Birthdate" />
 
-                            <TextInput
-                                id="birthdate"
-                                type="date"
-                                class="mt-1 block w-full uppercase"
-                                v-model="form.birthdate"
-                            />
+                            <TextInput id="birthdate" type="date" class="mt-1 block w-full uppercase"
+                                v-model="form.birthdate" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.birthdate"
-                            />
+                            <InputError class="mt-2" :message="form.errors.birthdate" />
                         </div>
                         <div class="w-1/3">
                             <InputLabel for="gender" value="Gender" />
 
                             <div class="flex gap-4 mt-4 ml-4">
-                                <div
-                                    class="flex items-center mb-4 cursor-pointer"
-                                >
-                                    <input
-                                        v-model="form.gender"
-                                        type="radio"
-                                        name="gender"
-                                        value="M"
+                                <div class="flex items-center mb-4 cursor-pointer">
+                                    <input v-model="form.gender" type="radio" name="gender" value="M"
                                         class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300 cursor-pointer"
-                                        aria-labelledby="country-option-1"
-                                        aria-describedby="country-option-1"
-                                    />
-                                    <label
-                                        for="country-option-1"
-                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer"
-                                    >
+                                        aria-labelledby="country-option-1" aria-describedby="country-option-1" />
+                                    <label for="country-option-1"
+                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer">
                                         Male
                                     </label>
                                 </div>
 
                                 <div class="flex items-center mb-4">
-                                    <input
-                                        v-model="form.gender"
-                                        type="radio"
-                                        name="gender"
-                                        value="F"
+                                    <input v-model="form.gender" type="radio" name="gender" value="F"
                                         class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300 cursor-pointer"
-                                        aria-labelledby="country-option-2"
-                                        aria-describedby="country-option-2"
-                                    />
-                                    <label
-                                        for="country-option-2"
-                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer"
-                                    >
+                                        aria-labelledby="country-option-2" aria-describedby="country-option-2" />
+                                    <label for="country-option-2"
+                                        class="text-sm font-medium text-gray-900 ml-2 block cursor-pointer">
                                         Female
                                     </label>
                                 </div>
                             </div>
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.gender"
-                            />
+                            <InputError class="mt-2" :message="form.errors.gender" />
                         </div>
                     </div>
 
                     <div class="mt-6 w-1/2">
                         <InputLabel for="remarks" value="Remarks" />
 
-                        <TextInput
-                            id="remarks"
-                            type="text"
-                            class="mt-1 block w-full"
-                            v-model="form.remarks"
-                        />
+                        <TextInput id="remarks" type="text" class="mt-1 block w-full" v-model="form.remarks" />
 
-                        <InputError
-                            class="mt-2"
-                            :message="form.errors.remarks"
-                        />
+                        <InputError class="mt-2" :message="form.errors.remarks" />
                     </div>
                     <div class="flex items-center mt-4">
-                        <PrimaryButton
-                            :class="{ 'opacity-25': form.processing }"
-                            :disabled="form.processing"
-                        >
+                        <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Create
                         </PrimaryButton>
                     </div>
@@ -446,6 +300,7 @@ const submit = () => {
     text-transform: uppercase;
     border-radius: 8px !important;
 }
+
 .multiselect__input::placeholder {
     text-transform: none;
 }

@@ -21,15 +21,7 @@
                                     <XCircleIcon class="h-8 w-8 text-red-400" />
                                 </button>
                             </DialogTitle>
-                            <form @submit.prevent="
-                                form.put(
-                                    route(
-                                        'votersprofile.update',
-                                        profile.id
-                                    ),
-                                    { preserveScroll: true }
-                                )
-                                ">
+                            <form @submit.prevent="submit">
                                 <div class="mt-6">
                                     <div class="mt-4">
                                         <div class="w-1/2 pr-1">
@@ -99,7 +91,7 @@
                                         <div class="w-1/3">
                                             <InputLabel for="precint_no" value="Precinct Number" />
 
-                                            <TextInput id="precint_no" type="text" v-model="form.precinct_no"
+                                            <TextInput id="precint_no" disabled type="text" v-model="form.precinct_no"
                                                 class="mt-1 block w-full uppercase" />
                                         </div>
                                         <div class="w-1/3">
@@ -145,44 +137,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <Draggable
-                                    class="mtl-tree"
-                                    v-model="treeData"
-                                    :indent="60"
-                                    treeLine
-                                    :treeLineOffset="34"
-                                    :maxLevel="2"
-                                >
-                                    <template #default="{ node, stat }">
-                                        <div
-                                            class="py-3 flex justify-center items-center"
-                                        >
-                                            <OpenIcon
-                                                v-if="stat.children.length"
-                                                :open="stat.open"
-                                                class="mtl-mr -ml-4"
-                                                @click.native="
-                                                    stat.open = !stat.open
-                                                "
-                                            />
-                                            <input
-                                                class="mtl-checkbox mtl-mr"
-                                                type="checkbox"
-                                                v-model="stat.checked"
-                                            />
-                                            <p class="text-xs text-yellow-600">
-                                                [{{ node.position }}]
-                                            </p>
-                                            <p class="mtl-ml">
-                                                {{ node.name }}
-                                            </p>
-                                        </div>
-                                    </template>
-</Draggable>
-
-<button class="py-2 px-4 bg-purple-700 text-white" @click.prevent="updateHeirarchy">
-    Update Heirarchy
-</button> -->
 
                                 <div class="flex items-center mt-4 justify-end">
                                     <button :class="{
@@ -220,7 +174,8 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import VueMultiselect from "vue-multiselect";
-
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import { XCircleIcon, ExclamationCircleIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
@@ -263,19 +218,27 @@ const form = useForm({
     redirectUrl: `/votersprofile/position/${props.position}`,
 });
 
+const submit = () => {
+    form.put(
+        route(
+            'votersprofile.update',
+            props.profile.id
+        ),
+        {
+            onSuccess: () => {
+                toast.success("Profile has been updated", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            },
+            preserveScroll: true
+        },
+    )
+}
+
 watch(
     () => props.profile,
     (profile) => {
         if (profile) {
-            // treeData.value = [
-            //     {
-            //         id: props.profile?.id || "",
-            //         name: props.profile?.name || "",
-            //         position: props.profile?.position || "",
-            //         precinct_no: props.profile?.precinct_no || "",
-            //         children: props.profile?.members || "",
-            //     },
-            // ];
             form.parent_id = profile.parent_id || "";
             form.name = profile.name || "";
             form.firstname = profile.firstname || "";

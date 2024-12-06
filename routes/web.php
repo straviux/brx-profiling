@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/users', UserController::class);
 
     /** BEGIN VOTER'S PROFILE ROUTE/RESOURCE */
-    Route::get('/votersprofile/position/{position}/{id?}/{downline?}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
+    Route::get('/votersprofile/position/{position}/{action?}/{id?}', [VoterProfileController::class, 'showByPosition'])->name('votersprofile.showposition');
     Route::get('/votersprofile/view/{id}', [VoterProfileController::class, 'viewProfile'])->name('votersprofile.viewprofile');
     Route::post('/votersprofile/add_downline', [VoterProfileController::class, 'addDownline'])->name('votersprofile.adddownline');
     Route::get('/votersprofile/downline/{id}', [VoterProfileController::class, 'showDownline'])->name('votersprofile.showdownline');
@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
 
     /** BEGIN VOTER'S LIST ROUTE/RESOURCE */
     Route::get('/voterslist', [VoterController::class, 'findVoter'])->name('voterslist.index');
+    Route::get('/voterslist.api', [VoterController::class, 'findVoterApi'])->name('voterslist.api');
 });
 
 Route::get('/initvoters/{file}', [VoterController::class, 'initVoters']);

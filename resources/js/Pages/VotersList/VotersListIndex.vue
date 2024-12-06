@@ -118,6 +118,7 @@ onMounted(() => {
 </script>
 
 <template>
+
     <Head title="Voters List" />
 
     <AdminLayout>
@@ -129,87 +130,63 @@ onMounted(() => {
                     <!--search bar -->
                     <div class="flex gap-4 w-full">
                         <div class="w-[400px]">
-                            <div
-                                class="relative flex items-center text-gray-400 focus-within:text-sky-500"
-                            >
-                                <span
-                                    class="absolute left-4 flex items-center pr-3 border-r border-gray-300"
-                                >
+                            <div class="relative flex items-center text-gray-400 focus-within:text-sky-500">
+                                <span class="absolute left-4 flex items-center pr-3 border-r border-gray-300">
                                     <MagnifyingGlassIcon class="h-4 w-4" />
                                 </span>
-                                <input
-                                    type="search"
-                                    name="leadingIcon"
-                                    v-model="searchNameQuery"
-                                    id="searchName"
+                                <input type="search" name="leadingIcon" v-model="searchNameQuery" id="searchName"
                                     placeholder="Search Name"
-                                    class="w-full pl-14 pr-4 rounded text-sm text-gray-600 outline-none border border-gray-300 focus:border-blue-300 transition"
-                                />
+                                    class="w-full pl-14 pr-4 rounded text-sm text-gray-600 outline-none border border-gray-300 focus:border-blue-300 transition" />
                             </div>
                         </div>
 
                         <div class="w-[340px] flex items-center rounded-lg">
-                            <VueSelect
-                                v-model="filterBarangayQuery"
-                                placeholder="Select Barangay"
-                                :options="barangayOptions"
-                            />
+                            <VueSelect v-model="filterBarangayQuery" placeholder="Select Barangay"
+                                :options="barangayOptions" />
                         </div>
                         <div class="w-[220px] flex items-center">
-                            <VueSelect
-                                :is-disabled="!filterBarangayQuery"
-                                v-model="precinctNoQuery"
-                                :options="precinctOptions"
-                                placeholder="Select Precinct#"
-                            />
+                            <VueSelect :is-disabled="!filterBarangayQuery" v-model="precinctNoQuery"
+                                :options="precinctOptions" placeholder="Select Precinct#" />
                         </div>
                     </div>
                 </div>
-                <div
-                    class="flex justify-between items-baseline gap-2 mb-6 mt-10"
-                    v-if="voters.data.length > 10"
-                >
-                    <div class="flex">
-                        <div class="w-[170px] space-x-2">
-                            <label class="text-sm text-gray-500"
-                                >Show results</label
-                            >
-                            <select
-                                class="py-0 rounded-sm text-gray-500 border-gray-400"
-                                v-model="showResultCount"
-                            >
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                                <option selected value="100">100</option>
-                                <option value="200">200</option>
-                            </select>
+                <div class="mt-10">
+                    <div class="flex justify-between items-baseline gap-2 mb-8" v-if="voters.data.length > 10">
+                        <div class="flex">
+                            <div class="w-[170px] space-x-2">
+                                <label class="text-sm text-gray-500">Show results</label>
+                                <select class="py-0 rounded-sm text-gray-500 border-gray-400" v-model="showResultCount">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option selected value="100">100</option>
+                                    <option value="200">200</option>
+                                </select>
+                            </div>
+                            <div class="text-gray-500 italic border-l-2 ml-2 pl-2">
+                                <span class="text-gray-600 font-semibold">
+                                    {{ search_count }}
+                                </span>
+                                <span v-if="search_count > 1"> records</span>
+                                <span v-else> record</span> found
+                            </div>
+                            <div class="text-gray-500 italic">
+                                &nbsp;( from
+                                <span class="text-gray-600 font-semibold">
+                                    {{ total_count }}
+                                </span>
+                                total voters )
+                            </div>
                         </div>
-                        <div class="text-gray-500 italic border-l-2 ml-2 pl-2">
-                            <span class="text-gray-600 font-semibold">
-                                {{ search_count }}
-                            </span>
-                            <span v-if="search_count > 1"> records</span>
-                            <span v-else> record</span> found
-                        </div>
-                        <div class="text-gray-500 italic">
-                            &nbsp;( from
-                            <span class="text-gray-600 font-semibold">
-                                {{ total_count }}
-                            </span>
-                            total voters )
-                        </div>
+                        <Pagination :links="voters.meta.links" class="w-1/2" />
                     </div>
-                    <Pagination :links="voters.meta.links" />
                 </div>
 
                 <Table class="border-collapse border border-slate-400">
                     <template #header>
                         <TableRow>
-                            <TableHeaderCell class="w-[10px]"
-                                >#</TableHeaderCell
-                            >
+                            <TableHeaderCell class="w-[10px]">#</TableHeaderCell>
                             <TableHeaderCell>Name</TableHeaderCell>
                             <TableHeaderCell>Municipality</TableHeaderCell>
                             <TableHeaderCell>Barangay</TableHeaderCell>
@@ -217,53 +194,32 @@ onMounted(() => {
                         </TableRow>
                     </template>
                     <template #default>
-                        <TableRow
-                            v-if="voters.data.length"
-                            v-for="(voter, index) in voters.data"
-                            :key="'voter_' + voter.id"
-                        >
-                            <TableDataCell
-                                class="px-6 w-[10px] border-collapse border-t border-slate-400"
-                                >{{ index + 1 }}</TableDataCell
-                            >
-                            <TableDataCell
-                                class="border-collapse border-t border-l border-slate-400 indent-1"
-                                >{{ voter.voter_name }}</TableDataCell
-                            >
+                        <TableRow v-if="voters.data.length" v-for="(voter, index) in voters.data"
+                            :key="'voter_' + voter.id">
+                            <TableDataCell class="px-6 w-[10px] border-collapse border-t border-slate-400">{{ index + 1
+                                }}</TableDataCell>
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
+                                voter.voter_name }}</TableDataCell>
 
-                            <TableDataCell
-                                class="border-collapse border-t border-l border-slate-400 indent-1"
-                                >{{ voter.municipality_name }}</TableDataCell
-                            ><TableDataCell
-                                class="border-collapse border-t border-l border-slate-400 indent-1"
-                                >{{ voter.barangay_name }}</TableDataCell
-                            >
-                            <TableDataCell
-                                class="border-collapse border-t border-l border-slate-400 indent-1"
-                                >{{ voter.precinct_no }}</TableDataCell
-                            >
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
+                                voter.municipality_name }}</TableDataCell>
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
+                                voter.barangay_name }}</TableDataCell>
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
+                                voter.precinct_no }}</TableDataCell>
                         </TableRow>
-                        <TableRow v-else
-                            ><TableDataCell
+                        <TableRow v-else>
+                            <TableDataCell
                                 class="px-6 py-8 w-[10px] border-collapse border-t border-slate-400 text-center"
-                                colspan="6"
-                                >No data to be displayed</TableDataCell
-                            ></TableRow
-                        >
+                                colspan="6">No data to be displayed</TableDataCell>
+                        </TableRow>
                     </template>
                 </Table>
-                <div
-                    class="flex justify-between items-baseline gap-2 mb-6 mt-6"
-                >
+                <div class="flex justify-between items-baseline gap-2 mb-6 mt-6">
                     <div class="flex">
                         <div class="w-[170px] space-x-2">
-                            <label class="text-sm text-gray-500"
-                                >Show results</label
-                            >
-                            <select
-                                class="py-0 rounded-sm text-gray-500 border-gray-400"
-                                v-model="showResultCount"
-                            >
+                            <label class="text-sm text-gray-500">Show results</label>
+                            <select class="py-0 rounded-sm text-gray-500 border-gray-400" v-model="showResultCount">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>

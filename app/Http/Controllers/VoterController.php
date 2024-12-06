@@ -56,4 +56,17 @@ class VoterController extends Controller
 
         ]);
     }
+
+    public function findVoterApi(Request $request)
+    {
+        // $bgy = Voter::distinct()->get('barangay_name')->toArray();
+        $name = $request->searchname ?? "";
+        $barangay = $request->barangay ?? "";
+        // $precinct = $request->barangay;
+        // // // $showresults = app()->request['results'] ?? 100;
+        $query = Voter::where('barangay_name', 'LIKE', "%{$barangay}%")
+            ->where('voter_name', 'LIKE', "%{$name}%")->orderBy('voter_name', 'asc')->limit(20)->get();
+
+        return response()->json(VoterResource::collection($query));
+    }
 }

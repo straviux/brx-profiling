@@ -20,10 +20,11 @@ import {
 	MagnifyingGlassIcon,
 	PencilSquareIcon,
 	TrashIcon,
-	EyeIcon,
+	IdentificationIcon,
 	UserPlusIcon,
 } from '@heroicons/vue/20/solid';
 
+import CreateModal from '@/Pages/Admin/VoterProfiles/Modal/CreateModal.vue';
 import EditModal from '@/Pages/Admin/VoterProfiles/Modal/EditModal.vue';
 import Pagination from '@/Components/Pagination.vue';
 
@@ -33,16 +34,18 @@ const sortColumnBy = (columnName) => {
 	console.log('test');
 };
 const props = defineProps({
-	// editdownline: String,
-	// showdownline: Boolean,
+	action: String,
 	q: Object,
 	profile: Object,
-	// showAddDownlineModal: Boolean,
 	barangays: Array,
 	precincts: Array,
 	voterprofiles: [Object, Array],
 	search_count: [String, Number],
 	total_count: [String, Number],
+	voters: [Object, Array],
+	coordinators: [Object, Array],
+	leaders: [Object, Array],
+	subleaders: [Object, Array]
 });
 const barangayOptions = ref([]);
 const precinctOptions = computed(() =>
@@ -62,10 +65,22 @@ const searchNameQuery = ref(props.q?.searchname?.toUpperCase());
 const precinctNoQuery = ref(props.q?.filterprecinct?.toUpperCase());
 const showResultCount = ref(props.q?.results);
 
-// const searchName = (voter) => {
-//     searchNameQuery.value = voter;
-// };
+const confirmDeleteVoterProfile = (profileID, profileName) => {
+	showConfirmDeleteVoterProfileModal.value = true;
+	modalVoterProfileData.value.id = profileID;
+	modalVoterProfileData.value.name = profileName;
+};
+const closeModal = () => {
+	showConfirmDeleteVoterProfileModal.value = false;
+};
+const deleteProfile = (voterProfileID) => {
+	// console.log(voterProfileID);
+	form.delete(route('votersprofile.destroy', voterProfileID), {
+		onSuccess: () => closeModal(),
+	});
+};
 
+console.log(props.action);
 watch(
 	showResultCount,
 	debounce(() =>
@@ -123,23 +138,10 @@ watch(props, () => {
 	console.log(props);
 });
 
-const confirmDeleteVoterProfile = (profileID, profileName) => {
-	showConfirmDeleteVoterProfileModal.value = true;
-	modalVoterProfileData.value.id = profileID;
-	modalVoterProfileData.value.name = profileName;
-};
-const closeModal = () => {
-	showConfirmDeleteVoterProfileModal.value = false;
-};
-const deleteProfile = (voterProfileID) => {
-	// console.log(voterProfileID);
-	form.delete(route('votersprofile.destroy', voterProfileID), {
-		onSuccess: () => closeModal(),
-	});
-};
 
 onMounted(() => {
 	// console.log(props.voterprofiles);
+	// console.log(props.barangays);
 	barangayOptions.value = props.barangays.map((bgy) => ({
 		label: bgy.barangay_name,
 		value: bgy.barangay_name,
@@ -185,8 +187,11 @@ onMounted(() => {
                     class="text-white font-semibold px-3 py-2 bg-sky-500 hover:bg-sky-600 rounded ml-auto shadow-lg"
                     >Add Profile</Link
                 > -->
-				<Link v-if="hasPermission('create voterprofile')" :href="route('votersprofile.create')"
-					class="text-emerald-500 underline font-bold px-3 py-2 bg-none rounded ml-auto flex items-center justify-center gap-1 text-xl">
+				<Link v-if="hasPermission('create voterprofile')" :href="route('votersprofile.showposition', {
+					position: currentVoterPosition,
+					action: 'create'
+				})" class=" text-emerald-500 underline font-bold px-3 py-2 bg-none rounded ml-auto flex items-center justify-center
+					gap-1 text-xl">
 				<UserPlusIcon class="h-6 w-6" />New Profile</Link>
 			</div>
 
@@ -235,7 +240,7 @@ onMounted(() => {
 
 			<div class="mt-10">
 				<div class="flex justify-between items-baseline gap-2 mb-8" v-if="voterprofiles.data.length > 10">
-					<div class="flex">
+					<div class="flex flex-row">
 						<div class="w-[170px] space-x-2">
 							<label class="text-sm text-gray-500">Show results</label>
 							<select class="py-0 rounded-sm text-gray-500 border-gray-400" v-model="showResultCount">
@@ -369,6 +374,7 @@ onMounted(() => {
 									<Link v-if="hasPermission('edit voterprofile')" :href="route('votersprofile.showposition', {
 										position: currentVoterPosition,
 										id: profile.id,
+										action: 'edit'
 									})
 										" class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-bl-lg border border-transparent py-4 text-xs font-semibold"
 										preserve-state preserve-scroll>
@@ -382,8 +388,8 @@ onMounted(() => {
 										id: profile.id,
 									})
 										" class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-br-lg border border-transparent py-4 text-xs font-semibold">
-									<EyeIcon class="h-5 w-5" />
-									View
+									<IdentificationIcon class="h-5 w-5" />
+									Downline
 									</Link>
 								</div>
 							</div>
@@ -426,6 +432,7 @@ onMounted(() => {
 								<div class="flex space-x-6 justify-center">
 									<Link v-if="hasPermission('edit voterprofile')" :href="route('votersprofile.showposition', {
 										position: currentVoterPosition,
+										action: 'edit',
 										id: voter.id,
 									})
 										" preserve-state preserve-scroll class="text-blue-400 hover:text-blue-600 flex">
@@ -479,8 +486,12 @@ onMounted(() => {
 					</div>
 					<Pagination :links="voterprofiles.meta.links" v-if="voterprofiles.data.length" />
 				</div>
-				<EditModal v-if="props.profile && !props.q.showdownline && hasPermission('edit voterprofile')"
-					:profile="props.profile" :barangays="barangayOptions" :position="currentVoterPosition" />
+				<EditModal v-if="props.action == 'edit' && hasPermission('edit voterprofile')" :profile="props.profile"
+					:barangays="barangayOptions" :position="currentVoterPosition" />
+				<CreateModal v-if="props.action == 'create' && hasPermission('create voterprofile')"
+					:barangays="barangayOptions" :coordinators="props.coordinators" :leaders="props.leaders"
+					:subleaders="props.subleaders" :position="currentVoterPosition" :action="props.action" />
+
 				<!-- <EditDownlineModal v-if="props.q.showdownline" /> -->
 			</div>
 		</div>

@@ -28,7 +28,7 @@ class VoterProfileController extends Controller
         return to_route('votersprofile.showposition', 'all');
     }
 
-    public function showByPosition($position, $id = null, $downline = false): Response
+    public function showByPosition($position, $action = null, $id = null): Response
     {
 
 
@@ -64,12 +64,18 @@ class VoterProfileController extends Controller
                 'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct, 'results' => $showresults],
                 // 'editdownline' => app()->request['editdownline'],
                 'profile' => fn() => $profile,
-                'downline' => fn() => $downline,
                 'barangays' => $bgy,
                 'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
-                'voterprofiles' => $voterprofile,
+                'voterprofiles' => fn() => $voterprofile,
                 'search_count' => count($voterprofile),
-                'total_count' => VoterProfile::count()
+                'total_count' => VoterProfile::count(),
+                'action' => fn() => $action,
+                'coordinators' => $action !== 'create' ? null : VoterProfile::query()
+                    ->where('position', '=', 'Coordinator')->get(),
+                'leaders' => fn() => $action !== 'create' ? null : VoterProfile::query()
+                    ->where('position', '=', 'Leader')->get(),
+                'subleaders' => fn() => $action !== 'create' ? null : VoterProfile::query()
+                    ->where('position', '=', 'Subleader')->get(),
 
             ]
         );
@@ -156,7 +162,7 @@ class VoterProfileController extends Controller
 
         // Gate::authorize('create', VoterProfile::class);
         VoterProfile::create($request->validated());
-        return to_route('votersprofile.index');
+        return back();
     }
 
 
