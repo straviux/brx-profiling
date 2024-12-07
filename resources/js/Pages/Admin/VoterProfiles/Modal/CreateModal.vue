@@ -26,7 +26,7 @@
                                     <div class="w-1/2">
                                         <InputLabel for="barangay" value="Barangay" />
                                         <VueSelect v-model="form.barangay" placeholder="Select Barangay"
-                                            :options="barangayOptions" />
+                                            :options="barangayOptions" @option-deselected="() => resetForm()" />
                                         <InputError class="mt-2" :message="form.errors.barangay"
                                             v-if="!form.barangay" />
                                     </div>
@@ -35,7 +35,7 @@
                                         <!-- <VueMultiselect v-model="form.position" :options="positions"
                                             :close-on-select="true" class="uppercase" placeholder="Select position" /> -->
                                         <VueSelect v-model="form.position" placeholder="Select position"
-                                            :options="positions" @option-deselected="() => voter_name = ''" />
+                                            :options="positions" @option-deselected="() => resetForm()" />
                                         <InputError class="mt-2" :message="form.errors.position"
                                             v-if="!form.position" />
                                     </div>
@@ -43,12 +43,12 @@
                                 <div class="w-full mt-4 flex gap-6">
                                     <div class="w-1/2">
                                         <InputLabel for="voters" value="Voter" />
-
+                                        <!-- {{ form.errors }} -->
                                         <VueMultiselect v-model="voter_name" @search-change="searchVoter"
                                             @update:model-value="onSelectVoter" :options="votersOptions"
                                             :disabled="!form.position || !form.barangay" :close-on-select="true"
                                             label="voter_name" placeholder="Search voter" />
-                                        <InputError class="mt-2" :message="form.errors.name" v-if="!form.name" />
+                                        <InputError class="mt-2" :message="form.errors.name" />
                                     </div>
                                     <div class="w-1/2" v-if="form.position == 'LEADER'">
                                         <InputLabel for="coordinator" value="Coordinator" />
@@ -276,10 +276,11 @@ const onSelectVoter = (voter) => {
     form.name = voter.voter_name;
     // form.barangay = voter.barangay_name;
     form.precinct_no = voter.precinct_no;
+    form.name = name;
     form.lastname = lastname;
     form.firstname = firstname.join(" ");
     form.middlename = middlename;
-    console.log(voter);
+    // console.log(voter);
     // console.log(name.length);
 };
 
@@ -307,6 +308,9 @@ watch(props, () => {
     // coordinators.value = props.coordinators;
 });
 
+const resetForm = () => {
+    form.reset();
+}
 
 // const emit = defineEmits(['refreshParentData']);
 const submit = () => {
@@ -333,6 +337,9 @@ const submit = () => {
                 position: toast.POSITION.TOP_RIGHT,
             });
 
+        },
+        onError: (err) => {
+            console.log(err.name)
         }
     });
 };

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateVoterProfileRequest extends FormRequest
 {
@@ -23,9 +24,10 @@ class CreateVoterProfileRequest extends FormRequest
     {
         return [
             "name" => [
-                'nullable',
+                'required',
                 'string',
-                'max:255'
+                'max:255',
+                Rule::unique('voter_profiles', 'name')->ignore($this->id)
             ],
             "firstname" => [
                 'required',
@@ -90,6 +92,14 @@ class CreateVoterProfileRequest extends FormRequest
 
 
 
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => 'Profile already exists.',
+            'name.required' => 'Name cannot be blank'
         ];
     }
 }
