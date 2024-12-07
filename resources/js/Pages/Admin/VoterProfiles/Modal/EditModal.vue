@@ -16,16 +16,15 @@
                             <DialogTitle as="h3"
                                 class="text-xl font-medium leading-6 text-gray-900 flex justify-between">
                                 Edit Voter's Profile
-                                <button class="-mr-4 -mt-4" onclick="window.history.back()" preserve-state
-                                    preserve-scroll>
-                                    <XCircleIcon class="h-8 w-8 text-red-400" />
-                                </button>
+                                <Link class="-mr-4 -mt-4"
+                                    :href="route('votersprofile.showposition', currentVoterPosition)">
+                                <XCircleIcon class="h-8 w-8 text-red-400" />
+                                </Link>
                             </DialogTitle>
                             <form @submit.prevent="submit">
                                 <div class="mt-6">
                                     <div class="mt-4">
                                         <div class="w-1/2 pr-1">
-                                            {{ typeof profile.parent_id }}
                                             <div class="flex gap-4 items-center">
                                                 <InputLabel for="position" value="Position" />
                                                 <div v-if="profile.members.length > 0" class="flex items-center gap-1">
@@ -195,9 +194,7 @@ const isOpen = computed(() => !!props.profile);
 //     },
 // ]);
 
-const updateHeirarchy = () => {
-    console.log(treeData);
-};
+
 
 const positions = ["COORDINATOR", "LEADER", "SUBLEADER", "MEMBER"];
 
@@ -230,11 +227,14 @@ const submit = () => {
                     position: toast.POSITION.TOP_RIGHT,
                 });
             },
+            onError: (err) => {
+                console.log(err)
+            },
             preserveScroll: true
         },
     )
 }
-
+const currentVoterPosition = route().params.position || null;
 watch(
     () => props.profile,
     (profile) => {

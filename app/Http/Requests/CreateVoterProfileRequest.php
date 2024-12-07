@@ -22,12 +22,14 @@ class CreateVoterProfileRequest extends FormRequest
      */
     public function rules(): array
     {
+        // $id = $this->route('id');
+        $id = $this->route('votersprofile') ?? null;
         return [
             "name" => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('voter_profiles', 'name')->ignore($this->id)
+                Rule::unique('voter_profiles', 'name')->ignore($id)
             ],
             "firstname" => [
                 'required',

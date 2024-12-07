@@ -16,7 +16,8 @@
                             <DialogTitle as="h3"
                                 class="text-xl font-medium leading-6 text-gray-900 flex justify-between">
                                 Add Voter's Profile
-                                <Link class="-mr-4 -mt-4" :href="route('votersprofile.showposition', 'all')">
+                                <Link class="-mr-4 -mt-4"
+                                    :href="route('votersprofile.showposition', currentVoterPosition)">
                                 <XCircleIcon class="h-8 w-8 text-red-400" />
                                 </Link>
                             </DialogTitle>
@@ -287,7 +288,7 @@ const onSelectVoter = (voter) => {
 const onSelectParent = (c) => {
     form.parent_id = c?.id;
 };
-
+const currentVoterPosition = route().params.position || null;
 watch(
     searchVoterQuery,
     debounce(
