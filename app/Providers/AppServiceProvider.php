@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,6 +14,16 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        Inertia::share([
+            //....
+            'urlPrev'    => function () {
+                if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
+                    return url()->previous();
+                } else {
+                    return 'empty'; // used in javascript to disable back button behavior
+                }
+            },
+        ]);
     }
 
     /**

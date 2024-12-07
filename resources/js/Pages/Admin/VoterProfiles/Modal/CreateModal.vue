@@ -16,10 +16,9 @@
                             <DialogTitle as="h3"
                                 class="text-xl font-medium leading-6 text-gray-900 flex justify-between">
                                 Add Voter's Profile
-                                <button class="-mr-4 -mt-4" onclick="window.history.back()" preserve-state
-                                    preserve-scroll>
-                                    <XCircleIcon class="h-8 w-8 text-red-400" />
-                                </button>
+                                <Link class="-mr-4 -mt-4" :href="route('votersprofile.showposition', 'all')">
+                                <XCircleIcon class="h-8 w-8 text-red-400" />
+                                </Link>
                             </DialogTitle>
                             <form @submit.prevent="submit">
                                 <div class="mt-8 flex gap-6">
@@ -213,7 +212,7 @@ import {
 } from "@headlessui/vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+
 import TextInput from "@/Components/TextInput.vue";
 import VueMultiselect from "vue-multiselect";
 import VueSelect from 'vue3-select-component';
@@ -227,9 +226,10 @@ const props = defineProps({
     subleaders: Array,
     action: String
 });
-// console.log(props)
+
+
 const isOpen = computed(() => props.action == 'create');
-// console.log(props.barangays);
+
 const positions = [
     { label: "COORDINATOR", value: "COORDINATOR" },
     { label: "LEADER", value: "LEADER" },
@@ -259,7 +259,7 @@ const form = useForm({
     remarks: "",
 });
 
-const voters = ref([]);
+// const voters = ref([]);
 const votersOptions = ref([]);
 
 const searchVoterQuery = ref();
@@ -308,7 +308,7 @@ watch(props, () => {
 });
 
 
-
+// const emit = defineEmits(['refreshParentData']);
 const submit = () => {
     form.name = `${form.lastname}, ${form.firstname} ${form.middlename}`;
     form.lastname = form.lastname.toUpperCase();
@@ -316,11 +316,23 @@ const submit = () => {
     form.middlename = form.middlename.toUpperCase();
     form.post(route("votersprofile.store"), {
         onSuccess: () => {
-            form.reset();
+            form.reset('parent_id');
+            form.reset('name');
+            form.reset('firstname');
+            form.reset('lastname');
+            form.reset('middlename');
+            form.reset('extension');
+            form.reset('birthdate');
+            form.reset('purok');
+            form.reset('contact_no');
+            form.reset('gender');
+            form.reset('precinct_no');
+            form.reset('remarks');
             voter_name.value = "";
             toast.success("Profile has been added", {
                 position: toast.POSITION.TOP_RIGHT,
             });
+
         }
     });
 };

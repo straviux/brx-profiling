@@ -80,7 +80,7 @@ const deleteProfile = (voterProfileID) => {
 	});
 };
 
-console.log(props.action);
+
 watch(
 	showResultCount,
 	debounce(() =>
@@ -182,16 +182,12 @@ onMounted(() => {
 							:active="route().current('votersprofile.showposition', 'member')">Member</TabLink>
 					</li>
 				</ul>
-				<!-- <Link
-                    :href="route('votersprofile.create')"
-                    class="text-white font-semibold px-3 py-2 bg-sky-500 hover:bg-sky-600 rounded ml-auto shadow-lg"
-                    >Add Profile</Link
-                > -->
+
 				<Link v-if="hasPermission('create voterprofile')" :href="route('votersprofile.showposition', {
 					position: currentVoterPosition,
 					action: 'create'
 				})" class=" text-emerald-500 underline font-bold px-3 py-2 bg-none rounded ml-auto flex items-center justify-center
-					gap-1 text-xl">
+					gap-1 text-lg">
 				<UserPlusIcon class="h-6 w-6" />New Profile</Link>
 			</div>
 
