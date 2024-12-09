@@ -20,6 +20,7 @@ import {
     FingerPrintIcon,
     ShieldExclamationIcon,
     ArrowRightStartOnRectangleIcon,
+    DocumentChartBarIcon
 } from "@heroicons/vue/20/solid";
 // import {  } from "@heroicons/vue/20/solid";
 // import { UserGroupIcon } from "@heroicons/vue/20/solid";
@@ -66,7 +67,15 @@ import {
                             route().current('votersprofile.showposition')
                             " class="text-white">
                             <UserGroupIcon class="h-5 w-5" />
-                            <span class="-mr-1 font-medium">Profiling</span>
+                            <span class="-mr-1 font-medium">Kiel's Profiling</span>
+                        </SidebarLink>
+                    </li>
+                    <li>
+                        <SidebarLink :href="route('votersprofile.index')" :active="route().current('votersprofile.index') ||
+                            route().current('votersprofile.showposition')
+                            " class="text-white">
+                            <DocumentChartBarIcon class="h-5 w-5" />
+                            <span class="-mr-1 font-medium">Reports</span>
                         </SidebarLink>
                     </li>
                     <li>
