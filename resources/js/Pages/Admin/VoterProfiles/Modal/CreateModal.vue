@@ -48,7 +48,7 @@
                                         <VueMultiselect v-model="voter_name" @search-change="searchVoter"
                                             @update:model-value="onSelectVoter" :options="votersOptions"
                                             :disabled="!form.position || !form.barangay" :close-on-select="true"
-                                            label="voter_name" placeholder="Search voter" />
+                                            :custom-label="customLabel" placeholder="Search voter" />
                                         <InputError class="mt-2" :message="form.errors.name" />
                                     </div>
                                     <div class="w-1/2" v-if="form.position == 'LEADER'">
@@ -262,7 +262,7 @@ const form = useForm({
 
 // const voters = ref([]);
 const votersOptions = ref([]);
-
+const customLabel = (voter) => { return `${voter.voter_name} - ${voter.precinct_no}` }
 const searchVoterQuery = ref();
 
 const searchVoter = (voter) => {

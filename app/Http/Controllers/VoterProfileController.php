@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Validation\Rule;
 
 class VoterProfileController extends Controller
 {
@@ -111,18 +112,139 @@ class VoterProfileController extends Controller
         $query->where('voter_name', 'like', "%{$searchname}%");
 
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
+        $exclude = [];
+        foreach ($profile->members as $mem) {
+            $exclude[] = $mem['name'];
+        };
+        $exclude[] = $profile->leader->name ?? "";
+        $exclude[] = $profile->name ?? "";
+        // dd(implode($exclude));
+
+        $exc_position = [];
+        if ($profile->position == 'COORDINATOR') {
+            $exc_position = ['COORDINATOR', 'SUBLEADER', 'MEMBER'];
+            // $exclude[] = VoterProfile::select('name')->whereIn('position', );
+        }
+        if ($profile->position == 'LEADER') {
+            // $exclude[] = VoterProfile::select('name')->whereIn('position', ['COORDINATOR', 'LEADER', 'MEMBER']);
+            $exc_position = ['COORDINATOR', 'LEADER', 'MEMBER'];
+        }
+        if ($profile->position == 'SUBLEADER') {
+            $exc_position = ['COORDINATOR', 'LEADER', 'SUBLEADER'];
+            // $exclude[] = VoterProfile::select('name')->whereIn('position', ['COORDINATOR', 'LEADER', 'SUBLEADER']);
+        }
+        if ($profile->position == 'MEMBER') {
+            $exc_position = ['COORDINATOR', 'LEADER', 'SUBLEADER', 'MEMBER'];
+            // $exclude[] = VoterProfile::select('name')->whereIn('position', ['COORDINATOR', 'LEADER', 'SUBLEADER', 'MEMBER']);
+        }
+        $query2 = VoterProfile::select('name')->whereIn('position', $exc_position)->get();
+        foreach ($query2 as $exclude_by_position) {
+            $exclude[] = $exclude_by_position['name'];
+        }
+        $query->where('precinct_no', $profile->precinct_no)->whereNotIn('voter_name', $exclude);
+        // if ($profile->position == 'COORDINATOR') {
+        //     $query->whereIn('voter_name', VoterProfile::select('name')->where('position', '=', 'LEADER'));
+        // }
+        // if ($profile->position == 'LEADER') {
+        //     $query->whereIn('voter_name', VoterProfile::select('name')->where('position', '=', 'SUBLEADER'));
+        // }
+        // if ($profile->position == 'SUBLEADER') {
+        //     $query->whereIn('voter_name', VoterProfile::select('name')->where('position', '=', 'MEMBER'));
+        // }
+
         return Inertia::render('Admin/VoterProfiles/ViewProfile', [
             'profile' => $profile,
-            'voters' => $query->whereIn('voter_name', VoterProfile::select('name')->whereNull('parent_id'))->where('precinct_no', $profile->precinct_no)->limit(20)->get(),
+            'voters' => $query->limit(20)->get(),
             'searchquery' => $searchname
         ]);
     }
 
 
-    public function addDownline(CreateVoterProfileRequest $request): RedirectResponse
+    public function addDownline(): RedirectResponse
     {
-        // dd($request->validated());
-        VoterProfile::create($request->validated());
+
+        // dd(request()->validate());
+        // $id = route('votersprofile') ?? nu
+        $query = VoterProfile::where('name', app()->request['name'])->first();
+        // dd($query->id);
+        if (isset($query->id)) {
+            $query->update(['parent_id' => app()->request['parent_id']]);
+        } else {
+            $validatedData = request()->validate([
+                "name" => [
+                    'required',
+                    'string',
+                    'max:255',
+                ],
+                "firstname" => [
+                    'required',
+                    'string',
+                    'max:255'
+                ],
+                "lastname" => [
+                    'required',
+                    'string',
+                    'max:255'
+                ],
+                "middlename" => [
+                    'nullable',
+                    'string',
+                    'max:255'
+                ],
+
+                "barangay" => [
+                    'required',
+                    'string',
+                    'max:255'
+                ],
+                "precinct_no" => [
+                    'required',
+                    'string',
+                    'max:255'
+                ],
+                "position" => [
+                    'required',
+                    'string',
+                    'max:255'
+                ],
+                "contact_no" => [
+                    'nullable',
+                    'string',
+                    'max:255'
+                ],
+                "birthdate" => [
+                    'nullable',
+                    'string',
+                    'max:255'
+                ],
+                "gender" => [
+                    'nullable',
+                    'string',
+                    'max:255'
+                ],
+                "remarks" => [
+                    'nullable',
+                    'string',
+                    'max:500'
+                ],
+                "purok" => [
+                    'nullable',
+                    'string',
+                    'max:255'
+                ],
+                "parent_id" => [
+                    'nullable',
+                    'exists:voter_profiles,id'
+                ],
+
+
+
+            ]);
+
+            VoterProfile::create($validatedData);
+        }
+        // dd($query->id);
+
         return redirect()->back();
     }
 

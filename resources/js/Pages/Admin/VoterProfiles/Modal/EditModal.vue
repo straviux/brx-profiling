@@ -30,13 +30,24 @@
                                                 <div v-if="profile.members.length > 0" class="flex items-center gap-1">
                                                     <ExclamationCircleIcon class="h-4 w-4 text-gray-500" />
                                                     <p class="text-gray-500 text-sm">This profile has dowline. view
-                                                        <Link class="text-blue-500 underline" :href="route('votersprofile.viewprofile', {
+                                                        <a class="text-blue-500 underline" :href="route('votersprofile.viewprofile', {
                                                             id: profile.id,
                                                         })
-                                                            ">here</Link>
+                                                            " target="_blank">here</a>
+                                                    </p>
+                                                </div>
+                                                <div v-if="typeof profile.parent_id == 'number'"
+                                                    class="flex items-center gap-1">
+                                                    <ExclamationCircleIcon class="h-4 w-4 text-gray-500" />
+                                                    <p class="text-gray-500 text-sm">This profile has an upline. view
+                                                        <a class="text-blue-500 underline" :href="route('votersprofile.viewprofile', {
+                                                            id: profile.parent_id,
+                                                        })
+                                                            " target="_blank">here</a>
                                                     </p>
                                                 </div>
                                             </div>
+
                                             <VueMultiselect v-model="form.position" :options="positions"
                                                 :close-on-select="true"
                                                 :disabled="profile.members.length > 0 || typeof profile.parent_id == 'number'"
@@ -47,7 +58,7 @@
                                     <div class="mt-4 flex gap-2">
                                         <div class="w-1/3">
                                             <InputLabel for="lastname" value="Last Name" />
-
+                                            <!-- {{ typeof profile.parent_id }} -->
                                             <TextInput id="lastname" type="text" v-model="form.lastname" autofocus
                                                 class="mt-1 block w-full uppercase" />
                                         </div>

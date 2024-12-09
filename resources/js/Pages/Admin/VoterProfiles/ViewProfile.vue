@@ -36,6 +36,7 @@ const votersOptions = ref([]);
 // );
 const prevUrl = `/votersprofile/position/${props.profile.position.toLowerCase()}`;
 const form = useForm({
+    id: props.profile?.id || "",
     parent_id: props.profile?.parent_id || "",
     name: props.profile?.name || "",
     firstname: props.profile?.firstname || "",
@@ -54,6 +55,7 @@ const form = useForm({
 
 
 const newDownlineform = useForm({
+    id: "",
     parent_id: "",
     name: "",
     firstname: "",
@@ -126,6 +128,7 @@ watch(
             //         children: props.profile?.members || "",
             //     },
             // ];
+            form.id = profile.id || "";
             form.parent_id = profile.parent_id || "";
             form.name = profile.name || "";
             form.firstname = profile.firstname || "";
@@ -167,6 +170,9 @@ const addDownline = () => {
             router.visit('', {
                 only: ['props']
             })
+        },
+        onError: (err) => {
+            console.log(err)
         }
     });
 };
