@@ -71,9 +71,7 @@ import {
                         </SidebarLink>
                     </li>
                     <li>
-                        <SidebarLink :href="route('votersprofile.index')" :active="route().current('votersprofile.index') ||
-                            route().current('votersprofile.showposition')
-                            " class="text-white">
+                        <SidebarLink :href="route('votersprofile.index')" class=" text-white">
                             <DocumentChartBarIcon class="h-5 w-5" />
                             <span class="-mr-1 font-medium">Reports</span>
                         </SidebarLink>
