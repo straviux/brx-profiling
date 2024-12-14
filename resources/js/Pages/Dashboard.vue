@@ -1,9 +1,16 @@
 <script setup>
-import AdminLayout from "@/Layouts/AdminLayout.vue";
+import { computed } from 'vue'
 import { Head } from "@inertiajs/vue3";
+import { usePage } from '@inertiajs/vue3'
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+
+
+const page = usePage()
+const localip = computed(() => page.props.localip)
 </script>
 
 <template>
+
     <Head title="Dashboard" />
 
     <AdminLayout>
@@ -17,6 +24,9 @@ import { Head } from "@inertiajs/vue3";
                 </div>
             </div> -->
             <h1>Welcome {{ $page.props.auth.user.name }}</h1>
+            <div class="flex">You can access this site on your local network thru
+                <pre class="font-semibold"> <span class="underline">{{ localip }}:9000</span></pre>
+            </div>
         </div>
     </AdminLayout>
 </template>

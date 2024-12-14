@@ -32,9 +32,10 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'auth.user' => fn () => $request->user()
+            'auth.user' => fn() => $request->user()
                 ? new UserSharedResource($request->user())
                 : null,
+            'localip' => getHostByName(getHostName())
 
         ];
     }
