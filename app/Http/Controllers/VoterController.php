@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\VoterResource;
 use Illuminate\Http\Request;
 use App\Models\Voter;
+use Faker\Provider\sv_SE\Municipality;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -32,20 +33,26 @@ class VoterController extends Controller
 
     public function findVoter(): Response
     {
-        $bgy = Voter::distinct()->get('barangay_name')->toArray();
+
+        $mun = Voter::distinct()->pluck('municipality_name');
+
         $name = app()->request['searchname'];
+        $municipality = app()->request['filtermunicipality'];
         $barangay = app()->request['filterbarangay'];
         $precinct = app()->request['filterprecinct'];
         $showresults = app()->request['results'] ?? 100;
-        $query = Voter::where('barangay_name', 'LIKE', "%{$barangay}%")
+
+        $bgy = $municipality ? Voter::where('municipality_name', '=', $municipality)->distinct()->pluck('barangay_name') : [];
+        $query = Voter::where('municipality_name', 'LIKE', "%{$municipality}%")->where('barangay_name', 'LIKE', "%{$barangay}%")
             ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%");
 
         return Inertia::render('VotersList/VotersListIndex', [
-            'q' => ['searchname' => $name, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct, 'results' => $showresults],
+            'q' => ['searchname' => $name, 'filtermunicipality' => $municipality, 'filterbarangay' => $barangay, 'filterprecinct' => $precinct, 'results' => $showresults],
+            'municipalities' => $mun,
             'barangays' => $bgy,
-            'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
-            'voters' => VoterResource::collection(
-                $query->paginate($showresults)
+            'precincts' => $barangay ? Voter::where('municipality_name', '=', $municipality)->where('barangay_name', '=', $barangay)->distinct()->pluck('precinct_no') : [],
+            'voters' => !$name && !$municipality ? [] : VoterResource::collection(
+                $query->paginate($showresults)->onEachSide(1)
                     ->through(function ($voter) {
                         return $voter;
                     })

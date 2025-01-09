@@ -141,10 +141,10 @@ watch(props, () => {
 
 onMounted(() => {
 	// console.log(props.voterprofiles);
-	// console.log(props.barangays);
+	console.log(props);
 	barangayOptions.value = props.barangays.map((bgy) => ({
-		label: bgy.barangay_name,
-		value: bgy.barangay_name,
+		label: bgy,
+		value: bgy,
 	}));
 	// console.log(props.precincts);
 });

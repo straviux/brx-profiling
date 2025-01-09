@@ -15,7 +15,7 @@ class VoterResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            // 'id' => $this->id,
             'pro_voter_id' => $this->pro_voter_id,
             'voter_name' => $this->voter_name,
             'precinct_no' => $this->precinct_no,

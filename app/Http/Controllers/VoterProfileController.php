@@ -33,7 +33,7 @@ class VoterProfileController extends Controller
     {
 
 
-        $bgy = Voter::distinct()->get('barangay_name')->toArray();
+        $bgy = Voter::where('municipality_name', '=', 'brooke\'s point')->distinct()->pluck('barangay_name');
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         $name = app()->request['searchname'];
         $barangay = app()->request['filterbarangay'];
@@ -66,7 +66,7 @@ class VoterProfileController extends Controller
                 // 'editdownline' => app()->request['editdownline'],
                 'profile' => fn() => $profile,
                 'barangays' => $bgy,
-                'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
+                'precincts' => $barangay ? Voter::where('municipality_name', '=', 'brooke\'s point')->where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
                 'voterprofiles' => fn() => $voterprofile,
                 'search_count' => count($voterprofile),
                 'total_count' => VoterProfile::count(),
@@ -85,7 +85,7 @@ class VoterProfileController extends Controller
     public function showDownline($id = null): Response
     {
 
-        $bgy = Voter::distinct()->get('barangay_name')->toArray();
+        $bgy = Voter::where('municipality_name', '=', 'brooke\'s point')->distinct()->pluck('barangay_name');
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         $name = app()->request['searchname'];
         $barangay = app()->request['filterbarangay'];
@@ -99,7 +99,7 @@ class VoterProfileController extends Controller
                 // 'profile' => fn() => $profile,
 
                 'barangays' => $bgy,
-                'precincts' => $barangay ? Voter::where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
+                'precincts' => $barangay ? Voter::where('municipality_name', '=', 'brooke\'s point')->where('barangay_name', 'LIKE', "%{$barangay}%")->distinct()->get('precinct_no')->toArray() : [],
             ]
         );
     }
@@ -109,7 +109,7 @@ class VoterProfileController extends Controller
         $searchname = app()->request['searchname'];
         $query = Voter::query();
 
-        $query->where('voter_name', 'like', "%{$searchname}%");
+        $query->where('municipality_name', '=', 'brooke\'s point')->where('voter_name', 'like', "%{$searchname}%");
 
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         $exclude = [];
