@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\VoterResource;
 use Illuminate\Http\Request;
 use App\Models\Voter;
-use Faker\Provider\sv_SE\Municipality;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -43,7 +41,9 @@ class VoterController extends Controller
         $showresults = app()->request['results'] ?? 100;
 
         $bgy = $municipality ? Voter::where('municipality_name', '=', $municipality)->distinct()->pluck('barangay_name') : [];
-        $query = Voter::where('municipality_name', 'LIKE', "%{$municipality}%")->where('barangay_name', 'LIKE', "%{$barangay}%")
+        $query = !$name ? Voter::where('municipality_name', '=', $municipality)->where('barangay_name', 'LIKE', "%{$barangay}%")
+            ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%") :
+            Voter::where('municipality_name', 'LIKE', "%{$municipality}%")->where('barangay_name', 'LIKE', "%{$barangay}%")
             ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%");
 
         return Inertia::render('VotersList/VotersListIndex', [
@@ -68,11 +68,12 @@ class VoterController extends Controller
     {
         // $bgy = Voter::distinct()->get('barangay_name')->toArray();
         $name = $request->searchname ?? "";
+        $municipality = $request->municipality ?? "";
         $barangay = $request->barangay ?? "";
         // $precinct = $request->barangay;
         // // // $showresults = app()->request['results'] ?? 100;
-        $query = Voter::where('barangay_name', 'LIKE', "%{$barangay}%")
-            ->where('voter_name', 'LIKE', "%{$name}%")->orderBy('voter_name', 'asc')->limit(20)->get();
+        $query = Voter::where('municipality_name', '=', $municipality)->where('barangay_name', 'LIKE', "%{$barangay}%")
+            ->where('voter_name', 'LIKE', "%{$name}%")->limit(10)->get();
 
         return response()->json(VoterResource::collection($query));
     }

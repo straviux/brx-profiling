@@ -20,7 +20,8 @@ import {
     FingerPrintIcon,
     ShieldExclamationIcon,
     ArrowRightStartOnRectangleIcon,
-    DocumentChartBarIcon
+    DocumentChartBarIcon,
+    HomeModernIcon
 } from "@heroicons/vue/20/solid";
 // import {  } from "@heroicons/vue/20/solid";
 // import { UserGroupIcon } from "@heroicons/vue/20/solid";
@@ -73,11 +74,18 @@ const toggleMenu = ref(false);
                         </SidebarLink>
                     </li>
                     <li>
+                        <SidebarLink :href="route('christiancommunity.index')" :active="route().current('christiancommunity.index') ||
+                            route().current('christiancommunity.showposition')" class="text-white">
+                            <HomeModernIcon class="h-5 w-5" />
+                            <span class="-mr-1 font-medium">Christian Community</span>
+                        </SidebarLink>
+                    </li>
+                    <!-- <li>
                         <SidebarLink :href="route('votersprofile.index')" class=" text-white">
                             <DocumentChartBarIcon class="h-5 w-5" />
                             <span class="-mr-1 font-medium">Reports</span>
                         </SidebarLink>
-                    </li>
+                    </li> -->
                     <li>
                         <SidebarLink v-if="hasRole('admin')" :href="route('users.index')"
                             :active="route().current('users.index')" class="text-white">

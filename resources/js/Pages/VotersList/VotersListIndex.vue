@@ -168,8 +168,8 @@ onMounted(() => {
 
         <div class="max-w-full mx-auto py-2">
             <div class="mt-2">
-                <div class="flex gap-4 mb-4">
-                    <!--search bar -->
+                <!-- <div class="flex gap-4 mb-4">
+
                     <div class="flex gap-4 w-full">
                         <div class="w-[400px]">
                             <div class="relative flex items-center text-gray-400 focus-within:text-sky-500">
@@ -194,7 +194,7 @@ onMounted(() => {
                                 :options="precinctOptions" placeholder="Select Precinct#" />
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="mt-10">
                     <div class="md:flex justify-between items-baseline gap-2 mb-8"
                         v-if="voters.data && voters.data.length > 10">
@@ -234,25 +234,62 @@ onMounted(() => {
                         <TableRow>
                             <TableHeaderCell class="w-[10px]">#</TableHeaderCell>
                             <TableHeaderCell>Name</TableHeaderCell>
-                            <TableHeaderCell>Municipality</TableHeaderCell>
-                            <TableHeaderCell>Barangay</TableHeaderCell>
+                            <TableHeaderCell class="w-[340px]">Municipality</TableHeaderCell>
+                            <TableHeaderCell class="w-[340px]">Barangay</TableHeaderCell>
                             <TableHeaderCell>Precinct #</TableHeaderCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableDataCell class="px-6 w-[10px] border-collapse border-t border-slate-400">
+                            </TableDataCell>
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 px-2">
+                                <div class="relative flex items-center text-gray-400 focus-within:text-sky-500">
+
+                                    <input type="search" name="leadingIcon" v-model="searchNameQuery" id="searchName"
+                                        placeholder="Search Name"
+                                        class="w-full rounded-sm text-lg text-gray-600 outline-none border border-gray-300 focus:border-blue-300 transition" />
+                                </div>
+                            </TableDataCell>
+
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 px-2">
+                                <VueSelect v-model="filterMunicipalityQuery" placeholder="Select Municipality"
+                                    :options="municipalityOptions" />
+                            </TableDataCell>
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 px-2">
+                                <VueSelect :is-disabled="!filterMunicipalityQuery" v-model="filterBarangayQuery"
+                                    placeholder="Select Barangay" :options="barangayOptions" />
+                            </TableDataCell>
+                            <TableDataCell class="border-collapse border-t border-l border-slate-400 px-2">
+                                <VueSelect :is-disabled="!filterBarangayQuery" v-model="precinctNoQuery"
+                                    :options="precinctOptions" placeholder="Select Precinct#" />
+                            </TableDataCell>
                         </TableRow>
                     </template>
                     <template #default>
                         <TableRow v-if="voters.data && voters.data.length" v-for="(voter, index) in voters.data"
                             :key="'voter_' + voter.pro_voter_id">
-                            <TableDataCell class="px-6 w-[10px] border-collapse border-t border-slate-400">{{ index + 1
+                            <TableDataCell
+                                class="px-6 w-[10px] border-collapse border-t border-slate-400 text-gray-600 text-normal ">
+                                {{ index
+                                    +
+                                    1
                                 }}</TableDataCell>
-                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
-                                voter.voter_name }}</TableDataCell>
+                            <TableDataCell
+                                class="border-collapse border-t border-l border-slate-400 indent-4 text-gray-700 text-lg">
+                                {{
+                                    voter.voter_name }}</TableDataCell>
 
-                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
-                                voter.municipality_name }}</TableDataCell>
-                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
-                                voter.barangay_name }}</TableDataCell>
-                            <TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
-                                voter.precinct_no }}</TableDataCell>
+                            <TableDataCell
+                                class="border-collapse border-t border-l border-slate-400 indent-4 text-gray-700 text-lg">
+                                {{
+                                    voter.municipality_name }}</TableDataCell>
+                            <TableDataCell
+                                class="border-collapse border-t border-l border-slate-400 indent-4 text-gray-700 text-lg">
+                                {{
+                                    voter.barangay_name }}</TableDataCell>
+                            <TableDataCell
+                                class="border-collapse border-t border-l border-slate-400 indent-4 text-gray-700 text-lg">
+                                {{
+                                    voter.precinct_no }}</TableDataCell>
                         </TableRow>
                         <TableRow v-else>
                             <TableDataCell

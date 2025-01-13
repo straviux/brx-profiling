@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { Head, Link } from "@inertiajs/vue3";
 import { usePage } from '@inertiajs/vue3'
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { FingerPrintIcon, IdentificationIcon, Squares2X2Icon, UserGroupIcon, UserPlusIcon } from "@heroicons/vue/20/solid";
+import { FingerPrintIcon, HomeModernIcon, IdentificationIcon, Squares2X2Icon, UserGroupIcon, UserPlusIcon } from "@heroicons/vue/20/solid";
 
 const page = usePage()
 const localip = computed(() => page.props.localip)
@@ -76,40 +76,54 @@ const localip = computed(() => page.props.localip)
 
 
                     <Link :href="route('dashboard')"
-                        class="flex items-center py-6 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg w-1/2 mt-6 px-6 sm:w-1/4 md:w-64 lg:w-64 xl:w-64 xl:mt-0">
+                        class="flex items-center py-6 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg w-1/2 mt-6 px-6 md:w-auto xl:mt-0">
 
 
                     <Squares2X2Icon class="h-8 w-8 text-slate-600" />
 
 
                     <div class="mx-3">
-                        <h4 class="text-xl underline underline-offset-4 font-semibold text-gray-600">Dashboard</h4>
+                        <h4 class="text-xl underline underline-offset-8 font-semibold text-gray-600">Dashboard</h4>
                     </div>
 
                     </Link>
 
                     <Link :href="route('voterslist.index')"
-                        class="flex items-center py-6 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg w-1/2 mt-6 px-6 sm:w-1/4 md:w-64 lg:w-64 xl:w-64 xl:mt-0">
+                        class="flex items-center py-6 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg w-1/2 mt-6 px-6 md:w-auto xl:mt-0">
 
 
                     <FingerPrintIcon class="h-8 w-8 text-slate-600" />
 
 
                     <div class="mx-3">
-                        <h4 class="text-xl underline underline-offset-4 font-semibold text-gray-600">Voters List</h4>
+                        <h4 class="text-xl underline underline-offset-8 font-semibold text-gray-600">Voters List</h4>
                     </div>
 
                     </Link>
 
                     <Link :href="route('votersprofile.index')"
-                        class="flex items-center py-6 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg w-1/2 mt-6 px-6 sm:w-1/4 md:w-64 lg:w-64 xl:w-64 xl:mt-0">
+                        class="flex items-center py-6 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg w-1/2 mt-6 px-6 md:w-auto xl:mt-0">
 
 
                     <UserGroupIcon class="h-8 w-8 text-slate-600" />
 
 
                     <div class="mx-3">
-                        <h4 class="text-xl underline underline-offset-4 font-semibold text-gray-600">Kiel's Profiling
+                        <h4 class="text-xl underline underline-offset-8 font-semibold text-gray-600">Kiel's Profiling
+                        </h4>
+                    </div>
+
+                    </Link>
+
+                    <Link :href="route('votersprofile.index')"
+                        class="flex items-center py-6 rounded-lg bg-white shadow border border-gray-300 transition hover:-translate-y-2 duration-150 hover:shadow-lg w-1/2 mt-6 px-6 md:w-auto xl:mt-0">
+
+
+                    <HomeModernIcon class="h-8 w-8 text-slate-600" />
+
+
+                    <div class="mx-3">
+                        <h4 class="text-xl underline underline-offset-8 font-semibold text-gray-600">Christian Community
                         </h4>
                     </div>
 

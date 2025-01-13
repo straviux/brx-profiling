@@ -24,8 +24,8 @@ import {
 	UserPlusIcon,
 } from '@heroicons/vue/20/solid';
 
-import CreateModal from '@/Pages/Admin/VoterProfiles/Modal/CreateModal.vue';
-import EditModal from '@/Pages/Admin/VoterProfiles/Modal/EditModal.vue';
+import CreateModal from '@/Pages/Admin/ChristianCommunity/Modal/CreateModal.vue';
+import EditModal from '@/Pages/Admin/ChristianCommunity/Modal/EditModal.vue';
 import Pagination from '@/Components/Pagination.vue';
 
 const { hasPermission } = usePermission();
@@ -37,6 +37,7 @@ const props = defineProps({
 	action: String,
 	q: Object,
 	profile: Object,
+	municipalities: Array,
 	barangays: Array,
 	precincts: Array,
 	voterprofiles: [Object, Array],
@@ -47,11 +48,18 @@ const props = defineProps({
 	leaders: [Object, Array],
 	subleaders: [Object, Array]
 });
-const barangayOptions = ref([]);
+// const barangayOptions = ref([]);
+const municipalityOptions = ref([]);
+const barangayOptions = computed(() =>
+	props.barangays?.map((bgy) => ({
+		label: bgy,
+		value: bgy,
+	}))
+);
 const precinctOptions = computed(() =>
 	props.precincts?.map((p) => ({
-		label: p.precinct_no,
-		value: p.precinct_no,
+		label: p,
+		value: p,
 	}))
 );
 const gridview = useStorage('gridview', false);
@@ -60,6 +68,7 @@ const currentVoterPosition = route().params.position || null;
 const showConfirmDeleteVoterProfileModal = ref(false);
 const modalVoterProfileData = ref({ id: null, name: null });
 
+const filterMunicipalityQuery = ref(props.q?.filtermunicipality?.toUpperCase());
 const filterBarangayQuery = ref(props.q?.filterbarangay?.toUpperCase());
 const searchNameQuery = ref(props.q?.searchname?.toUpperCase());
 const precinctNoQuery = ref(props.q?.filterprecinct?.toUpperCase());
@@ -75,7 +84,7 @@ const closeModal = () => {
 };
 const deleteProfile = (voterProfileID) => {
 	// console.log(voterProfileID);
-	form.delete(route('votersprofile.destroy', voterProfileID), {
+	form.delete(route('christiancommunity.destroy', voterProfileID), {
 		onSuccess: () => closeModal(),
 	});
 };
@@ -105,6 +114,22 @@ watch(
 			),
 		500
 	)
+);
+
+
+watch(
+	filterMunicipalityQuery,
+	debounce(() => {
+		precinctNoQuery.value = null;
+		filterBarangayQuery.value = null;
+		router.get(
+			'',
+			{
+				filtermunicipality: filterMunicipalityQuery.value?.toLowerCase(),
+			},
+			{ preserveState: true, preserveScroll: true, replace: true }
+		);
+	}, 500)
 );
 
 watch(
@@ -142,7 +167,7 @@ watch(props, () => {
 onMounted(() => {
 	// console.log(props.voterprofiles);
 	console.log(props);
-	barangayOptions.value = props.barangays.map((bgy) => ({
+	municipalityOptions.value = props.municipalities.map((bgy) => ({
 		label: bgy,
 		value: bgy,
 	}));
@@ -155,35 +180,37 @@ onMounted(() => {
 	<Head title="Voter's Profile" />
 
 	<AdminLayout>
-		<template #header>Kiel's Voters Profile</template>
+		<template #header>Christian Community Voter's Profile</template>
 
 		<div class="max-w-full mx-auto py-4">
 			<div
 				class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 flex justify-center items-center">
 				<ul class="flex flex-wrap -mb-px">
 					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'all')"
-							:active="route().current('votersprofile.showposition', 'all')">All</TabLink>
+						<TabLink :href="route('christiancommunity.showposition', 'all')"
+							:active="route().current('christiancommunity.showposition', 'all')">All</TabLink>
 					</li>
 					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'coordinator')"
-							:active="route().current('votersprofile.showposition', 'coordinator')">Coordinator</TabLink>
+						<TabLink :href="route('christiancommunity.showposition', 'coordinator')"
+							:active="route().current('christiancommunity.showposition', 'coordinator')">Coordinator
+						</TabLink>
 					</li>
 					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'leader')"
-							:active="route().current('votersprofile.showposition', 'leader')">Leader</TabLink>
+						<TabLink :href="route('christiancommunity.showposition', 'leader')"
+							:active="route().current('christiancommunity.showposition', 'leader')">Leader</TabLink>
 					</li>
 					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'subleader')"
-							:active="route().current('votersprofile.showposition', 'subleader')">SubLeader</TabLink>
+						<TabLink :href="route('christiancommunity.showposition', 'subleader')"
+							:active="route().current('christiancommunity.showposition', 'subleader')">SubLeader
+						</TabLink>
 					</li>
 					<li>
-						<TabLink :href="route('votersprofile.showposition', 'member')"
-							:active="route().current('votersprofile.showposition', 'member')">Member</TabLink>
+						<TabLink :href="route('christiancommunity.showposition', 'member')"
+							:active="route().current('christiancommunity.showposition', 'member')">Member</TabLink>
 					</li>
 				</ul>
 
-				<Link v-if="hasPermission('create voterprofile')" :href="route('votersprofile.showposition', {
+				<Link v-if="hasPermission('create voterprofile')" :href="route('christiancommunity.showposition', {
 					position: currentVoterPosition,
 					action: 'create'
 				})" class=" text-emerald-500 underline font-bold px-3 py-2 bg-none rounded ml-auto flex items-center justify-center
@@ -204,15 +231,13 @@ onMounted(() => {
 								class="w-full pl-14 pr-4 rounded text-sm text-gray-600 outline-none border border-gray-300 focus:border-blue-300 transition" />
 						</div>
 					</div>
+					<div class="w-[340px] flex items-center rounded-lg">
+
+						<VueSelect v-model="filterMunicipalityQuery" placeholder="Select Municipality"
+							:options="municipalityOptions" />
+					</div>
 
 					<div class="w-[340px] flex items-center rounded-lg">
-						<!-- <VueMultiselect
-                            v-model="filterBarangayQuery"
-                            :options="barangayOptions"
-                            :close-on-select="true"
-                            placeholder="SELECT BARANGAY"
-                        /> -->
-						<!-- {{ barangayOptions }} -->
 						<VueSelect v-model="filterBarangayQuery" placeholder="Select Barangay"
 							:options="barangayOptions" />
 					</div>
@@ -282,11 +307,7 @@ onMounted(() => {
 									{{ profile.precinct_no }}
 								</p>
 							</div>
-							<!-- <img
-                                class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-                                src="https://qph.cf2.quoracdn.net/main-thumb-554097988-200-xietklpojlcioqxaqgcyykzfxblvoqrb.jpeg"
-                                alt=""
-                            /> -->
+
 						</div>
 						<div class="px-6 py-2" v-if="currentVoterPosition == 'coordinator'">
 							<h3 class="text-gray-600 ml-4">Leaders</h3>
@@ -367,7 +388,7 @@ onMounted(() => {
 									</button>
 								</div>
 								<div class="flex w-0 flex-1 text-blue-400 hover:text-blue-600">
-									<Link v-if="hasPermission('edit voterprofile')" :href="route('votersprofile.showposition', {
+									<Link v-if="hasPermission('edit voterprofile')" :href="route('christiancommunity.showposition', {
 										position: currentVoterPosition,
 										id: profile.id,
 										action: 'edit'
@@ -380,7 +401,7 @@ onMounted(() => {
 								</div>
 
 								<div class="-ml-px flex w-0 flex-1 text-purple-500 hover:text-purple-600">
-									<Link :href="route('votersprofile.viewprofile', {
+									<Link :href="route('christiancommunity.viewprofile', {
 										id: profile.id,
 									})
 										" class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-1 rounded-br-lg border border-transparent py-4 text-xs font-semibold">
@@ -399,6 +420,7 @@ onMounted(() => {
 							<TableHeaderCell class="w-[10px]">#</TableHeaderCell>
 							<TableHeaderCell @click="sortColumnBy('name')">Name</TableHeaderCell>
 							<TableHeaderCell @click="sortColumnBy('position')">Position</TableHeaderCell>
+							<TableHeaderCell @click="sortColumnBy('municipality')">Municipality</TableHeaderCell>
 							<TableHeaderCell @click="sortColumnBy('barangay')">Barangay</TableHeaderCell>
 							<TableHeaderCell @click="sortColumnBy('precinct_no')">Precinct #</TableHeaderCell>
 							<TableHeaderCell class="w-[160px]">Action</TableHeaderCell>
@@ -419,6 +441,9 @@ onMounted(() => {
 								voter.position
 							}}</TableDataCell>
 							<TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
+								voter.municipality
+							}}</TableDataCell>
+							<TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
 								voter.barangay
 							}}</TableDataCell>
 							<TableDataCell class="border-collapse border-t border-l border-slate-400 indent-1">{{
@@ -426,7 +451,7 @@ onMounted(() => {
 							}}</TableDataCell>
 							<TableDataCell class="border-collapse border-t border-l border-slate-400">
 								<div class="flex space-x-6 justify-center">
-									<Link v-if="hasPermission('edit voterprofile')" :href="route('votersprofile.showposition', {
+									<Link v-if="hasPermission('edit voterprofile')" :href="route('christiancommunity.showposition', {
 										position: currentVoterPosition,
 										action: 'edit',
 										id: voter.id,
@@ -448,7 +473,7 @@ onMounted(() => {
 						<TableRow v-else>
 							<TableDataCell
 								class="px-6 py-8 w-[10px] border-collapse border-t border-slate-400 text-center"
-								colspan="6">No data to be displayed</TableDataCell>
+								colspan="7">No data to be displayed</TableDataCell>
 						</TableRow>
 					</template>
 				</Table>
@@ -485,8 +510,9 @@ onMounted(() => {
 				<EditModal v-if="props.action == 'edit' && hasPermission('edit voterprofile')" :profile="props.profile"
 					:barangays="barangayOptions" :position="currentVoterPosition" />
 				<CreateModal v-if="props.action == 'create' && hasPermission('create voterprofile')"
-					:barangays="barangayOptions" :coordinators="props.coordinators" :leaders="props.leaders"
-					:subleaders="props.subleaders" :position="currentVoterPosition" :action="props.action" />
+					:municipalities="municipalityOptions" :barangays="barangayOptions"
+					:coordinators="props.coordinators" :leaders="props.leaders" :subleaders="props.subleaders"
+					:position="currentVoterPosition" :action="props.action" />
 
 				<!-- <EditDownlineModal v-if="props.q.showdownline" /> -->
 			</div>

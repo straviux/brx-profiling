@@ -17,21 +17,27 @@
                                 class="text-xl font-medium leading-6 text-gray-900 flex justify-between">
                                 Add Voter's Profile
                                 <Link class="-mr-4 -mt-4"
-                                    :href="route('votersprofile.showposition', currentVoterPosition)">
+                                    :href="route('christiancommunity.showposition', currentVoterPosition)">
                                 <XCircleIcon class="h-8 w-8 text-red-400" />
                                 </Link>
                             </DialogTitle>
                             <form @submit.prevent="submit">
                                 <div class="mt-8 flex gap-6">
-
-                                    <div class="w-1/2">
+                                    <div class="w-1/3">
+                                        <InputLabel for="municipality" value="Municipality" />
+                                        <VueSelect v-model="form.municipality" placeholder="Select Municipality"
+                                            :options="municipalityOptions" @option-deselected="() => resetForm()" />
+                                        <InputError class="mt-2" :message="form.errors.municipality"
+                                            v-if="!form.municipality" />
+                                    </div>
+                                    <div class="w-1/3">
                                         <InputLabel for="barangay" value="Barangay" />
                                         <VueSelect v-model="form.barangay" placeholder="Select Barangay"
                                             :options="barangayOptions" @option-deselected="() => resetForm()" />
                                         <InputError class="mt-2" :message="form.errors.barangay"
                                             v-if="!form.barangay" />
                                     </div>
-                                    <div class="w-1/2">
+                                    <div class="w-1/3">
                                         <InputLabel for="position" value="Position" />
                                         <!-- <VueMultiselect v-model="form.position" :options="positions"
                                             :close-on-select="true" class="uppercase" placeholder="Select position" /> -->
@@ -222,6 +228,7 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 const props = defineProps({
     barangays: [Array, Object],
+    municipalities: [Array, Object],
     coordinators: Array,
     leaders: Array,
     subleaders: Array,
@@ -237,6 +244,7 @@ const positions = [
     { label: "SUBLEADER", value: "SUBLEADER" },
     { label: "MEMBER", value: "MEMBER" }];
 
+const municipalityOptions = ref([]);
 const barangayOptions = ref([]);
 const coordinator = ref([]);
 const leader = ref([]);
@@ -250,6 +258,7 @@ const form = useForm({
     lastname: "",
     middlename: "",
     extension: "",
+    municipality: "",
     barangay: "",
     birthdate: "",
     purok: "",
@@ -264,6 +273,7 @@ const form = useForm({
 const votersOptions = ref([]);
 const customLabel = (voter) => { return `${voter.voter_name} - ${voter.precinct_no}` }
 const searchVoterQuery = ref();
+// const municipalityQuery = ref();
 
 const searchVoter = (voter) => {
     searchVoterQuery.value = voter;
@@ -294,19 +304,39 @@ watch(
     debounce(
         (q) =>
             axios.get(
-                route("voterslist.api", { searchname: q, barangay: form.barangay, municipality: `brooke's point` })
+                route("voterslist.api", { searchname: q, barangay: form.barangay, municipality: form.municipality })
             ).then((res) => votersOptions.value = res.data),
         1000
     )
 );
+watch(
+    form,
+    debounce(
+        // (q) => { console.log(q) },
+        // 1000
+        (q) =>
+            router.get(
+                '',
+                {
+                    filtermunicipality: q.municipality.toLowerCase(), filterbarangay: q.barangay.toLowerCase(),
+                },
+                // filtermunicipality: q.municipality.toLowerCase()
+                { preserveState: true, preserveScroll: true, replace: true }
+            ),
+        500
+    )
+);
 watch(props, () => {
+
     // console.log(props.barangays);
     barangayOptions.value = props.barangays.map((bgy) => ({
         label: bgy.label,
         value: bgy.value,
     }));
-    // console.log(barangayOptions.value)
-    // coordinators.value = props.coordinators;
+    municipalityOptions.value = props.municipalities.map((mun) => ({
+        label: mun.label,
+        value: mun.value,
+    }));
 });
 
 const resetForm = () => {
@@ -315,12 +345,21 @@ const resetForm = () => {
 
 // const emit = defineEmits(['refreshParentData']);
 const submit = () => {
+
+
     form.name = `${form.lastname}, ${form.firstname} ${form.middlename}`;
     form.lastname = form.lastname.toUpperCase();
     form.firstname = form.firstname.toUpperCase();
     form.middlename = form.middlename.toUpperCase();
-    form.post(route("votersprofile.store"), {
+    form.post(route("christiancommunity.store"), {
         onSuccess: () => {
+
+
+        },
+        onError: (err) => {
+            console.log(err.name)
+        },
+        onFinish: (q) => {
             form.reset('parent_id');
             form.reset('name');
             form.reset('firstname');
@@ -337,10 +376,6 @@ const submit = () => {
             toast.success("Profile has been added", {
                 position: toast.POSITION.TOP_RIGHT,
             });
-
-        },
-        onError: (err) => {
-            console.log(err.name)
         }
     });
 };
