@@ -8,6 +8,7 @@ import SidebarLink from "@/Components/SidebarLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
 import { usePermission } from "@/composable/permissions";
+import { DynamicHeroicon } from 'vue-dynamic-heroicons';
 // import ToastList from "@/Components/ToastList.vue";
 const showingNavigationDropdown = ref(false);
 
@@ -21,7 +22,8 @@ import {
     ShieldExclamationIcon,
     ArrowRightStartOnRectangleIcon,
     DocumentChartBarIcon,
-    HomeModernIcon
+    HomeModernIcon,
+    HeartIcon
 } from "@heroicons/vue/20/solid";
 // import {  } from "@heroicons/vue/20/solid";
 // import { UserGroupIcon } from "@heroicons/vue/20/solid";
@@ -29,15 +31,18 @@ import {
 // import { FingerPrintIcon } from "@heroicons/vue/20/solid";
 // import { ArrowRightStartOnRectangleIcon } from "@heroicons/vue/20/solid";
 const toggleMenu = ref(false);
+
 </script>
 
 <template>
     <div class="w-full h-full">
         <!-- component -->
+
         <aside
-            class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-[#2C3639] transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
-            @click="toggleMenu != toggleMenu">
-            <div>
+            class="hidden fixed z-10 top-0 pb-3 px-2 w-full md:flex flex-col justify-between h-screen border-r bg-[#2C3639] transition duration-300 md:w-[12%]"
+            :class="{ '!flex': toggleMenu }">
+
+            <div class="block">
                 <div class="-mx-6 px-6 py-4">
                     <a href="#" title="home" class="text-2xl font-bold font-mono text-white">
                         <!-- <img
@@ -49,7 +54,7 @@ const toggleMenu = ref(false);
                     </a>
                 </div>
 
-                <ul class="space-y-2 tracking-wide mt-8">
+                <ul class="space-y-6 md:space-y-4 tracking-wide mt-8 text-normal md:text-sm">
                     <li>
                         <SidebarLink :href="route('dashboard')" :active="route().current('dashboard')"
                             class="text-white">
@@ -76,7 +81,7 @@ const toggleMenu = ref(false);
                     <li>
                         <SidebarLink :href="route('christiancommunity.index')" :active="route().current('christiancommunity.index') ||
                             route().current('christiancommunity.showposition')" class="text-white">
-                            <HomeModernIcon class="h-5 w-5" />
+                            <HeartIcon class="h-5 w-5" />
                             <span class="-mr-1 font-medium">Christian Community</span>
                         </SidebarLink>
                     </li>
@@ -120,20 +125,22 @@ const toggleMenu = ref(false);
                 </Link>
             </div>
         </aside>
-        <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
+
+        <div class="ml-auto mb-6 w-full md:w-[88%]">
             <div class="sticky z-10 top-0 h-16 border-b bg-[#2C3639] lg:py-2.5">
                 <div class="px-6 flex items-center justify-between space-x-4">
-                    <h5 hidden class="text-2xl text-white font-medium lg:block">
+                    <h5 class="text-xl md:text-2xl text-white font-medium lg:block">
                         <slot name="header" />
                     </h5>
-                    <button class="w-12 h-16 -mr-2 border-r lg:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 my-auto" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                    <button class="w-12 h-16 -mr-2 border-none lg:hidden">
+                        <Transition>
+                            <DynamicHeroicon :name="toggleMenu ? 'x' : 'menu'"
+                                class="text-gray-50 button transition-all" :size="9"
+                                @click="toggleMenu = !toggleMenu" />
+                        </Transition>
                     </button>
-                    <div class="flex space-x-4">
+                    <!-- <div v-if="!toggleMenu" class="h-full w-full">test</div> -->
+                    <div class="space-x-4 hidden md:flex">
                         <!-- <button aria-label="notification"
                             class="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto text-gray-600"
@@ -159,3 +166,28 @@ const toggleMenu = ref(false);
         </div>
     </div>
 </template>
+<style>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+}
+</style>

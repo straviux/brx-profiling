@@ -35,15 +35,16 @@ class VoterController extends Controller
         $mun = Voter::distinct()->pluck('municipality_name');
 
         $name = app()->request['searchname'];
+        $list_year = app()->request['list_year'];
         $municipality = app()->request['filtermunicipality'];
         $barangay = app()->request['filterbarangay'];
         $precinct = app()->request['filterprecinct'];
         $showresults = app()->request['results'] ?? 100;
 
         $bgy = $municipality ? Voter::where('municipality_name', '=', $municipality)->distinct()->pluck('barangay_name') : [];
-        $query = !$name ? Voter::where('municipality_name', '=', $municipality)->where('barangay_name', 'LIKE', "%{$barangay}%")
+        $query = !$name ? Voter::where('elect_year', '=', $list_year)->where('municipality_name', '=', $municipality)->where('barangay_name', 'LIKE', "%{$barangay}%")
             ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%") :
-            Voter::where('municipality_name', 'LIKE', "%{$municipality}%")->where('barangay_name', 'LIKE', "%{$barangay}%")
+            Voter::where('elect_year', '=', $list_year)->where('municipality_name', 'LIKE', "%{$municipality}%")->where('barangay_name', 'LIKE', "%{$barangay}%")
             ->where('voter_name', 'LIKE', "%{$name}%")->where('precinct_no', 'LIKE', "%{$precinct}%");
 
         return Inertia::render('VotersList/VotersListIndex', [
@@ -59,7 +60,7 @@ class VoterController extends Controller
                     ->withQueryString()
             ),
             'search_count' => $query->count(),
-            'total_count' => Voter::count(),
+            'total_count' => Voter::where('elect_year', '=', $list_year)->count(),
 
         ]);
     }
@@ -72,7 +73,7 @@ class VoterController extends Controller
         $barangay = $request->barangay ?? "";
         // $precinct = $request->barangay;
         // // // $showresults = app()->request['results'] ?? 100;
-        $query = Voter::where('municipality_name', '=', $municipality)->where('barangay_name', 'LIKE', "%{$barangay}%")
+        $query = Voter::where('elect_year', '=', 2025)->where('municipality_name', '=', $municipality)->where('barangay_name', 'LIKE', "%{$barangay}%")
             ->where('voter_name', 'LIKE', "%{$name}%")->limit(10)->get();
 
         return response()->json(VoterResource::collection($query));

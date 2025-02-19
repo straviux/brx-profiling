@@ -33,7 +33,7 @@ class VoterProfileController extends Controller
     {
 
 
-        $bgy = Voter::where('municipality_name', '=', 'brooke\'s point')->distinct()->pluck('barangay_name');
+        $bgy = Voter::where('municipality_name', '=', 'brooke\'s point')->where('elect_year', '=', '2025')->distinct()->pluck('barangay_name');
         $profile = VoterProfile::where('id', $id)->with('members')->with('leader')->first();
         $name = app()->request['searchname'];
         $barangay = app()->request['filterbarangay'];
