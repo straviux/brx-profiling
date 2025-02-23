@@ -159,7 +159,7 @@ const toggleMenu = ref(false);
                 </div>
             </div>
 
-            <div class="px-6 pt-6 min-h-[calc(100vh-6rem)]">
+            <div class="px-4 md:px-6 pt-6 min-h-[calc(100vh-6rem)]">
                 <!-- <ToastList /> -->
                 <slot />
             </div>

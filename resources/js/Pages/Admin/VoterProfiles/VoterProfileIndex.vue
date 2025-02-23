@@ -23,10 +23,14 @@ import {
 	IdentificationIcon,
 	UserPlusIcon,
 } from '@heroicons/vue/20/solid';
+import { DynamicHeroicon } from 'vue-dynamic-heroicons';
 
 import CreateModal from '@/Pages/Admin/VoterProfiles/Modal/CreateModal.vue';
 import EditModal from '@/Pages/Admin/VoterProfiles/Modal/EditModal.vue';
 import Pagination from '@/Components/Pagination.vue';
+
+import { isAndroid, isIOS, isMobile } from '@basitcodeenv/vue3-device-detect'
+import MobileTabLink from '@/Components/MobileTabLink.vue';
 
 const { hasPermission } = usePermission();
 const sortColumnBy = (columnName) => {
@@ -45,7 +49,8 @@ const props = defineProps({
 	voters: [Object, Array],
 	coordinators: [Object, Array],
 	leaders: [Object, Array],
-	subleaders: [Object, Array]
+	subleaders: [Object, Array],
+	summary: [Object, Array],
 });
 const barangayOptions = ref([]);
 const precinctOptions = computed(() =>
@@ -78,6 +83,12 @@ const deleteProfile = (voterProfileID) => {
 	form.delete(route('votersprofile.destroy', voterProfileID), {
 		onSuccess: () => closeModal(),
 	});
+};
+
+
+const showFilterModal = ref(false);
+const closeFilterModal = () => {
+	showFilterModal.value = false;
 };
 
 
@@ -157,31 +168,60 @@ onMounted(() => {
 	<AdminLayout>
 		<template #header>Kiel's Voters Profile</template>
 
-		<div class="max-w-full mx-auto py-4">
+
+		<!-- DESKTOP VIEW -->
+		<div class="max-w-full mx-auto py-4" v-if="!isMobile && !isAndroid && !isIOS">
 			<div
-				class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 flex justify-center items-center">
-				<ul class="flex flex-wrap -mb-px">
-					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'all')"
-							:active="route().current('votersprofile.showposition', 'all')">All</TabLink>
-					</li>
-					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'coordinator')"
-							:active="route().current('votersprofile.showposition', 'coordinator')">Coordinator</TabLink>
-					</li>
-					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'leader')"
-							:active="route().current('votersprofile.showposition', 'leader')">Leader</TabLink>
-					</li>
-					<li class="me-2">
-						<TabLink :href="route('votersprofile.showposition', 'subleader')"
-							:active="route().current('votersprofile.showposition', 'subleader')">SubLeader</TabLink>
-					</li>
-					<li>
-						<TabLink :href="route('votersprofile.showposition', 'member')"
-							:active="route().current('votersprofile.showposition', 'member')">Member</TabLink>
-					</li>
-				</ul>
+				class="text-normal font-medium text-center text-gray-500 border-b border-gray-200 flex justify-center items-center">
+				<div class="flex space-x-16 items-center text-normal mb-20">
+					<MobileTabLink :href="route('votersprofile.showposition', 'all')"
+						:active="route().current('votersprofile.showposition', 'all')"
+						class="flex flex-col justify-center items-center">
+						<button class="btn btn-circle btn-lg"
+							:class="{ 'shadow-lg bg-emerald-400 text-white': route().current('votersprofile.showposition', 'all') }">A</button>
+
+						All
+						<div class="badge bg-pink-400 text-white -mt-[90px] border-2  text-[10px] -mr-12">{{ summary.all
+						}}
+						</div>
+					</MobileTabLink>
+					<MobileTabLink :href="route('votersprofile.showposition', 'coordinator')"
+						:active="route().current('votersprofile.showposition', 'coordinator')"
+						class="flex flex-col justify-center items-center">
+						<button class="btn btn-circle btn-lg"
+							:class="{ 'shadow-lg bg-emerald-400 text-white': route().current('votersprofile.showposition', 'coordinator') }">C</button>
+						Coordinator<div class="badge bg-pink-400 text-white -mt-[90px] border-2  text-[10px] -mr-12">{{
+							summary.coordinator
+						}}</div>
+					</MobileTabLink>
+					<MobileTabLink :href="route('votersprofile.showposition', 'leader')"
+						:active="route().current('votersprofile.showposition', 'leader')"
+						class="flex flex-col justify-center items-center">
+						<button class="btn btn-circle btn-lg"
+							:class="{ 'shadow-lg bg-emerald-400 text-white': route().current('votersprofile.showposition', 'leader') }">L</button>Leader
+						<div class="badge bg-pink-400 text-white -mt-[90px] border-2  text-[10px] -mr-12">
+							{{ summary.leader }}
+						</div>
+					</MobileTabLink>
+					<MobileTabLink :href="route('votersprofile.showposition', 'subleader')"
+						:active="route().current('votersprofile.showposition', 'subleader')"
+						class="flex flex-col justify-center items-center">
+						<button class="btn btn-circle btn-lg"
+							:class="{ 'shadow-lg bg-emerald-400 text-white': route().current('votersprofile.showposition', 'subleader') }">S</button>Subleader
+						<div class="badge bg-pink-400 text-white -mt-[90px] border-2  text-[10px] -mr-12">{{
+							summary.subleader }}
+						</div>
+					</MobileTabLink>
+					<MobileTabLink :href="route('votersprofile.showposition', 'member')"
+						:active="route().current('votersprofile.showposition', 'member')"
+						class="flex flex-col justify-center items-center">
+						<button class="btn btn-circle btn-lg"
+							:class="{ 'shadow-lg bg-emerald-400 text-white': route().current('votersprofile.showposition', 'member') }">M</button>Member
+						<div class="badge bg-pink-400 text-white -mt-[90px] border-2  text-[10px] -mr-12">
+							{{ summary.member }}
+						</div>
+					</MobileTabLink>
+				</div>
 
 				<Link v-if="hasPermission('create voterprofile')" :href="route('votersprofile.showposition', {
 					position: currentVoterPosition,
@@ -491,6 +531,144 @@ onMounted(() => {
 				<!-- <EditDownlineModal v-if="props.q.showdownline" /> -->
 			</div>
 		</div>
+		<!-- END OF DESKTOP VIEW -->
+
+		<!-- MOBILE/ANDROID/IOS VIEW -->
+		<div class="max-w-full mx-auto py-2" v-else>
+
+			<div class="flex flex-wrap justify-between items-center text-normal mb-20">
+				<MobileTabLink :href="route('votersprofile.showposition', 'all')"
+					:active="route().current('votersprofile.showposition', 'all')"
+					class="flex flex-col justify-center items-center">
+					<button class="btn btn-circle btn-sm">A</button>
+
+					All
+					<div class="badge bg-pink-400 badge-sm text-white -mt-16 -mr-8">{{ summary.all }}</div>
+				</MobileTabLink>
+				<MobileTabLink :href="route('votersprofile.showposition', 'coordinator')"
+					:active="route().current('votersprofile.showposition', 'coordinator')"
+					class="flex flex-col justify-center items-center">
+					<button class="btn btn-circle btn-sm">C</button>
+					Coordinator<div class="badge bg-pink-400 badge-sm text-white -mt-16 -mr-8">{{ summary.coordinator
+					}}</div>
+				</MobileTabLink>
+				<MobileTabLink :href="route('votersprofile.showposition', 'leader')"
+					:active="route().current('votersprofile.showposition', 'leader')"
+					class="flex flex-col justify-center items-center">
+					<button class="btn btn-circle btn-sm">L</button>Leader<div
+						class="badge bg-pink-400 badge-sm text-white -mt-16 -mr-8">
+						{{ summary.leader }}
+					</div>
+				</MobileTabLink>
+				<MobileTabLink :href="route('votersprofile.showposition', 'subleader')"
+					:active="route().current('votersprofile.showposition', 'subleader')"
+					class="flex flex-col justify-center items-center">
+					<button class="btn btn-circle btn-sm">S</button>Subleader<div
+						class="badge bg-pink-400 badge-sm text-white -mt-16 -mr-8">{{ summary.subleader }}</div>
+				</MobileTabLink>
+				<MobileTabLink :href="route('votersprofile.showposition', 'member')"
+					:active="route().current('votersprofile.showposition', 'member')"
+					class="flex flex-col justify-center items-center">
+					<button class="btn btn-circle btn-sm">M</button>Member<div
+						class="badge bg-pink-400 badge-sm text-white -mt-16 -mr-8">
+						{{ summary.member }}
+					</div>
+				</MobileTabLink>
+			</div>
+
+			<!-- POSITION SELECTION/SEARCH NAME -->
+			<div class="join flex  shadow border">
+
+
+				<button class="btn join-item bg-purple-500 text-white border-0" @click="
+					showFilterModal = !showFilterModal
+					">
+					<DynamicHeroicon name="filter" :outline="true" :size="6" />
+				</button>
+				<input class="input join-item w-full focus:outline-none" placeholder="Search name"
+					v-model="searchNameQuery" />
+				<!-- <select class="select text-xs select-bordered focus:outline-none join-item w-1/4">
+					<option disabled selected>Bgy</option>
+					<option v-for="bgy in barangays">{{ bgy }}</option>
+
+				</select>
+				<select class="select text-xs select-bordered focus:outline-none join-item w-1/3">
+					<option disabled selected>Precinct</option>
+					<option v-for="bgy in barangays">{{ bgy }}</option>
+
+				</select> -->
+				<button class="btn join-item bg-emerald-500 text-white border-0">
+					<DynamicHeroicon name="plus" :outline="true" :size="6" />
+				</button>
+			</div>
+
+			<!-- LIST RESULT -->
+			<div class="mt-8">
+				<!-- <div v-for="(profile, index) in voterprofiles.data" :key="'profile_' + profile.id" class="py-1">
+					{{ profile.name }}
+				</div> -->
+				<div v-for="(profile, index) in voterprofiles.data" :key="'profile_' + profile.id"
+					class="px-2 py-3 border-b flex flex-col gap-2">
+					<div class="flex">
+						<p class="text-gray-600 w-[30px] text-xs mt-1 -ml-1">{{ index + 1 }}. </p>
+						<div class="w-full flex justify-between">
+							<p class="pr-2">{{ profile.name }}</p>
+							<p class="font-semibold">{{ profile.precinct_no }}</p>
+						</div>
+					</div>
+					<div class="text-xs ml-7 text-gray-500 flex justify-between">
+						<div>{{ profile.barangay }}</div>
+						<div class="font-semibold">{{ profile.position }}</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<Modal marginTop="md" maxWidth="lg" :show="showFilterModal" @close="closeFilterModal">
+			<div class="p-4">
+				<h2 class="text-lg font-semibold text-slate-800">
+					Filter Options
+				</h2>
+
+				<div class="mt-6 flex justify-between">
+					<div class="flex items-center gap-1">
+						<label class="text-xs text-gray-500">Show Results</label>
+						<select class="py-0 rounded-sm text-gray-500 text-sm border-gray-400" v-model="showResultCount">
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+							<option selected value="100">100</option>
+							<option value="200">200</option>
+						</select>
+					</div>
+
+					<!-- <div class="flex gap-1 items-center">
+						<label class="text-xs text-gray-5">Voters List</label>
+						<select class="py-0 rounded-sm text-gray-500 text-sm border-gray-400" v-model="list_year">
+							<option value="2024">2024</option>
+							<option selected value="2025">2025</option>
+						</select>
+					</div> -->
+				</div>
+
+				<div class="mt-6">
+					<VueSelect v-model="filterBarangayQuery" placeholder="Select Barangay" :options="barangayOptions" />
+
+				</div>
+
+				<div class="mt-6">
+					<VueSelect :is-disabled="!filterBarangayQuery" v-model="precinctNoQuery" :options="precinctOptions"
+						placeholder="Select Precinct#" />
+
+				</div>
+
+				<div class="mt-16 flex space-x-4 justify-end">
+					<SecondaryButton @click="closeFilterModal">close</SecondaryButton>
+				</div>
+			</div>
+		</Modal>
+		<!-- END MOBILE/ANDROID/IOS VIEW -->
 		<Modal v-if="hasPermission('delete voterprofile')" maxWidth="lg" :show="showConfirmDeleteVoterProfileModal"
 			@close="closeModal">
 			<div class="p-6">
@@ -510,6 +688,10 @@ onMounted(() => {
 	</AdminLayout>
 </template>
 <style scoped>
+/* .active {
+	background: red;
+} */
+
 /* .multiselect__input {
     min-height: 24px !important;
     font-size: 12px !important;

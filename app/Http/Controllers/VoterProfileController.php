@@ -77,6 +77,13 @@ class VoterProfileController extends Controller
                     ->where('position', '=', 'Leader')->get(),
                 'subleaders' => fn() => $action !== 'create' ? null : VoterProfile::query()
                     ->where('position', '=', 'Subleader')->get(),
+                'summary' => [
+                    'all' => VoterProfile::count(),
+                    'coordinator' => VoterProfile::where('position', '=', 'Coordinator')->count(),
+                    'leader' => VoterProfile::where('position', '=', 'Leader')->count(),
+                    'subleader' => VoterProfile::where('position', '=', 'Subleader')->count(),
+                    'member' => VoterProfile::where('position', '=', 'Member')->count()
+                ]
 
             ]
         );
