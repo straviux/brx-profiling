@@ -27,6 +27,7 @@
         "@he-tree/vue": "^2.8.6",
         "@headlessui/vue": "^1.7.22",
         "@heroicons/vue": "^2.1.5",
+        "@tenrok/vue-device-detect": "^1.0.0",
         "@vueuse/core": "^10.11.0",
         "lodash": "^4.17.21",
         "vue-dynamic-heroicons": "^0.0.2",
